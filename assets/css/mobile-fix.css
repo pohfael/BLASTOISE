@@ -1,0 +1,40 @@
+@media (max-width: 520px) {
+    .grid-layout {
+        padding: 0;
+        gap: 0;
+    }
+
+    .inventory-panel,
+    .manual-panel {
+        width: 100%;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .manual-panel {
+        margin-top: 0;
+        padding: 10px 12px;
+        overflow: hidden;
+    }
+
+    .manual-selectors,
+    .forge-preview,
+    .ratio-card,
+    .stepper-label,
+    .stepper,
+    #manualSlider,
+    .manual-panel .preview-grid,
+    .exchange-actions {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    .grid-layout {
+        padding-inline: 0;
+    }
+
+    .manual-panel {
+        padding-inline: 12px;
+    }
+}
