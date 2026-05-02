@@ -126,15 +126,15 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: min(330px, 62vw);
-    min-height: 120px;
+    width: min(430px, 72vw);
+    min-height: 178px;
     padding: 4px 0;
 }
 
 .brand-mark img {
     display: block;
     width: 100%;
-    max-height: 132px;
+    max-height: 184px;
     object-fit: contain;
     filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
 }
@@ -1403,12 +1403,12 @@ body {
     }
 
     .brand-mark {
-        width: 180px;
-        min-height: 82px;
+        width: 230px;
+        min-height: 116px;
     }
 
     .brand-mark img {
-        max-height: 86px;
+        max-height: 120px;
     }
 
     .grid-layout {
@@ -1702,12 +1702,12 @@ body {
     }
 
     .brand-mark {
-        width: 156px;
-        min-height: 70px;
+        width: 210px;
+        min-height: 104px;
     }
 
     .brand-mark img {
-        max-height: 74px;
+        max-height: 108px;
     }
 
     .game-window {
@@ -2134,6 +2134,10 @@ body {
     text-transform: uppercase;
 }
 
+.operator-mobile-logo {
+    display: none;
+}
+
 .operator-layout {
     display: grid;
     gap: 18px;
@@ -2337,6 +2341,15 @@ body {
     .operator-card {
         width: min(420px, 100%);
     }
+
+    .operator-mobile-logo {
+        display: block;
+        width: min(340px, 94%);
+        height: auto;
+        margin: -2px auto 12px;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.46));
+    }
 }
 
 @media (min-width: 901px) {
@@ -2353,12 +2366,12 @@ body {
     }
 
     .brand-mark {
-        width: min(410px, 46vw);
-        min-height: 150px;
+        width: min(500px, 52vw);
+        min-height: 172px;
     }
 
     .brand-mark img {
-        max-height: 158px;
+        max-height: 178px;
     }
 
     .game-window {
@@ -2687,5 +2700,46 @@ body {
 
     .operator-card {
         width: min(560px, 100%);
+    }
+}
+
+@media (max-width: 520px) {
+    .grid-layout {
+        padding: 0;
+        gap: 0;
+    }
+
+    .inventory-panel,
+    .manual-panel {
+        width: 100%;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .manual-panel {
+        margin-top: 0;
+        padding: 10px 12px;
+        overflow: hidden;
+    }
+
+    .manual-selectors,
+    .forge-preview,
+    .ratio-card,
+    .stepper-label,
+    .stepper,
+    #manualSlider,
+    .manual-panel .preview-grid,
+    .exchange-actions {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    .grid-layout {
+        padding-inline: 0;
+    }
+
+    .manual-panel {
+        padding-inline: 12px;
     }
 }
