@@ -114,6 +114,10 @@ function iconMarkup(item) {
 }
 
 function sanitizeInput(input) {
+    if (input.value === "") {
+        return;
+    }
+
     input.value = toNumber(input.value);
 }
 
@@ -127,7 +131,8 @@ function getInventory() {
 
 function setTierAmount(key, amount) {
     const input = els.resourceInputs.find((item) => item.dataset.tier === key);
-    input.value = Math.max(0, Math.floor(amount));
+    const cleanAmount = Math.max(0, Math.floor(amount));
+    input.value = cleanAmount > 0 ? cleanAmount : "";
 }
 
 function nextTierKey(key) {
@@ -270,7 +275,7 @@ function applyManualConversion() {
     }
 
     if (plan.source.key === "coins") {
-        els.coins.value = plan.leftover;
+        els.coins.value = plan.leftover > 0 ? plan.leftover : "";
     } else {
         setTierAmount(plan.source.key, plan.inventory[plan.source.key] - plan.consumed);
     }
@@ -299,9 +304,9 @@ function animate(element) {
 }
 
 function clearAll() {
-    els.coins.value = 0;
+    els.coins.value = "";
     els.resourceInputs.forEach((input) => {
-        input.value = 0;
+        input.value = "";
     });
     syncManualAmount(0);
     els.exchangeFeedback.classList.remove("is-visible", "is-success", "is-error");
