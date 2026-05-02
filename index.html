@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Mods / Inteligência</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <main class="app-shell">
+        <nav class="topbar" aria-label="Navegação principal">
+            <a class="brand-mark" href="#manualPanel" aria-label="Blastoise Burn">
+                <img src="assets/img/blastoise-burn-logo.png" alt="Blastoise Burn">
+            </a>
+        </nav>
+
+        <section class="game-window" aria-label="Janela de conversão"></section>
+
+        <section class="grid-layout">
+            <aside class="panel inventory-panel" id="inventoryPanel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Insira seu inventário</p>
+                        <h2>Inventário atual</h2>
+                    </div>
+                    <button class="icon-button" type="button" id="clearButton" title="Limpar inventário" aria-label="Limpar inventário">X</button>
+                </div>
+
+                <label class="coin-input">
+                    <span><i class="coin-icon" aria-hidden="true"></i>Prata</span>
+                    <input type="number" id="coinsInput" min="0" step="1" value="0" inputmode="numeric">
+                    <small>2.000 pratas geram 1 branco</small>
+                </label>
+
+                <div class="inventory-list">
+                    <label class="tier-input" style="--tier-color: #E8E8D0">
+                        <span class="tier-dot"></span>
+                        <span>Branco</span>
+                        <input type="number" class="resource-input" data-tier="white" min="0" step="1" value="0" inputmode="numeric">
+                    </label>
+                    <label class="tier-input" style="--tier-color: #3BA9FF">
+                        <span class="tier-dot"></span>
+                        <span>Azul</span>
+                        <input type="number" class="resource-input" data-tier="blue" min="0" step="1" value="0" inputmode="numeric">
+                    </label>
+                    <label class="tier-input" style="--tier-color: #9B4DFF">
+                        <span class="tier-dot"></span>
+                        <span>Roxo</span>
+                        <input type="number" class="resource-input" data-tier="purple" min="0" step="1" value="0" inputmode="numeric">
+                    </label>
+                    <label class="tier-input" style="--tier-color: #FF9F1C">
+                        <span class="tier-dot"></span>
+                        <span>Laranja</span>
+                        <input type="number" class="resource-input" data-tier="orange" min="0" step="1" value="0" inputmode="numeric">
+                    </label>
+                    <label class="tier-input" style="--tier-color: #FFD93D">
+                        <span class="tier-dot"></span>
+                        <span>Amarelo</span>
+                        <input type="number" class="resource-input" data-tier="yellow" min="0" step="1" value="0" inputmode="numeric">
+                    </label>
+                </div>
+            </aside>
+
+            <section class="panel manual-panel" id="manualPanel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Principal</p>
+                        <h2>Troca manual</h2>
+                    </div>
+                </div>
+
+                <div class="forge-preview" aria-label="Prévia da conversão manual">
+                    <div class="forge-slot" id="sourceSlot">
+                        <span>Origem</span>
+                        <strong>Branco</strong>
+                        <small>Disponível: 0</small>
+                    </div>
+                    <div class="forge-arrow">></div>
+                    <div class="forge-slot" id="targetSlot">
+                        <span>Destino</span>
+                        <strong>Azul</strong>
+                        <small>Recebe: 0</small>
+                    </div>
+                </div>
+
+                <div class="manual-selectors">
+                    <label>
+                        <span>Você tem</span>
+                        <div class="select-shell">
+                            <span id="sourceSelectedLabel"></span>
+                        </div>
+                        <select id="sourceSelect"></select>
+                    </label>
+                    <label>
+                        <span>Quer receber</span>
+                        <div class="select-shell is-locked">
+                            <span id="targetSelectedLabel"></span>
+                        </div>
+                        <select id="targetSelect"></select>
+                    </label>
+                </div>
+
+                <div class="ratio-card">
+                    <span id="ratioLabel">Custo: 6 Branco</span>
+                    <strong id="maxLabel">Máximo: 0</strong>
+                </div>
+
+                <span class="stepper-label">Quantidade que você quer receber</span>
+                <div class="stepper">
+                    <button type="button" id="decreaseButton" aria-label="Diminuir">-</button>
+                    <input type="number" id="manualAmount" min="0" step="1" value="0" inputmode="numeric" aria-label="Quantidade de resultado">
+                    <button type="button" id="increaseButton" aria-label="Aumentar">+</button>
+                </div>
+
+                <input type="range" id="manualSlider" min="0" max="0" value="0">
+                <button type="button" class="max-action" id="maxManualButton">Usar máximo</button>
+
+                <div class="preview-grid" id="manualPreview" aria-live="polite"></div>
+                <div class="exchange-feedback" id="exchangeFeedback" aria-live="polite"></div>
+
+                <div class="exchange-actions">
+                    <button type="button" class="secondary-action" id="closeManualButton">Fechar</button>
+                    <button type="button" class="primary-action" id="manualConvertButton">Trocar</button>
+                </div>
+            </section>
+        </section>
+
+        <section class="operator-game" aria-label="Mini game">
+            <p class="operator-mini-label">Mini game</p>
+            <div class="operator-layout">
+                <div class="operator-logo-panel" aria-hidden="true">
+                    <img src="assets/img/quem-e-esse-pokemon-logo.png" alt="">
+                </div>
+
+                <div class="operator-play-panel">
+                    <button class="operator-card" id="operatorCard" type="button" aria-label="Revelar operador">
+                        <span class="operator-frame">
+                            <img id="operatorImage" src="assets/img/operators/quem-e-esse-pokemon-base.jpg" alt="Imagem base sem operador">
+                        </span>
+                        <span class="operator-hint" id="operatorHint">Clique para começar</span>
+                    </button>
+
+                    <p class="operator-instruction" id="operatorInstruction">Clique no card para iniciar o desafio.</p>
+                    <strong class="operator-name" id="operatorName" aria-live="polite"></strong>
+                    <button class="operator-next" id="nextOperatorButton" type="button">Próximo Pokémon</button>
+                </div>
+            </div>
+            <audio id="operatorAudio" src="assets/audio/quem-e-o-operador.mp3" preload="auto"></audio>
+        </section>
+    </main>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
