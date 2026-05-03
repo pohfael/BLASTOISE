@@ -126,6 +126,58 @@
             </section>
         </section>
 
+        <section class="panel mission-tool" id="missionTool" aria-label="Ferramenta de locação de operadores">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Ferramenta protegida</p>
+                    <h2>Locação de operadores</h2>
+                </div>
+            </div>
+
+            <div class="mission-lock" id="missionLock">
+                <div>
+                    <strong>Área restrita</strong>
+                    <span>Digite a senha para montar a orientação das missões.</span>
+                </div>
+                <form id="missionUnlockForm" class="mission-unlock-form">
+                    <input type="password" id="missionPassword" autocomplete="current-password" placeholder="Senha numérica" aria-label="Senha numérica" inputmode="numeric" pattern="[0-9]*">
+                    <button type="submit">Desbloquear</button>
+                </form>
+                <p id="missionLockMessage" class="mission-lock-message" aria-live="polite"></p>
+            </div>
+
+            <div class="mission-workbench" id="missionWorkbench">
+                <div class="mission-toolbar">
+                    <div>
+                        <p class="eyebrow">Lista de missões</p>
+                        <h3>Escolha os tipos de missão</h3>
+                    </div>
+                    <div class="mission-toolbar-actions">
+                        <button type="button" id="clearMissionButton">Limpar</button>
+                    </div>
+                </div>
+
+                <div class="mission-grid" id="missionRows"></div>
+
+                <div class="mission-output">
+                    <div class="mission-box">
+                        <span>Locação sugerida</span>
+                        <div id="missionAssignment" class="mission-assignment"></div>
+                    </div>
+                    <div class="mission-box">
+                        <span>Ranking geral</span>
+                        <ol id="missionRanking" class="mission-ranking"></ol>
+                    </div>
+                </div>
+
+                <div class="mission-share-actions">
+                    <button type="button" id="copyMissionButton">Copiar texto</button>
+                    <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
+                </div>
+                <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
+            </div>
+        </section>
+
         <section class="operator-game" aria-label="Mini game">
             <p class="operator-mini-label">Mini game</p>
             <img class="operator-mobile-logo" src="assets/img/quem-e-esse-pokemon-logo-mobile.png" alt="Quem é esse Pokémon?">
@@ -152,5 +204,6 @@
     </main>
 
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/operator-planner.js"></script>
 </body>
 </html>

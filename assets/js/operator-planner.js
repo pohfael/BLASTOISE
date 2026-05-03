@@ -1,0 +1,421 @@
+const PLANNER_PASSWORD_SALT = "blastoise-burn-operator-tool-v1";
+const PLANNER_PASSWORD_HASH = "d8b5f6f84b2839d58d614e239fa1715620ad23d3ed733e46178db2c0ae37fb22";
+
+const PLANNER_OPERATORS = [
+    "VARG",
+    "DAVID",
+    "SYNDROME",
+    "JOE",
+    "VALERA",
+    "CAPISCE",
+    "KLAUS",
+    "SHI",
+    "VICTOR",
+    "SPENCER",
+    "TRAVIS",
+    "BATYA",
+    "HAWK",
+    "JASON",
+    "BORIS",
+    "THOR",
+    "RICK",
+    "MISHKA",
+    "ROOKIE",
+    "SNEK",
+    "DIANA",
+    "MIRO",
+    "MIA",
+    "MCMEAN",
+    "LENS",
+    "JB",
+    "DUTCH",
+    "RAY",
+    "APOLLON",
+    "SUSSURRO",
+    "CHE LI",
+    "CHATON",
+    "MOSES",
+    "FÊNIX",
+    "OWEN",
+    "KIRIN",
+    "DMITRY",
+    "FERRY",
+    "CRAIG",
+    "WOLF"
+];
+
+const PLANNER_BASE_OPERATOR_COUNT = 19;
+const EXTRA_OPERATOR_SCORES = {
+    SNEK: { limpeza: 210, incomum: 110, hildr: 90 },
+    DIANA: { limpeza: 205, incomum: 110, hildr: 90 },
+    MIRO: { limpeza: 200, incomum: 110, hildr: 90 },
+    MIA: { limpeza: 195, incomum: 110, hildr: 90 },
+    MCMEAN: { limpeza: 190, incomum: 110, hildr: 90 },
+    LENS: { limpeza: 185, incomum: 110, hildr: 90 },
+    JB: { incomum: 175, hildr: 100 },
+    DUTCH: { incomum: 170, hildr: 100 },
+    RAY: { incomum: 165, hildr: 100 },
+    APOLLON: { incomum: 160, hildr: 100 },
+    SUSSURRO: { incomum: 155, hildr: 100 },
+    "CHE LI": { hildr: 180 },
+    CHATON: { hildr: 175 },
+    MOSES: { hildr: 170 },
+    "FÊNIX": { hildr: 165 },
+    OWEN: { hildr: 160 },
+    KIRIN: { hildr: 155 },
+    DMITRY: { hildr: 150 },
+    FERRY: { hildr: 145 },
+    CRAIG: { hildr: 140 },
+    WOLF: { hildr: 135 }
+};
+
+const PLANNER_MISSIONS = [
+    { key: "baioneta", name: "Baioneta", scores: [65, 210, 65, 65, 65, 65, 155, 155, 155, 155, 155, 50, 40, 150, 150, 150, 150, 40, 35, 200] },
+    { key: "brecha", name: "Brecha", scores: [115, 115, 240, 115, 115, 115, 85, 85, 180, 85, 85, 85, 70, 70, 150, 70, 70, 70, 55, 200] },
+    { key: "bss", name: "B.S.S.", scores: [95, 255, 95, 95, 95, 95, 70, 70, 70, 190, 70, 70, 60, 160, 60, 60, 60, 60, 50, 200] },
+    { key: "cobertura", name: "Cobertura", scores: [115, 115, 115, 115, 240, 115, 85, 85, 85, 85, 180, 85, 70, 70, 70, 70, 150, 70, 55, 200] },
+    { key: "demonstracao", name: "Demonstração", scores: [115, 115, 115, 115, 115, 240, 85, 85, 85, 85, 85, 180, 70, 70, 70, 70, 70, 150, 55, 200] },
+    { key: "faca", name: "Faca", scores: [90, 90, 90, 90, 320, 90, 65, 240, 240, 65, 240, 60, 55, 55, 55, 55, 55, 55, 45, 200] },
+    { key: "habitantes", name: "Habitantes", scores: [95, 95, 225, 225, 95, 225, 70, 70, 70, 70, 70, 170, 140, 60, 60, 60, 60, 140, 40, 200] },
+    { key: "hildr", name: "HILDR", scores: [480, 100, 100, 100, 100, 100, 70, 70, 70, 70, 70, 70, 60, 60, 60, 300, 60, 60, 50, 200] },
+    { key: "limpeza", name: "Limpeza", scores: [115, 115, 115, 240, 115, 115, 85, 85, 85, 180, 85, 85, 70, 70, 70, 150, 70, 70, 55, 200] },
+    { key: "logistica", name: "Logística", scores: [115, 240, 115, 115, 115, 115, 85, 180, 85, 85, 85, 85, 70, 150, 70, 70, 70, 70, 55, 200] },
+    { key: "martelo", name: "Martelo", scores: [95, 95, 95, 95, 95, 95, 240, 70, 70, 70, 70, 240, 60, 60, 190, 60, 190, 190, 50, 200] },
+    { key: "basica", name: "M. Básica", scores: [160, 160, 160, 160, 160, 160, 120, 120, 120, 120, 120, 120, 100, 100, 100, 100, 100, 100, 80, 200] },
+    { key: "reconhecimento", name: "Reconhecimento", scores: [240, 115, 115, 115, 115, 115, 180, 85, 85, 85, 85, 85, 150, 70, 70, 70, 70, 70, 55, 200] },
+    { key: "comum", name: "S. Comum", scores: [65, 65, 65, 65, 65, 65, 50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150, 150, 120, 200] },
+    { key: "incomum", name: "S. Incomum", scores: [65, 65, 65, 65, 65, 65, 180, 180, 180, 180, 180, 180, 40, 40, 40, 40, 40, 40, 30, 200] },
+    { key: "raro", name: "S. Raro", scores: [240, 240, 240, 240, 240, 240, 50, 50, 50, 50, 50, 50, 40, 40, 40, 40, 40, 40, 30, 200] }
+];
+
+const PLANNER_SLOTS = [
+    { slot: 1, points: "50.000", reward: "10k Prata", send: 0 },
+    { slot: 2, points: "100.000", reward: "125 Ouro", send: 0 },
+    { slot: 3, points: "200.000", reward: "20k Prata", send: 3 },
+    { slot: 4, points: "400.000", reward: "250 Ouro", send: 4 },
+    { slot: 5, points: "700.000", reward: "38k Prata", send: 7 },
+    { slot: 6, points: "1.300.000", reward: "450 Ouro", send: 11 },
+    { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
+];
+
+const plannerEls = {};
+let plannerUnlocked = false;
+
+function missionByKey(key) {
+    return PLANNER_MISSIONS.find((mission) => mission.key === key);
+}
+
+function formatScore(score) {
+    return Number(score || 0).toLocaleString("pt-BR");
+}
+
+async function hashPlannerPassword(password) {
+    const data = new TextEncoder().encode(`${PLANNER_PASSWORD_SALT}${password}`);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return [...new Uint8Array(digest)]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+function unlockPlanner() {
+    plannerUnlocked = true;
+    plannerEls.lock.hidden = true;
+    plannerEls.workbench.hidden = false;
+    setPlannerControlsEnabled(true);
+    updateMissionPlanner();
+}
+
+function showPlannerLockedNotice() {
+    if (plannerUnlocked) {
+        return;
+    }
+
+    plannerEls.message.textContent = "Insira a senha para selecionar as missões.";
+    plannerEls.lock.classList.add("is-warning");
+    clearTimeout(plannerEls.warningTimer);
+    plannerEls.warningTimer = setTimeout(() => {
+        plannerEls.lock.classList.remove("is-warning");
+    }, 1400);
+}
+
+function setPlannerControlsEnabled(enabled) {
+    if (!plannerEls.rows) {
+        return;
+    }
+
+    plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
+        select.disabled = !enabled;
+    });
+
+    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton].forEach((button) => {
+        if (button) {
+            button.disabled = !enabled;
+        }
+    });
+}
+
+function createMissionRows() {
+    const options = [
+        '<option value="">Selecione</option>',
+        ...PLANNER_MISSIONS.map((mission) => `<option value="${mission.key}">${mission.name}</option>`)
+    ].join("");
+
+    plannerEls.rows.innerHTML = PLANNER_SLOTS.map((item) => `
+        <label class="mission-row">
+            <span class="mission-slot">#${item.slot}</span>
+            <span class="mission-meta">
+                <strong>${item.points}</strong>
+                <small>${item.reward}</small>
+                <em>${missionSendLabel(item)}</em>
+            </span>
+            <select class="mission-select" data-slot="${item.slot}" disabled>
+                ${options}
+            </select>
+        </label>
+    `).join("");
+}
+
+function missionSendLabel(item) {
+    if (item.send === 0) {
+        return "Sem operador";
+    }
+
+    if (item.send === "remaining") {
+        return "Sobras";
+    }
+
+    return `${item.send} operadores`;
+}
+
+function selectedMissions() {
+    return [...plannerEls.rows.querySelectorAll(".mission-select")]
+        .map((select) => {
+            const mission = missionByKey(select.value);
+            const slotInfo = PLANNER_SLOTS.find((item) => item.slot === Number(select.dataset.slot));
+            return mission ? { ...slotInfo, mission } : null;
+        })
+        .filter(Boolean);
+}
+
+function scoreMission(mission) {
+    return PLANNER_OPERATORS
+        .map((operator, index) => ({
+            operator,
+            score: getMissionScore(mission, operator, index)
+        }))
+        .sort((a, b) => b.score - a.score || a.operator.localeCompare(b.operator));
+}
+
+function getMissionScore(mission, operator, index) {
+    if (index < PLANNER_BASE_OPERATOR_COUNT) {
+        return mission.scores[index] || 0;
+    }
+
+    return EXTRA_OPERATOR_SCORES[operator]?.[mission.key] || 55;
+}
+
+function buildRanking(selected) {
+    return PLANNER_OPERATORS
+        .map((operator, index) => {
+            const picks = selected
+                .map((item) => ({
+                    mission: item.mission.name,
+                    slot: item.slot,
+                    score: getMissionScore(item.mission, operator, index)
+                }))
+                .sort((a, b) => b.score - a.score);
+
+            return {
+                operator,
+                total: picks.reduce((sum, pick) => sum + pick.score, 0),
+                picks
+            };
+        })
+        .sort((a, b) => b.total - a.total || a.operator.localeCompare(b.operator));
+}
+
+function buildAssignment(selected) {
+    const used = new Set();
+
+    return selected.map((item) => {
+        const ranking = scoreMission(item.mission);
+        const available = ranking.filter((entry) => !used.has(entry.operator));
+        const amount = item.send === "remaining" ? available.length : Number(item.send || 0);
+        const chosen = amount > 0 ? available.slice(0, amount) : [];
+        chosen.forEach((entry) => used.add(entry.operator));
+
+        return {
+            ...item,
+            chosen,
+            alternatives: available.slice(chosen.length, chosen.length + 3)
+        };
+    });
+}
+
+function renderEmptyState() {
+    plannerEls.assignment.innerHTML = '<p class="mission-empty">Escolha pelo menos uma missão para gerar a locação.</p>';
+    plannerEls.ranking.innerHTML = '<li class="mission-empty">Aguardando missões.</li>';
+    plannerEls.copyText.value = "";
+}
+
+function renderMissionPlanner(selected) {
+    if (!selected.length) {
+        renderEmptyState();
+        return;
+    }
+
+    const ranking = buildRanking(selected);
+    const assignment = buildAssignment(selected);
+
+    plannerEls.assignment.innerHTML = assignment.map((item) => `
+        <article class="assignment-card">
+            <div>
+                <span>Missão ${item.slot}</span>
+                <strong>${item.mission.name}</strong>
+                <small>${item.points} pontos | ${item.reward}</small>
+            </div>
+            <div>
+                <span>${missionSendLabel(item)}</span>
+                <strong>${item.chosen.length ? `${item.chosen.length} enviados` : "Não envia"}</strong>
+                <small>${item.chosen.length ? `${formatScore(item.chosen.reduce((sum, entry) => sum + entry.score, 0))} pontos somados` : "Sem locação nesta missão"}</small>
+            </div>
+            <p>${item.chosen.length ? item.chosen.map((entry) => `${entry.operator} (${formatScore(entry.score)})`).join(", ") : "Missão ignorada no envio de operadores."}</p>
+            <p>Alternativas: ${item.alternatives.length ? item.alternatives.map((alt) => `${alt.operator} (${formatScore(alt.score)})`).join(", ") : "sem operadores disponíveis"}</p>
+        </article>
+    `).join("");
+
+    plannerEls.ranking.innerHTML = ranking.slice(0, 8).map((entry) => `
+        <li>
+            <strong>${entry.operator}</strong>
+            <span>${formatScore(entry.total)} pts</span>
+            <small>Melhor em: ${entry.picks.slice(0, 2).map((pick) => `${pick.mission} (${formatScore(pick.score)})`).join(" / ")}</small>
+        </li>
+    `).join("");
+
+    plannerEls.copyText.value = buildCopyText(assignment, ranking);
+}
+
+function buildCopyText(assignment) {
+    const lines = [
+        "🚨 MISSÕES DISPONÍVEIS🚨",
+        "",
+        "🕙 Início: 8:h00",
+        ""
+    ];
+
+    assignment.forEach((item) => {
+        lines.push(`[ ${item.slot} ] ${item.mission.name.toUpperCase()}`);
+        if (item.chosen.length) {
+            lines[lines.length - 1] += `: ${item.chosen.map((entry) => entry.operator).join(", ")}.`;
+        } else {
+            lines.push("SEM OPERADORES");
+        }
+        lines.push("");
+    });
+
+    lines.push("⚠️🚨 COLOCAR OS OPERADORES NAS MISSÕES E ASSISTIR OS VÍDEOS DA LOJA! ⚠️🚨");
+
+    return lines.join("\n");
+}
+
+function updateMissionPlanner() {
+    renderMissionPlanner(selectedMissions());
+}
+
+async function handlePlannerUnlock(event) {
+    event.preventDefault();
+
+    const password = plannerEls.password.value.trim();
+    if (!password) {
+        plannerEls.message.textContent = "Digite a senha para continuar.";
+        return;
+    }
+
+    if (!/^\d+$/.test(password)) {
+        plannerEls.message.textContent = "A senha deve conter apenas números.";
+        return;
+    }
+
+    const hash = await hashPlannerPassword(password);
+    if (hash === PLANNER_PASSWORD_HASH) {
+        plannerEls.message.textContent = "";
+        unlockPlanner();
+        return;
+    }
+
+    plannerEls.message.textContent = "Senha incorreta.";
+}
+
+async function copyMissionText() {
+    if (!plannerEls.copyText.value.trim()) {
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(plannerEls.copyText.value);
+    } catch (error) {
+        plannerEls.copyText.focus();
+        plannerEls.copyText.select();
+        document.execCommand("copy");
+        plannerEls.copyText.setSelectionRange(0, 0);
+    }
+
+    plannerEls.copyButton.textContent = "Copiado";
+    setTimeout(() => {
+        plannerEls.copyButton.textContent = "Copiar texto";
+    }, 1300);
+}
+
+function shareMissionText() {
+    const text = plannerEls.copyText.value.trim();
+    if (!text) {
+        return;
+    }
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+}
+
+function clearMissionPlanner() {
+    plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
+        select.value = "";
+    });
+    updateMissionPlanner();
+}
+
+function initOperatorPlanner() {
+    const tool = document.getElementById("missionTool");
+    if (!tool) {
+        return;
+    }
+
+    plannerEls.lock = document.getElementById("missionLock");
+    plannerEls.form = document.getElementById("missionUnlockForm");
+    plannerEls.password = document.getElementById("missionPassword");
+    plannerEls.message = document.getElementById("missionLockMessage");
+    plannerEls.workbench = document.getElementById("missionWorkbench");
+    plannerEls.rows = document.getElementById("missionRows");
+    plannerEls.assignment = document.getElementById("missionAssignment");
+    plannerEls.ranking = document.getElementById("missionRanking");
+    plannerEls.copyText = document.getElementById("missionCopyText");
+    plannerEls.copyButton = document.getElementById("copyMissionButton");
+    plannerEls.shareButton = document.getElementById("shareMissionButton");
+    plannerEls.clearButton = document.getElementById("clearMissionButton");
+
+    createMissionRows();
+    setPlannerControlsEnabled(false);
+    plannerEls.form.addEventListener("submit", handlePlannerUnlock);
+    plannerEls.workbench.addEventListener("click", (event) => {
+        if (!plannerUnlocked && event.target.closest("select, button, .mission-row")) {
+            showPlannerLockedNotice();
+        }
+    }, true);
+    plannerEls.rows.addEventListener("change", updateMissionPlanner);
+    plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
+    plannerEls.copyButton.addEventListener("click", copyMissionText);
+    plannerEls.shareButton.addEventListener("click", shareMissionText);
+
+    renderEmptyState();
+}
+
+document.addEventListener("DOMContentLoaded", initOperatorPlanner);

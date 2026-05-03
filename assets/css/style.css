@@ -2107,6 +2107,365 @@ body {
     transform: skewY(-4deg);
 }
 
+/* Operator mission planner */
+.mission-tool {
+    width: min(1120px, calc(100% - 24px));
+    margin: 18px auto;
+    border-color: rgba(255, 159, 28, 0.44);
+    background:
+        radial-gradient(circle at 12% 0%, rgba(255, 217, 61, 0.1), transparent 26%),
+        radial-gradient(circle at 90% 10%, rgba(59, 169, 255, 0.12), transparent 34%),
+        linear-gradient(180deg, rgba(31, 40, 44, 0.96), rgba(12, 17, 22, 0.96));
+}
+
+.mission-tool .panel-heading {
+    margin-bottom: 14px;
+}
+
+.mission-lock {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+    gap: 14px;
+    align-items: end;
+    padding: 16px;
+    border: 1px solid rgba(216, 238, 248, 0.16);
+    background: rgba(4, 7, 10, 0.42);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mission-lock.is-warning {
+    border-color: rgba(255, 217, 61, 0.82);
+    box-shadow: 0 0 22px rgba(255, 217, 61, 0.16);
+}
+
+.mission-lock strong,
+.mission-toolbar h3 {
+    display: block;
+    color: #fff8d0;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.mission-lock span {
+    display: block;
+    margin-top: 5px;
+    color: #c8d4dc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.mission-unlock-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+}
+
+.mission-unlock-form input,
+.mission-row select {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid rgba(216, 238, 248, 0.24);
+    background: #05070a;
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    outline: none;
+}
+
+.mission-unlock-form input {
+    padding: 0 12px;
+}
+
+.mission-unlock-form input:focus,
+.mission-row select:focus {
+    border-color: #ffd93d;
+    box-shadow: 0 0 0 1px rgba(255, 217, 61, 0.3), 0 0 18px rgba(255, 217, 61, 0.12);
+}
+
+.mission-row select:disabled,
+.mission-toolbar-actions button:disabled,
+.mission-share-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    filter: grayscale(0.4);
+}
+
+.mission-unlock-form button,
+.mission-toolbar-actions button {
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid rgba(255, 217, 61, 0.78);
+    background: linear-gradient(180deg, rgba(255, 217, 61, 0.26), rgba(117, 96, 0, 0.72));
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mission-lock-message {
+    grid-column: 1 / -1;
+    min-height: 18px;
+    margin: 0;
+    color: #ff6b6b;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mission-workbench {
+    display: grid;
+    gap: 14px;
+}
+
+.mission-workbench[hidden] {
+    display: none;
+}
+
+.mission-toolbar {
+    display: flex;
+    gap: 14px;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.mission-toolbar h3 {
+    margin: 0;
+}
+
+.mission-toolbar-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.mission-toolbar-actions button:first-child {
+    border-color: rgba(216, 238, 248, 0.55);
+    background: rgba(5, 7, 10, 0.72);
+}
+
+.mission-share-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.mission-share-actions button {
+    min-height: 46px;
+    border: 1px solid rgba(255, 217, 61, 0.78);
+    background: linear-gradient(180deg, rgba(255, 217, 61, 0.24), rgba(117, 96, 0, 0.72));
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mission-share-actions button:first-child {
+    border-color: rgba(216, 238, 248, 0.62);
+    background: rgba(5, 7, 10, 0.82);
+}
+
+.mission-share-actions button:last-child {
+    border-color: rgba(64, 255, 122, 0.72);
+    background: linear-gradient(180deg, rgba(64, 255, 122, 0.22), rgba(14, 88, 42, 0.72));
+    box-shadow: 0 0 18px rgba(64, 255, 122, 0.1);
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.mission-row {
+    display: grid;
+    grid-template-columns: 44px minmax(82px, 0.6fr) minmax(0, 1fr);
+    align-items: center;
+    min-height: 64px;
+    border: 1px solid rgba(216, 238, 248, 0.13);
+    background: rgba(5, 7, 10, 0.52);
+}
+
+.mission-slot {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    border-right: 1px solid rgba(255, 217, 61, 0.18);
+    color: #ffd93d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 900;
+}
+
+.mission-meta {
+    display: grid;
+    gap: 2px;
+    padding: 0 10px;
+    text-transform: uppercase;
+}
+
+.mission-meta strong {
+    color: #fff8d0;
+    font-size: 0.82rem;
+}
+
+.mission-meta small,
+.mission-meta em,
+.assignment-card small,
+.mission-ranking small {
+    color: #c8d4dc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 900;
+}
+
+.mission-meta em {
+    color: #ffd93d;
+    font-size: 0.62rem;
+    font-style: normal;
+}
+
+.mission-row select {
+    height: 100%;
+    min-height: 64px;
+    border-width: 0 0 0 1px;
+    border-color: rgba(216, 238, 248, 0.13);
+    padding: 0 8px;
+}
+
+.mission-output {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 12px;
+}
+
+.mission-box {
+    border: 1px solid rgba(59, 169, 255, 0.28);
+    background: rgba(5, 7, 10, 0.58);
+}
+
+.mission-box > span {
+    display: block;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(216, 238, 248, 0.12);
+    color: #ffd93d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mission-assignment {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+}
+
+.assignment-card {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid rgba(216, 238, 248, 0.14);
+    background: rgba(21, 29, 34, 0.72);
+}
+
+.assignment-card > div {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.assignment-card span,
+.mission-ranking span {
+    color: #c8d4dc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.assignment-card strong,
+.mission-ranking strong {
+    color: #fff8d0;
+    text-transform: uppercase;
+}
+
+.assignment-card p {
+    margin: 0;
+    color: #9fb0bb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.mission-ranking {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 10px 10px 10px 34px;
+}
+
+.mission-ranking li {
+    padding: 8px 8px 8px 0;
+    border-bottom: 1px solid rgba(216, 238, 248, 0.1);
+}
+
+.mission-ranking li::marker {
+    color: #ffd93d;
+    font-weight: 900;
+}
+
+.mission-ranking span,
+.mission-ranking small {
+    display: block;
+}
+
+.mission-empty {
+    margin: 0;
+    padding: 12px;
+    color: #c8d4dc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mission-copy-text {
+    width: 100%;
+    min-height: 132px;
+    padding: 12px;
+    border: 1px solid rgba(216, 238, 248, 0.14);
+    background: rgba(5, 7, 10, 0.72);
+    color: #d8eef8;
+    font: 800 0.78rem/1.45 Arial, Helvetica, sans-serif;
+    resize: vertical;
+}
+
+@media (max-width: 900px) {
+    .mission-tool {
+        width: 100%;
+        margin-inline: auto;
+    }
+
+    .mission-lock,
+    .mission-output {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mission-assignment {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Operator reveal mini game */
 .operator-game {
     width: min(760px, calc(100% - 24px));
