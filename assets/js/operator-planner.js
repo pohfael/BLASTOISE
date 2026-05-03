@@ -30,12 +30,14 @@ const PLANNER_OPERATORS = [
     "JB",
     "DUTCH",
     "RAY",
+    "ZLOY",
+    "CHARON",
     "APOLLON",
     "SUSSURRO",
-    "CHE LI",
+    "CHEN LI",
     "CHATON",
     "MOSES",
-    "FÊNIX",
+    "F?NIX",
     "OWEN",
     "KIRIN",
     "DMITRY",
@@ -57,7 +59,7 @@ const EXTRA_OPERATOR_SCORES = {
     RAY: { incomum: 165, hildr: 100 },
     APOLLON: { incomum: 160, hildr: 100 },
     SUSSURRO: { incomum: 155, hildr: 100 },
-    "CHE LI": { hildr: 180 },
+    "CHEN LI": { hildr: 180 },
     CHATON: { hildr: 175 },
     MOSES: { hildr: 170 },
     "FÊNIX": { hildr: 165 },
@@ -67,6 +69,282 @@ const EXTRA_OPERATOR_SCORES = {
     FERRY: { hildr: 145 },
     CRAIG: { hildr: 140 },
     WOLF: { hildr: 135 }
+};
+
+const UPDATED_MISSION_SCORES = {
+    "baioneta": {
+        "CHEN LI": 496,
+        "THOR": 355,
+        "VALERA": 355,
+        "JASON": 355,
+        "TRAVIS": 352,
+        "SPENCER": 341,
+        "MIRO": 280,
+        "DUTCH": 280,
+        "MOSES": 280,
+        "DIANA": 253,
+        "SNEK": 250,
+        "JB": 234,
+        "ZLOY": 231,
+        "RAY": 231,
+        "CHARON": 231,
+        "BORIS": 229,
+        "APOLLON": 218,
+        "VICTOR": 203,
+        "DMITRY": 202,
+        "F?NIX": 195,
+        "OWEN": 192,
+        "JOE": 192,
+        "DAVID": 192,
+        "VARG": 189,
+        "SHI": 184,
+        "CAPISCE": 181,
+        "MISHKA": 178,
+        "ROOKIE": 178,
+        "HAWK": 178,
+        "MCMEAN": 173,
+        "RICK": 149,
+        "SUSSURRO": 108,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    },
+    "basica": {
+        "TRAVIS": 511,
+        "MIRO": 433,
+        "MOSES": 433,
+        "CHEN LI": 433,
+        "DUTCH": 433,
+        "DIANA": 391,
+        "SNEK": 386,
+        "JB": 363,
+        "CHARON": 358,
+        "RAY": 358,
+        "ZLOY": 358,
+        "BORIS": 351,
+        "APOLLON": 338,
+        "VICTOR": 311,
+        "THOR": 310,
+        "VALERA": 310,
+        "JASON": 310,
+        "DMITRY": 312,
+        "KLAUS": 307,
+        "BATYA": 302,
+        "SYNDROME": 302,
+        "F?NIX": 302,
+        "OWEN": 298,
+        "SPENCER": 298,
+        "JOE": 298,
+        "DAVID": 298,
+        "VARG": 294,
+        "SHI": 283,
+        "CAPISCE": 282,
+        "MISHKA": 275,
+        "ROOKIE": 275,
+        "HAWK": 274,
+        "MCMEAN": 270,
+        "RICK": 230,
+        "SUSSURRO": 167,
+        "KIRIN": 167,
+        "MIA": 137,
+        "LENS": 85
+    },
+    "brecha": {
+        "DUTCH": 496,
+        "MOSES": 496,
+        "SYNDROME": 346,
+        "VICTOR": 352,
+        "DMITRY": 358,
+        "ZLOY": 410,
+        "DAVID": 341,
+        "MIRO": 280,
+        "CHEN LI": 280,
+        "DIANA": 253,
+        "SNEK": 250,
+        "JB": 234,
+        "CHARON": 231,
+        "RAY": 231,
+        "APOLLON": 218,
+        "TRAVIS": 203,
+        "BORIS": 229,
+        "KLAUS": 200,
+        "BATYA": 197,
+        "VALERA": 199,
+        "JASON": 199,
+        "F?NIX": 195,
+        "THOR": 199,
+        "SPENCER": 192,
+        "JOE": 192,
+        "OWEN": 192,
+        "VARG": 189,
+        "SHI": 184,
+        "CAPISCE": 181,
+        "MISHKA": 178,
+        "ROOKIE": 178,
+        "HAWK": 178,
+        "MCMEAN": 173,
+        "RICK": 149,
+        "SUSSURRO": 108,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    },
+    "habitantes": {
+        "MIRO": 496,
+        "JOE": 341,
+        "BATYA": 341,
+        "HAWK": 310,
+        "MISHKA": 324,
+        "CAPISCE": 323,
+        "SYNDROME": 346,
+        "CHEN LI": 280,
+        "DUTCH": 280,
+        "MOSES": 280,
+        "DIANA": 253,
+        "SNEK": 250,
+        "JB": 234,
+        "ZLOY": 231,
+        "CHARON": 231,
+        "RAY": 231,
+        "BORIS": 229,
+        "APOLLON": 218,
+        "TRAVIS": 203,
+        "VICTOR": 203,
+        "DMITRY": 202,
+        "KLAUS": 200,
+        "THOR": 199,
+        "VALERA": 199,
+        "JASON": 199,
+        "F?NIX": 195,
+        "SPENCER": 192,
+        "OWEN": 192,
+        "DAVID": 192,
+        "VARG": 189,
+        "SHI": 184,
+        "ROOKIE": 178,
+        "MCMEAN": 173,
+        "RICK": 149,
+        "SUSSURRO": 108,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    },
+    "limpeza": {
+        "MIRO": 496,
+        "DIANA": 449,
+        "SNEK": 443,
+        "JB": 416,
+        "MCMEAN": 309,
+        "THOR": 355,
+        "JOE": 341,
+        "MOSES": 280,
+        "CHEN LI": 280,
+        "DUTCH": 280,
+        "CHARON": 231,
+        "RAY": 231,
+        "ZLOY": 231,
+        "BORIS": 229,
+        "APOLLON": 218,
+        "TRAVIS": 203,
+        "VICTOR": 203,
+        "KLAUS": 200,
+        "VALERA": 199,
+        "JASON": 199,
+        "F?NIX": 195,
+        "SYNDROME": 194,
+        "SPENCER": 192,
+        "OWEN": 192,
+        "DAVID": 192,
+        "VARG": 189,
+        "HAWK": 178,
+        "MISHKA": 178,
+        "ROOKIE": 178,
+        "CAPISCE": 181,
+        "RICK": 149,
+        "SUSSURRO": 108,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    },
+    "incomum": {
+        "BORIS": 397,
+        "TRAVIS": 352,
+        "VICTOR": 352,
+        "BATYA": 341,
+        "KLAUS": 347,
+        "SHI": 320,
+        "MIRO": 280,
+        "MOSES": 280,
+        "CHEN LI": 280,
+        "DUTCH": 280,
+        "DIANA": 253,
+        "SNEK": 250,
+        "JB": 234,
+        "CHARON": 231,
+        "ZLOY": 231,
+        "RAY": 231,
+        "APOLLON": 218,
+        "DMITRY": 202,
+        "VALERA": 199,
+        "JASON": 199,
+        "THOR": 199,
+        "F?NIX": 195,
+        "SYNDROME": 194,
+        "JOE": 192,
+        "SPENCER": 192,
+        "OWEN": 192,
+        "DAVID": 192,
+        "VARG": 189,
+        "CAPISCE": 181,
+        "HAWK": 178,
+        "MISHKA": 178,
+        "ROOKIE": 178,
+        "RICK": 149,
+        "SUSSURRO": 108,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    },
+    "hildr": {
+        "JASON": 355,
+        "THOR": 355,
+        "VARG": 337,
+        "MIRO": 280,
+        "MOSES": 280,
+        "CHEN LI": 280,
+        "DUTCH": 280,
+        "DIANA": 253,
+        "SNEK": 250,
+        "JB": 234,
+        "ZLOY": 231,
+        "CHARON": 231,
+        "RAY": 231,
+        "BORIS": 229,
+        "APOLLON": 218,
+        "TRAVIS": 203,
+        "VICTOR": 203,
+        "DMITRY": 202,
+        "KLAUS": 200,
+        "VALERA": 199,
+        "BATYA": 197,
+        "F?NIX": 195,
+        "SYNDROME": 194,
+        "JOE": 192,
+        "OWEN": 192,
+        "SPENCER": 192,
+        "DAVID": 192,
+        "SUSSURRO": 192,
+        "SHI": 184,
+        "CAPISCE": 181,
+        "ROOKIE": 178,
+        "MISHKA": 178,
+        "HAWK": 178,
+        "MCMEAN": 173,
+        "RICK": 149,
+        "KIRIN": 108,
+        "MIA": 88,
+        "LENS": 55
+    }
 };
 
 const PLANNER_MISSIONS = [
@@ -97,6 +375,8 @@ const PLANNER_SLOTS = [
     { slot: 6, points: "1.300.000", reward: "450 Ouro", send: 11 },
     { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
 ];
+
+const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00", "06:00"];
 
 const plannerEls = {};
 let plannerUnlocked = false;
@@ -147,6 +427,10 @@ function setPlannerControlsEnabled(enabled) {
         select.disabled = !enabled;
     });
 
+    if (plannerEls.timeSelect) {
+        plannerEls.timeSelect.disabled = !enabled;
+    }
+
     [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton].forEach((button) => {
         if (button) {
             button.disabled = !enabled;
@@ -154,11 +438,28 @@ function setPlannerControlsEnabled(enabled) {
     });
 }
 
-function createMissionRows() {
-    const options = [
+function createMissionTimes() {
+    if (!plannerEls.timeSelect) {
+        return;
+    }
+
+    plannerEls.timeSelect.innerHTML = MISSION_TIMES.map((time) => (
+        `<option value="${time}">${time}</option>`
+    )).join("");
+    plannerEls.timeSelect.value = "09:00";
+}
+
+function createMissionOptions(currentValue = "", selectedValues = new Set()) {
+    return [
         '<option value="">Selecione</option>',
-        ...PLANNER_MISSIONS.map((mission) => `<option value="${mission.key}">${mission.name}</option>`)
+        ...PLANNER_MISSIONS
+            .filter((mission) => mission.key === currentValue || !selectedValues.has(mission.key))
+            .map((mission) => `<option value="${mission.key}">${mission.name}</option>`)
     ].join("");
+}
+
+function createMissionRows() {
+    const options = createMissionOptions();
 
     plannerEls.rows.innerHTML = PLANNER_SLOTS.map((item) => `
         <label class="mission-row">
@@ -173,6 +474,17 @@ function createMissionRows() {
             </select>
         </label>
     `).join("");
+}
+
+function updateMissionSelectOptions() {
+    const selects = [...plannerEls.rows.querySelectorAll(".mission-select")];
+    const selectedValues = new Set(selects.map((select) => select.value).filter(Boolean));
+
+    selects.forEach((select) => {
+        const currentValue = select.value;
+        select.innerHTML = createMissionOptions(currentValue, selectedValues);
+        select.value = currentValue;
+    });
 }
 
 function missionSendLabel(item) {
@@ -197,6 +509,10 @@ function selectedMissions() {
         .filter(Boolean);
 }
 
+function normalizeOperatorName(operator) {
+    return operator.toUpperCase().replace("CHE LI", "CHEN LI");
+}
+
 function scoreMission(mission) {
     return PLANNER_OPERATORS
         .map((operator, index) => ({
@@ -207,6 +523,11 @@ function scoreMission(mission) {
 }
 
 function getMissionScore(mission, operator, index) {
+    const updatedScore = UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
+    if (Number.isFinite(updatedScore)) {
+        return updatedScore;
+    }
+
     if (index < PLANNER_BASE_OPERATOR_COUNT) {
         return mission.scores[index] || 0;
     }
@@ -296,10 +617,11 @@ function renderMissionPlanner(selected) {
 }
 
 function buildCopyText(assignment) {
+    const missionTime = plannerEls.timeSelect?.value || "09:00";
     const lines = [
         "🚨 MISSÕES DISPONÍVEIS🚨",
         "",
-        "🕙 Início: 8:h00",
+        `🕙 Início: ${missionTime}`,
         ""
     ];
 
@@ -320,6 +642,11 @@ function buildCopyText(assignment) {
 
 function updateMissionPlanner() {
     renderMissionPlanner(selectedMissions());
+}
+
+function handleMissionSelectChange() {
+    updateMissionSelectOptions();
+    updateMissionPlanner();
 }
 
 async function handlePlannerUnlock(event) {
@@ -380,6 +707,7 @@ function clearMissionPlanner() {
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
         select.value = "";
     });
+    updateMissionSelectOptions();
     updateMissionPlanner();
 }
 
@@ -394,6 +722,7 @@ function initOperatorPlanner() {
     plannerEls.password = document.getElementById("missionPassword");
     plannerEls.message = document.getElementById("missionLockMessage");
     plannerEls.workbench = document.getElementById("missionWorkbench");
+    plannerEls.timeSelect = document.getElementById("missionTimeSelect");
     plannerEls.rows = document.getElementById("missionRows");
     plannerEls.assignment = document.getElementById("missionAssignment");
     plannerEls.ranking = document.getElementById("missionRanking");
@@ -402,6 +731,7 @@ function initOperatorPlanner() {
     plannerEls.shareButton = document.getElementById("shareMissionButton");
     plannerEls.clearButton = document.getElementById("clearMissionButton");
 
+    createMissionTimes();
     createMissionRows();
     setPlannerControlsEnabled(false);
     plannerEls.form.addEventListener("submit", handlePlannerUnlock);
@@ -410,7 +740,8 @@ function initOperatorPlanner() {
             showPlannerLockedNotice();
         }
     }, true);
-    plannerEls.rows.addEventListener("change", updateMissionPlanner);
+    plannerEls.timeSelect.addEventListener("change", updateMissionPlanner);
+    plannerEls.rows.addEventListener("change", handleMissionSelectChange);
     plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
     plannerEls.copyButton.addEventListener("click", copyMissionText);
     plannerEls.shareButton.addEventListener("click", shareMissionText);

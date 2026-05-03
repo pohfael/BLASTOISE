@@ -104,6 +104,10 @@ button {
         flex-direction: column;
     }
 
+    .mission-time-panel {
+        grid-template-columns: 1fr;
+    }
+
     .mission-toolbar-actions,
     .mission-share-actions {
         display: grid;
@@ -216,6 +220,10 @@ button {
     .mission-toolbar {
         align-items: stretch;
         flex-direction: column;
+    }
+
+    .mission-time-panel {
+        grid-template-columns: 1fr;
     }
 
     .mission-toolbar-actions {

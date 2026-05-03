@@ -2162,6 +2162,7 @@ body {
 }
 
 .mission-unlock-form input,
+.mission-time-panel select,
 .mission-row select {
     width: 100%;
     min-height: 44px;
@@ -2178,11 +2179,13 @@ body {
 }
 
 .mission-unlock-form input:focus,
+.mission-time-panel select:focus,
 .mission-row select:focus {
     border-color: #ffd93d;
     box-shadow: 0 0 0 1px rgba(255, 217, 61, 0.3), 0 0 18px rgba(255, 217, 61, 0.12);
 }
 
+.mission-time-panel select:disabled,
 .mission-row select:disabled,
 .mission-toolbar-actions button:disabled,
 .mission-share-actions button:disabled {
@@ -2232,6 +2235,43 @@ body {
 
 .mission-toolbar h3 {
     margin: 0;
+}
+
+.mission-time-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 240px);
+    gap: 14px;
+    align-items: end;
+    padding: 14px;
+    border: 1px solid rgba(216, 238, 248, 0.14);
+    background: rgba(5, 7, 10, 0.42);
+}
+
+.mission-time-panel h3 {
+    margin: 0;
+    color: #fff8d0;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+}
+
+.mission-time-panel label {
+    display: grid;
+    gap: 6px;
+}
+
+.mission-time-panel label span {
+    color: #c8d4dc;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.mission-time-panel select {
+    padding: 0 12px;
+    border-color: rgba(255, 217, 61, 0.55);
+    color: #ffd93d;
 }
 
 .mission-toolbar-actions {
