@@ -101,6 +101,11 @@ button {
         grid-template-columns: 1fr;
     }
 
+    .mission-import-actions button {
+        justify-self: stretch;
+        width: 100%;
+    }
+
     .mission-toolbar {
         align-items: stretch;
         flex-direction: column;
@@ -230,6 +235,11 @@ button {
     .mission-output,
     .mission-assignment {
         grid-template-columns: 1fr;
+    }
+
+    .mission-import-actions button {
+        justify-self: stretch;
+        width: 100%;
     }
 
     .mission-toolbar {
