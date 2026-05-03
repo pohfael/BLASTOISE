@@ -77,11 +77,13 @@ const UPDATED_MISSION_SCORES = {
         "THOR": 355,
         "VALERA": 355,
         "JASON": 355,
+        "CRAIG": 370,
         "TRAVIS": 352,
         "SPENCER": 341,
         "MIRO": 280,
         "DUTCH": 280,
         "MOSES": 280,
+        "WOLF": 280,
         "DIANA": 253,
         "SNEK": 250,
         "JB": 234,
@@ -97,6 +99,7 @@ const UPDATED_MISSION_SCORES = {
         "JOE": 192,
         "DAVID": 192,
         "VARG": 189,
+        "FERRY": 185,
         "SHI": 184,
         "CAPISCE": 181,
         "MISHKA": 178,
@@ -115,6 +118,7 @@ const UPDATED_MISSION_SCORES = {
         "MOSES": 433,
         "CHEN LI": 433,
         "DUTCH": 433,
+        "WOLF": 433,
         "DIANA": 391,
         "SNEK": 386,
         "JB": 363,
@@ -129,6 +133,7 @@ const UPDATED_MISSION_SCORES = {
         "JASON": 310,
         "DMITRY": 312,
         "KLAUS": 307,
+        "CRAIG": 323,
         "BATYA": 302,
         "SYNDROME": 302,
         "F?NIX": 302,
@@ -137,6 +142,7 @@ const UPDATED_MISSION_SCORES = {
         "JOE": 298,
         "DAVID": 298,
         "VARG": 294,
+        "FERRY": 286,
         "SHI": 283,
         "CAPISCE": 282,
         "MISHKA": 275,
@@ -156,9 +162,12 @@ const UPDATED_MISSION_SCORES = {
         "VICTOR": 352,
         "DMITRY": 358,
         "ZLOY": 410,
+        "CRAIG": 370,
         "DAVID": 341,
+        "FERRY": 328,
         "MIRO": 280,
         "CHEN LI": 280,
+        "WOLF": 280,
         "DIANA": 253,
         "SNEK": 250,
         "JB": 234,
@@ -191,6 +200,7 @@ const UPDATED_MISSION_SCORES = {
     },
     "habitantes": {
         "MIRO": 496,
+        "WOLF": 496,
         "JOE": 341,
         "BATYA": 341,
         "HAWK": 310,
@@ -208,6 +218,7 @@ const UPDATED_MISSION_SCORES = {
         "RAY": 231,
         "BORIS": 229,
         "APOLLON": 218,
+        "CRAIG": 209,
         "TRAVIS": 203,
         "VICTOR": 203,
         "DMITRY": 202,
@@ -220,6 +231,7 @@ const UPDATED_MISSION_SCORES = {
         "OWEN": 192,
         "DAVID": 192,
         "VARG": 189,
+        "FERRY": 185,
         "SHI": 184,
         "ROOKIE": 178,
         "MCMEAN": 173,
@@ -240,11 +252,13 @@ const UPDATED_MISSION_SCORES = {
         "MOSES": 280,
         "CHEN LI": 280,
         "DUTCH": 280,
+        "WOLF": 280,
         "CHARON": 231,
         "RAY": 231,
         "ZLOY": 231,
         "BORIS": 229,
         "APOLLON": 218,
+        "CRAIG": 209,
         "TRAVIS": 203,
         "VICTOR": 203,
         "KLAUS": 200,
@@ -256,6 +270,7 @@ const UPDATED_MISSION_SCORES = {
         "OWEN": 192,
         "DAVID": 192,
         "VARG": 189,
+        "FERRY": 185,
         "HAWK": 178,
         "MISHKA": 178,
         "ROOKIE": 178,
@@ -277,6 +292,7 @@ const UPDATED_MISSION_SCORES = {
         "MOSES": 280,
         "CHEN LI": 280,
         "DUTCH": 280,
+        "WOLF": 280,
         "DIANA": 253,
         "SNEK": 250,
         "JB": 234,
@@ -284,6 +300,7 @@ const UPDATED_MISSION_SCORES = {
         "ZLOY": 231,
         "RAY": 231,
         "APOLLON": 218,
+        "CRAIG": 209,
         "DMITRY": 202,
         "VALERA": 199,
         "JASON": 199,
@@ -295,6 +312,7 @@ const UPDATED_MISSION_SCORES = {
         "OWEN": 192,
         "DAVID": 192,
         "VARG": 189,
+        "FERRY": 185,
         "CAPISCE": 181,
         "HAWK": 178,
         "MISHKA": 178,
@@ -313,6 +331,7 @@ const UPDATED_MISSION_SCORES = {
         "MOSES": 280,
         "CHEN LI": 280,
         "DUTCH": 280,
+        "WOLF": 280,
         "DIANA": 253,
         "SNEK": 250,
         "JB": 234,
@@ -321,6 +340,7 @@ const UPDATED_MISSION_SCORES = {
         "RAY": 231,
         "BORIS": 229,
         "APOLLON": 218,
+        "CRAIG": 209,
         "TRAVIS": 203,
         "VICTOR": 203,
         "DMITRY": 202,
@@ -334,6 +354,7 @@ const UPDATED_MISSION_SCORES = {
         "SPENCER": 192,
         "DAVID": 192,
         "SUSSURRO": 192,
+        "FERRY": 185,
         "SHI": 184,
         "CAPISCE": 181,
         "ROOKIE": 178,
@@ -380,6 +401,7 @@ const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03
 
 const plannerEls = {};
 let plannerUnlocked = false;
+let importedAssignment = null;
 
 function missionByKey(key) {
     return PLANNER_MISSIONS.find((mission) => mission.key === key);
@@ -387,6 +409,46 @@ function missionByKey(key) {
 
 function formatScore(score) {
     return Number(score || 0).toLocaleString("pt-BR");
+}
+
+function normalizeLookupText(value) {
+    return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "");
+}
+
+function missionTextName(mission) {
+    if (mission.key === "incomum") {
+        return "SOMENTE INCOMUM";
+    }
+
+    return mission.name.toUpperCase();
+}
+
+function missionByTextName(name) {
+    const lookup = normalizeLookupText(name);
+    const aliases = {
+        BASICA: "basica",
+        MBASICA: "basica",
+        MISSAOBASICA: "basica",
+        SOMENTEINCOMUM: "incomum",
+        SINCOMUM: "incomum",
+        HILDR: "hildr"
+    };
+    const aliasKey = aliases[lookup];
+
+    if (aliasKey) {
+        return missionByKey(aliasKey);
+    }
+
+    return PLANNER_MISSIONS.find((mission) => normalizeLookupText(mission.name) === lookup);
+}
+
+function operatorByTextName(name) {
+    const lookup = normalizeLookupText(name);
+    return PLANNER_OPERATORS.find((operator) => normalizeLookupText(operator) === lookup) || String(name || "").trim().toUpperCase();
 }
 
 async function hashPlannerPassword(password) {
@@ -427,11 +489,19 @@ function setPlannerControlsEnabled(enabled) {
         select.disabled = !enabled;
     });
 
+    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
+        button.disabled = !enabled;
+    });
+
     if (plannerEls.timeSelect) {
         plannerEls.timeSelect.disabled = !enabled;
     }
 
-    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton].forEach((button) => {
+    if (plannerEls.lastMissionText) {
+        plannerEls.lastMissionText.disabled = !enabled;
+    }
+
+    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.importButton].forEach((button) => {
         if (button) {
             button.disabled = !enabled;
         }
@@ -462,7 +532,7 @@ function createMissionRows() {
     const options = createMissionOptions();
 
     plannerEls.rows.innerHTML = PLANNER_SLOTS.map((item) => `
-        <label class="mission-row">
+        <div class="mission-row">
             <span class="mission-slot">#${item.slot}</span>
             <span class="mission-meta">
                 <strong>${item.points}</strong>
@@ -472,7 +542,8 @@ function createMissionRows() {
             <select class="mission-select" data-slot="${item.slot}" disabled>
                 ${options}
             </select>
-        </label>
+            <button type="button" class="mission-status-button" data-state="pending" disabled>Pendente</button>
+        </div>
     `).join("");
 }
 
@@ -507,6 +578,12 @@ function selectedMissions() {
             return mission ? { ...slotInfo, mission } : null;
         })
         .filter(Boolean);
+}
+
+function completedMissionSlots() {
+    return new Set([...plannerEls.rows.querySelectorAll(".mission-status-button[data-state='done']")]
+        .map((button) => Number(button.closest(".mission-row")?.querySelector(".mission-select")?.dataset.slot))
+        .filter(Boolean));
 }
 
 function normalizeOperatorName(operator) {
@@ -557,20 +634,159 @@ function buildRanking(selected) {
 
 function buildAssignment(selected) {
     const used = new Set();
+    const assignment = selected.map((item) => ({
+        ...item,
+        chosen: [],
+        alternatives: []
+    }));
 
-    return selected.map((item) => {
-        const ranking = scoreMission(item.mission);
-        const available = ranking.filter((entry) => !used.has(entry.operator));
-        const amount = item.send === "remaining" ? available.length : Number(item.send || 0);
-        const chosen = amount > 0 ? available.slice(0, amount) : [];
-        chosen.forEach((entry) => used.add(entry.operator));
+    const fixedSlots = assignment.filter((item) => Number(item.send) > 0);
+    const remainingSlot = assignment.find((item) => item.send === "remaining");
+    const candidates = fixedSlots.flatMap((item) => (
+        PLANNER_OPERATORS.map((operator, index) => ({
+            item,
+            operator,
+            score: getMissionScore(item.mission, operator, index)
+        }))
+    ));
 
-        return {
-            ...item,
-            chosen,
-            alternatives: available.slice(chosen.length, chosen.length + 3)
-        };
+    candidates
+        .sort((a, b) => b.score - a.score || a.item.slot - b.item.slot || a.operator.localeCompare(b.operator))
+        .forEach((entry) => {
+            if (used.has(entry.operator) || entry.item.chosen.length >= Number(entry.item.send)) {
+                return;
+            }
+
+            entry.item.chosen.push({
+                operator: entry.operator,
+                score: entry.score
+            });
+            used.add(entry.operator);
+        });
+
+    if (remainingSlot) {
+        remainingSlot.chosen = scoreMission(remainingSlot.mission)
+            .filter((entry) => !used.has(entry.operator));
+        remainingSlot.chosen.forEach((entry) => used.add(entry.operator));
+    }
+
+    assignment.forEach((item) => {
+        item.alternatives = scoreMission(item.mission)
+            .filter((entry) => !used.has(entry.operator) && !item.chosen.some((chosen) => chosen.operator === entry.operator))
+            .slice(0, 3);
     });
+
+    return assignment;
+}
+
+function parseMissionText(text) {
+    const lines = String(text || "")
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+    const parsed = [];
+
+    lines.forEach((line) => {
+        const cleanLine = line.replace(/^>\s*/, "");
+        const match = cleanLine.match(/^\*?\[\s*(\d+)\s*\]\s*([^:*]+?)\*?\s*(?::\s*(.*))?$/i);
+
+        if (!match) {
+            return;
+        }
+
+        const slot = Number(match[1]);
+        const mission = missionByTextName(match[2]);
+
+        if (!mission) {
+            return;
+        }
+
+        const operatorsText = (match[3] || "").replace(/\*/g, "").replace(/\.$/, "");
+        const chosen = operatorsText && !/SEM OPERADORES/i.test(operatorsText)
+            ? operatorsText.split(",")
+                .map((operator) => operatorByTextName(operator.replace(/\.$/, "")))
+                .filter(Boolean)
+                .map((operator, index) => ({
+                    operator,
+                    score: getMissionScore(mission, operator, PLANNER_OPERATORS.indexOf(operator) >= 0 ? PLANNER_OPERATORS.indexOf(operator) : index)
+                }))
+            : [];
+        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === slot);
+
+        if (slotInfo) {
+            parsed.push({
+                ...slotInfo,
+                mission,
+                chosen,
+                alternatives: []
+            });
+        }
+    });
+
+    return parsed;
+}
+
+function importMissionText() {
+    const parsed = parseMissionText(plannerEls.lastMissionText.value);
+
+    if (!parsed.length) {
+        plannerEls.importMessage.textContent = "Não encontrei missões válidas no texto colado.";
+        return;
+    }
+
+    importedAssignment = parsed;
+    plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
+        const item = parsed.find((entry) => entry.slot === Number(select.dataset.slot));
+        select.value = item?.mission.key || "";
+    });
+    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
+        button.dataset.state = "pending";
+        button.textContent = "Pendente";
+    });
+    updateMissionSelectOptions();
+    updateMissionPlanner();
+    plannerEls.importMessage.textContent = `${parsed.length} missões importadas. Marque como concluídas as missões finalizadas.`;
+}
+
+function buildRelocationAssignment(baseAssignment, completedSlots) {
+    const movingOperators = [];
+    const sourceItems = baseAssignment.filter((item) => completedSlots.has(item.slot) && item.chosen.length);
+    const targetItems = selectedMissions().filter((item) => !completedSlots.has(item.slot) && item.send !== 0);
+
+    sourceItems.forEach((item) => {
+        item.chosen.forEach((entry) => {
+            if (!movingOperators.some((operator) => operator === entry.operator)) {
+                movingOperators.push(entry.operator);
+            }
+        });
+    });
+
+    const targets = targetItems.map((item) => ({
+        ...item,
+        chosen: []
+    }));
+
+    movingOperators.forEach((operator) => {
+        const operatorIndex = PLANNER_OPERATORS.indexOf(operator);
+        const bestTarget = targets
+            .map((item) => ({
+                item,
+                score: getMissionScore(item.mission, operator, operatorIndex >= 0 ? operatorIndex : 0)
+            }))
+            .sort((a, b) => b.score - a.score || a.item.slot - b.item.slot)[0];
+
+        if (bestTarget) {
+            bestTarget.item.chosen.push({
+                operator,
+                score: bestTarget.score
+            });
+        }
+    });
+
+    return {
+        sourceItems,
+        targetItems: targets.filter((item) => item.chosen.length)
+    };
 }
 
 function renderEmptyState() {
@@ -586,7 +802,14 @@ function renderMissionPlanner(selected) {
     }
 
     const ranking = buildRanking(selected);
-    const assignment = buildAssignment(selected);
+    const generatedAssignment = buildAssignment(selected);
+    const completedSlots = completedMissionSlots();
+    const baseAssignment = importedAssignment?.length ? importedAssignment : generatedAssignment;
+    const assignment = baseAssignment.map((item) => ({
+        ...item,
+        alternatives: item.alternatives || []
+    }));
+    const relocation = completedSlots.size ? buildRelocationAssignment(assignment, completedSlots) : null;
 
     plannerEls.assignment.innerHTML = assignment.map((item) => `
         <article class="assignment-card">
@@ -613,7 +836,9 @@ function renderMissionPlanner(selected) {
         </li>
     `).join("");
 
-    plannerEls.copyText.value = buildCopyText(assignment, ranking);
+    plannerEls.copyText.value = relocation?.sourceItems.length
+        ? buildRelocationText(relocation)
+        : buildCopyText(assignment, ranking);
 }
 
 function buildCopyText(assignment) {
@@ -626,7 +851,7 @@ function buildCopyText(assignment) {
     ];
 
     assignment.forEach((item) => {
-        lines.push(`[ ${item.slot} ] ${item.mission.name.toUpperCase()}`);
+        lines.push(`*[ ${item.slot} ] ${item.mission.name.toUpperCase()}*`);
         if (item.chosen.length) {
             lines[lines.length - 1] += `: ${item.chosen.map((entry) => entry.operator).join(", ")}.`;
         } else {
@@ -640,12 +865,59 @@ function buildCopyText(assignment) {
     return lines.join("\n");
 }
 
+function buildRelocationText(relocation) {
+    const lines = [
+        "🚨🚨🚨🚨⚠️ ATENÇÃO ⚠️🚨🚨🚨🚨",
+        "",
+        "MOVIMENTAÇÃO ESTRATÉGICA IMEDIATA!",
+        "",
+        "ALOQUEM OS OPERADORES CONFORME AS INSTRUÇÕES ABAIXO:",
+        "",
+        relocation.sourceItems.length > 1 ? "REMOVAM OS OPERADORES DAS MISSÕES" : "REMOVAM OS OPERADORES DA MISSÃO",
+        ""
+    ];
+
+    relocation.sourceItems.forEach((item) => {
+        lines.push(`> ⏳✅ [ ${item.slot} ]: *${missionTextName(item.mission)}.*`);
+    });
+
+    lines.push("", "ALOQUEM DE IMEDIATO NAS MISSÕES:", "");
+
+    if (relocation.targetItems.length) {
+        relocation.targetItems.forEach((item) => {
+            lines.push(`> [ ${item.slot} ] ${missionTextName(item.mission)}: ${item.chosen.map((entry) => entry.operator).join(", ")}.`);
+        });
+    } else {
+        lines.push("> Nenhuma missão pendente disponível para realocar.");
+    }
+
+    lines.push("", "⚠️🚨 COLOCAR OS OPERADORES NAS MISSÕES E ASSISTIR OS VÍDEOS DA LOJA! ⚠️🚨");
+
+    return lines.join("\n");
+}
+
 function updateMissionPlanner() {
     renderMissionPlanner(selectedMissions());
 }
 
 function handleMissionSelectChange() {
+    importedAssignment = null;
+    if (plannerEls.importMessage) {
+        plannerEls.importMessage.textContent = "";
+    }
     updateMissionSelectOptions();
+    updateMissionPlanner();
+}
+
+function handleMissionStatusClick(event) {
+    const button = event.target.closest(".mission-status-button");
+    if (!button || button.disabled) {
+        return;
+    }
+
+    const isDone = button.dataset.state === "done";
+    button.dataset.state = isDone ? "pending" : "done";
+    button.textContent = isDone ? "Pendente" : "Concluído";
     updateMissionPlanner();
 }
 
@@ -704,9 +976,20 @@ function shareMissionText() {
 }
 
 function clearMissionPlanner() {
+    importedAssignment = null;
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
         select.value = "";
     });
+    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
+        button.dataset.state = "pending";
+        button.textContent = "Pendente";
+    });
+    if (plannerEls.lastMissionText) {
+        plannerEls.lastMissionText.value = "";
+    }
+    if (plannerEls.importMessage) {
+        plannerEls.importMessage.textContent = "";
+    }
     updateMissionSelectOptions();
     updateMissionPlanner();
 }
@@ -730,6 +1013,9 @@ function initOperatorPlanner() {
     plannerEls.copyButton = document.getElementById("copyMissionButton");
     plannerEls.shareButton = document.getElementById("shareMissionButton");
     plannerEls.clearButton = document.getElementById("clearMissionButton");
+    plannerEls.lastMissionText = document.getElementById("lastMissionText");
+    plannerEls.importButton = document.getElementById("importMissionButton");
+    plannerEls.importMessage = document.getElementById("missionImportMessage");
 
     createMissionTimes();
     createMissionRows();
@@ -742,6 +1028,8 @@ function initOperatorPlanner() {
     }, true);
     plannerEls.timeSelect.addEventListener("change", updateMissionPlanner);
     plannerEls.rows.addEventListener("change", handleMissionSelectChange);
+    plannerEls.rows.addEventListener("click", handleMissionStatusClick);
+    plannerEls.importButton.addEventListener("click", importMissionText);
     plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
     plannerEls.copyButton.addEventListener("click", copyMissionText);
     plannerEls.shareButton.addEventListener("click", shareMissionText);
