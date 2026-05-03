@@ -94,6 +94,8 @@ button {
 
     .mission-lock,
     .mission-unlock-form,
+    .mission-import-panel,
+    .mission-import-actions,
     .mission-output,
     .mission-assignment {
         grid-template-columns: 1fr;
@@ -125,11 +127,21 @@ button {
         overflow: hidden;
     }
 
-    .mission-row select {
+    .mission-row select,
+    .mission-status-button {
         min-width: 0;
         max-width: 100%;
         padding-inline: 6px;
         font-size: 0.76rem;
+    }
+
+    .mission-status-button {
+        grid-column: 1 / -1;
+        min-height: 36px;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 217, 61, 0.18);
+        justify-content: center;
+        text-align: center;
     }
 
     .mission-meta {
@@ -140,7 +152,8 @@ button {
     .mission-meta strong,
     .mission-meta small,
     .mission-meta em,
-    .mission-row select {
+    .mission-row select,
+    .mission-status-button {
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -212,6 +225,8 @@ button {
 
     .mission-lock,
     .mission-unlock-form,
+    .mission-import-panel,
+    .mission-import-actions,
     .mission-output,
     .mission-assignment {
         grid-template-columns: 1fr;
@@ -241,14 +256,15 @@ button {
     }
 
     .mission-row {
-        grid-template-columns: 38px 92px minmax(0, 1fr);
+        grid-template-columns: 38px 86px minmax(0, 1fr);
     }
 
     .mission-meta {
         padding: 0 8px;
     }
 
-    .mission-row select {
+    .mission-row select,
+    .mission-status-button {
         font-size: 0.76rem;
     }
 }

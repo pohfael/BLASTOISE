@@ -147,6 +147,19 @@
             </div>
 
             <div class="mission-workbench" id="missionWorkbench">
+                <div class="mission-import-panel">
+                    <div>
+                        <p class="eyebrow">Realocação de operadores</p>
+                        <h3>Use a última mensagem enviada</h3>
+                        <p>Cole o texto da última missão, clique em Enviar e marque como Concluído apenas as missões já finalizadas.</p>
+                    </div>
+                    <div class="mission-import-actions">
+                        <textarea id="lastMissionText" aria-label="Texto da última missão" placeholder="Cole aqui o texto da última missão enviada ao clã" disabled></textarea>
+                        <button type="button" id="importMissionButton" disabled>Enviar</button>
+                        <span id="missionImportMessage" aria-live="polite"></span>
+                    </div>
+                </div>
+
                 <div class="mission-time-panel">
                     <div>
                         <p class="eyebrow">Horário da missão</p>
@@ -175,7 +188,7 @@
                         <span>Locação sugerida</span>
                         <div id="missionAssignment" class="mission-assignment"></div>
                     </div>
-                    <div class="mission-box">
+                    <div class="mission-box mission-ranking-box" hidden>
                         <span>Ranking geral</span>
                         <ol id="missionRanking" class="mission-ranking"></ol>
                     </div>
