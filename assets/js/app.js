@@ -46,6 +46,12 @@ const OPERATORS = [
         base: "assets/img/operators/quem-e-esse-pokemon-base.jpg",
         mystery: "assets/img/operators/valera-misterio.jpg",
         revealed: "assets/img/operators/valera-revelado.jpg"
+    },
+    {
+        name: "Jo\u00E3ozytos",
+        base: "assets/img/operators/quem-e-esse-pokemon-base.jpg",
+        mystery: "assets/img/operators/joaozytos-misterio.jpg",
+        revealed: "assets/img/operators/joaozytos-revelado.jpg"
     }
 ];
 
@@ -80,8 +86,9 @@ const els = {
 };
 
 const operatorState = {
-    index: 0,
-    phase: "base"
+    index: -1,
+    phase: "base",
+    deck: []
 };
 
 function tierIndex(key) {
@@ -318,6 +325,37 @@ function currentOperator() {
     return OPERATORS[operatorState.index];
 }
 
+function randomInt(max) {
+    if (window.crypto?.getRandomValues) {
+        const randomBuffer = new Uint32Array(1);
+        window.crypto.getRandomValues(randomBuffer);
+        return randomBuffer[0] % max;
+    }
+
+    return Math.floor(Math.random() * max);
+}
+
+function shuffledOperatorIndexes(excludedIndex = -1) {
+    const indexes = OPERATORS
+        .map((_, index) => index)
+        .filter((index) => OPERATORS.length <= 1 || index !== excludedIndex);
+
+    for (let index = indexes.length - 1; index > 0; index -= 1) {
+        const swapIndex = randomInt(index + 1);
+        [indexes[index], indexes[swapIndex]] = [indexes[swapIndex], indexes[index]];
+    }
+
+    return indexes;
+}
+
+function nextOperatorIndex() {
+    if (!operatorState.deck.length) {
+        operatorState.deck = shuffledOperatorIndexes(operatorState.index);
+    }
+
+    return operatorState.deck.shift() ?? 0;
+}
+
 function getOperatorDisplayName(operator) {
     if (operator.name) {
         return operator.name;
@@ -336,7 +374,7 @@ function getOperatorDisplayName(operator) {
 }
 
 function loadOperator(index) {
-    operatorState.index = index % OPERATORS.length;
+    operatorState.index = ((index % OPERATORS.length) + OPERATORS.length) % OPERATORS.length;
     operatorState.phase = "base";
 
     const operator = currentOperator();
@@ -351,18 +389,7 @@ function loadOperator(index) {
 }
 
 function loadRandomOperator() {
-    if (OPERATORS.length <= 1) {
-        loadOperator(0);
-        return;
-    }
-
-    let nextIndex = operatorState.index;
-
-    while (nextIndex === operatorState.index) {
-        nextIndex = Math.floor(Math.random() * OPERATORS.length);
-    }
-
-    loadOperator(nextIndex);
+    loadOperator(nextOperatorIndex());
 }
 
 function handleOperatorClick() {
@@ -453,7 +480,7 @@ function init() {
     syncManualAmount(0);
     updateTotals();
     if (els.operatorCard) {
-        loadOperator(0);
+        loadRandomOperator();
     }
 }
 

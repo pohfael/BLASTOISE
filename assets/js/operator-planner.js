@@ -1,5 +1,20 @@
-const PLANNER_PASSWORD_SALT = "blastoise-burn-operator-tool-v1";
+﻿const PLANNER_PASSWORD_SALT = "blastoise-burn-operator-tool-v1";
 const PLANNER_PASSWORD_HASH = "d8b5f6f84b2839d58d614e239fa1715620ad23d3ed733e46178db2c0ae37fb22";
+
+const TEXT_SIREN = "\u{1F6A8}";
+const TEXT_CLOCK = "\u{1F559}";
+const TEXT_WARNING = "\u26A0\uFE0F";
+const TEXT_HOURGLASS = "\u23F3";
+const TEXT_CHECK = "\u2705";
+const TEXT_COPY_TITLE = `${TEXT_SIREN} MISS\u00D5ES DISPON\u00CDVEIS${TEXT_SIREN}`;
+const TEXT_COPY_FOOTER = `${TEXT_WARNING}${TEXT_SIREN} COLOCAR OS OPERADORES NAS MISS\u00D5ES E ASSISTIR OS V\u00CDDEOS DA LOJA! ${TEXT_WARNING}${TEXT_SIREN}`;
+const TEXT_RELOCATION_TITLE = `${TEXT_SIREN}${TEXT_SIREN}${TEXT_SIREN}${TEXT_SIREN}${TEXT_WARNING} ATEN\u00C7\u00C3O ${TEXT_WARNING}${TEXT_SIREN}${TEXT_SIREN}${TEXT_SIREN}${TEXT_SIREN}`;
+const TEXT_RELOCATION_MOVEMENT = "MOVIMENTA\u00C7\u00C3O ESTRAT\u00C9GICA IMEDIATA!";
+const TEXT_RELOCATION_INSTRUCTIONS = "ALOQUEM OS OPERADORES CONFORME AS INSTRU\u00C7\u00D5ES ABAIXO:";
+const TEXT_REMOVE_MISSIONS = "REMOVAM OS OPERADORES DAS MISS\u00D5ES";
+const TEXT_REMOVE_MISSION = "REMOVAM OS OPERADORES DA MISS\u00C3O";
+const TEXT_ALLOCATE_NOW = "ALOQUEM DE IMEDIATO NAS MISS\u00D5ES:";
+const TEXT_NO_PENDING_MISSION = "> Nenhuma miss\u00E3o pendente dispon\u00EDvel para realocar.";
 
 const PLANNER_OPERATORS = [
     "VARG",
@@ -37,7 +52,7 @@ const PLANNER_OPERATORS = [
     "CHEN LI",
     "CHATON",
     "MOSES",
-    "F?NIX",
+    "FÊNIX",
     "OWEN",
     "KIRIN",
     "DMITRY",
@@ -62,7 +77,7 @@ const EXTRA_OPERATOR_SCORES = {
     "CHEN LI": { hildr: 180 },
     CHATON: { hildr: 175 },
     MOSES: { hildr: 170 },
-    "FÊNIX": { hildr: 165 },
+    "F\u00CANIX": { hildr: 165 },
     OWEN: { hildr: 160 },
     KIRIN: { hildr: 155 },
     DMITRY: { hildr: 150 },
@@ -94,7 +109,7 @@ const UPDATED_MISSION_SCORES = {
         "APOLLON": 218,
         "VICTOR": 203,
         "DMITRY": 202,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "OWEN": 192,
         "JOE": 192,
         "DAVID": 192,
@@ -136,7 +151,7 @@ const UPDATED_MISSION_SCORES = {
         "CRAIG": 323,
         "BATYA": 302,
         "SYNDROME": 302,
-        "F?NIX": 302,
+        "FÊNIX": 302,
         "OWEN": 298,
         "SPENCER": 298,
         "JOE": 298,
@@ -180,7 +195,7 @@ const UPDATED_MISSION_SCORES = {
         "BATYA": 197,
         "VALERA": 199,
         "JASON": 199,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "THOR": 199,
         "SPENCER": 192,
         "JOE": 192,
@@ -226,7 +241,7 @@ const UPDATED_MISSION_SCORES = {
         "THOR": 199,
         "VALERA": 199,
         "JASON": 199,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "SPENCER": 192,
         "OWEN": 192,
         "DAVID": 192,
@@ -264,7 +279,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "VALERA": 199,
         "JASON": 199,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "SYNDROME": 194,
         "SPENCER": 192,
         "OWEN": 192,
@@ -305,7 +320,7 @@ const UPDATED_MISSION_SCORES = {
         "VALERA": 199,
         "JASON": 199,
         "THOR": 199,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "SYNDROME": 194,
         "JOE": 192,
         "SPENCER": 192,
@@ -347,7 +362,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "VALERA": 199,
         "BATYA": 197,
-        "F?NIX": 195,
+        "FÊNIX": 195,
         "SYNDROME": 194,
         "JOE": 192,
         "OWEN": 192,
@@ -373,14 +388,14 @@ const PLANNER_MISSIONS = [
     { key: "brecha", name: "Brecha", scores: [115, 115, 240, 115, 115, 115, 85, 85, 180, 85, 85, 85, 70, 70, 150, 70, 70, 70, 55, 200] },
     { key: "bss", name: "B.S.S.", scores: [95, 255, 95, 95, 95, 95, 70, 70, 70, 190, 70, 70, 60, 160, 60, 60, 60, 60, 50, 200] },
     { key: "cobertura", name: "Cobertura", scores: [115, 115, 115, 115, 240, 115, 85, 85, 85, 85, 180, 85, 70, 70, 70, 70, 150, 70, 55, 200] },
-    { key: "demonstracao", name: "Demonstração", scores: [115, 115, 115, 115, 115, 240, 85, 85, 85, 85, 85, 180, 70, 70, 70, 70, 70, 150, 55, 200] },
+    { key: "demonstracao", name: "Demonstra\u00E7\u00E3o", scores: [115, 115, 115, 115, 115, 240, 85, 85, 85, 85, 85, 180, 70, 70, 70, 70, 70, 150, 55, 200] },
     { key: "faca", name: "Faca", scores: [90, 90, 90, 90, 320, 90, 65, 240, 240, 65, 240, 60, 55, 55, 55, 55, 55, 55, 45, 200] },
     { key: "habitantes", name: "Habitantes", scores: [95, 95, 225, 225, 95, 225, 70, 70, 70, 70, 70, 170, 140, 60, 60, 60, 60, 140, 40, 200] },
     { key: "hildr", name: "HILDR", scores: [480, 100, 100, 100, 100, 100, 70, 70, 70, 70, 70, 70, 60, 60, 60, 300, 60, 60, 50, 200] },
     { key: "limpeza", name: "Limpeza", scores: [115, 115, 115, 240, 115, 115, 85, 85, 85, 180, 85, 85, 70, 70, 70, 150, 70, 70, 55, 200] },
-    { key: "logistica", name: "Logística", scores: [115, 240, 115, 115, 115, 115, 85, 180, 85, 85, 85, 85, 70, 150, 70, 70, 70, 70, 55, 200] },
+    { key: "logistica", name: "Log\u00EDstica", scores: [115, 240, 115, 115, 115, 115, 85, 180, 85, 85, 85, 85, 70, 150, 70, 70, 70, 70, 55, 200] },
     { key: "martelo", name: "Martelo", scores: [95, 95, 95, 95, 95, 95, 240, 70, 70, 70, 70, 240, 60, 60, 190, 60, 190, 190, 50, 200] },
-    { key: "basica", name: "M. Básica", scores: [160, 160, 160, 160, 160, 160, 120, 120, 120, 120, 120, 120, 100, 100, 100, 100, 100, 100, 80, 200] },
+    { key: "basica", name: "M. B\u00E1sica", scores: [160, 160, 160, 160, 160, 160, 120, 120, 120, 120, 120, 120, 100, 100, 100, 100, 100, 100, 80, 200] },
     { key: "reconhecimento", name: "Reconhecimento", scores: [240, 115, 115, 115, 115, 115, 180, 85, 85, 85, 85, 85, 150, 70, 70, 70, 70, 70, 55, 200] },
     { key: "comum", name: "S. Comum", scores: [65, 65, 65, 65, 65, 65, 50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150, 150, 120, 200] },
     { key: "incomum", name: "S. Incomum", scores: [65, 65, 65, 65, 65, 65, 180, 180, 180, 180, 180, 180, 40, 40, 40, 40, 40, 40, 30, 200] },
@@ -472,7 +487,7 @@ function showPlannerLockedNotice() {
         return;
     }
 
-    plannerEls.message.textContent = "Insira a senha para selecionar as missões.";
+    plannerEls.message.textContent = "Insira a senha para selecionar as miss\u00F5es.";
     plannerEls.lock.classList.add("is-warning");
     clearTimeout(plannerEls.warningTimer);
     plannerEls.warningTimer = setTimeout(() => {
@@ -730,7 +745,7 @@ function importMissionText() {
     const parsed = parseMissionText(plannerEls.lastMissionText.value);
 
     if (!parsed.length) {
-        plannerEls.importMessage.textContent = "Não encontrei missões válidas no texto colado.";
+        plannerEls.importMessage.textContent = "N\u00E3o encontrei miss\u00F5es v\u00E1lidas no texto colado.";
         return;
     }
 
@@ -745,7 +760,7 @@ function importMissionText() {
     });
     updateMissionSelectOptions();
     updateMissionPlanner();
-    plannerEls.importMessage.textContent = `${parsed.length} missões importadas. Marque como concluídas as missões finalizadas.`;
+    plannerEls.importMessage.textContent = `${parsed.length} miss\u00F5es importadas. Marque como conclu\u00EDdas as miss\u00F5es finalizadas.`;
 }
 
 function buildRelocationAssignment(baseAssignment, completedSlots) {
@@ -790,8 +805,8 @@ function buildRelocationAssignment(baseAssignment, completedSlots) {
 }
 
 function renderEmptyState() {
-    plannerEls.assignment.innerHTML = '<p class="mission-empty">Escolha pelo menos uma missão para gerar a locação.</p>';
-    plannerEls.ranking.innerHTML = '<li class="mission-empty">Aguardando missões.</li>';
+    plannerEls.assignment.innerHTML = '<p class="mission-empty">Escolha pelo menos uma miss\u00E3o para gerar a loca\u00E7\u00E3o.</p>';
+    plannerEls.ranking.innerHTML = '<li class="mission-empty">Aguardando miss\u00F5es.</li>';
     plannerEls.copyText.value = "";
 }
 
@@ -814,17 +829,17 @@ function renderMissionPlanner(selected) {
     plannerEls.assignment.innerHTML = assignment.map((item) => `
         <article class="assignment-card">
             <div>
-                <span>Missão ${item.slot}</span>
+                <span>Miss\u00E3o ${item.slot}</span>
                 <strong>${item.mission.name}</strong>
                 <small>${item.points} pontos | ${item.reward}</small>
             </div>
             <div>
                 <span>${missionSendLabel(item)}</span>
-                <strong>${item.chosen.length ? `${item.chosen.length} enviados` : "Não envia"}</strong>
-                <small>${item.chosen.length ? `${formatScore(item.chosen.reduce((sum, entry) => sum + entry.score, 0))} pontos somados` : "Sem locação nesta missão"}</small>
+                <strong>${item.chosen.length ? `${item.chosen.length} enviados` : "N\u00E3o envia"}</strong>
+                <small>${item.chosen.length ? `${formatScore(item.chosen.reduce((sum, entry) => sum + entry.score, 0))} pontos somados` : "Sem loca\u00E7\u00E3o nesta miss\u00E3o"}</small>
             </div>
-            <p>${item.chosen.length ? item.chosen.map((entry) => `${entry.operator} (${formatScore(entry.score)})`).join(", ") : "Missão ignorada no envio de operadores."}</p>
-            <p>Alternativas: ${item.alternatives.length ? item.alternatives.map((alt) => `${alt.operator} (${formatScore(alt.score)})`).join(", ") : "sem operadores disponíveis"}</p>
+            <p>${item.chosen.length ? item.chosen.map((entry) => `${entry.operator} (${formatScore(entry.score)})`).join(", ") : "Miss\u00E3o ignorada no envio de operadores."}</p>
+            <p>Alternativas: ${item.alternatives.length ? item.alternatives.map((alt) => `${alt.operator} (${formatScore(alt.score)})`).join(", ") : "sem operadores dispon\u00EDveis"}</p>
         </article>
     `).join("");
 
@@ -844,9 +859,9 @@ function renderMissionPlanner(selected) {
 function buildCopyText(assignment) {
     const missionTime = plannerEls.timeSelect?.value || "09:00";
     const lines = [
-        "🚨 MISSÕES DISPONÍVEIS🚨",
+        TEXT_COPY_TITLE,
         "",
-        `🕙 Início: ${missionTime}`,
+        `${TEXT_CLOCK} In\u00EDcio: ${missionTime}`,
         ""
     ];
 
@@ -860,38 +875,38 @@ function buildCopyText(assignment) {
         lines.push("");
     });
 
-    lines.push("⚠️🚨 COLOCAR OS OPERADORES NAS MISSÕES E ASSISTIR OS VÍDEOS DA LOJA! ⚠️🚨");
+    lines.push(TEXT_COPY_FOOTER);
 
     return lines.join("\n");
 }
 
 function buildRelocationText(relocation) {
     const lines = [
-        "🚨🚨🚨🚨⚠️ ATENÇÃO ⚠️🚨🚨🚨🚨",
+        TEXT_RELOCATION_TITLE,
         "",
-        "MOVIMENTAÇÃO ESTRATÉGICA IMEDIATA!",
+        TEXT_RELOCATION_MOVEMENT,
         "",
-        "ALOQUEM OS OPERADORES CONFORME AS INSTRUÇÕES ABAIXO:",
+        TEXT_RELOCATION_INSTRUCTIONS,
         "",
-        relocation.sourceItems.length > 1 ? "REMOVAM OS OPERADORES DAS MISSÕES" : "REMOVAM OS OPERADORES DA MISSÃO",
+        relocation.sourceItems.length > 1 ? TEXT_REMOVE_MISSIONS : TEXT_REMOVE_MISSION,
         ""
     ];
 
     relocation.sourceItems.forEach((item) => {
-        lines.push(`> ⏳✅ [ ${item.slot} ]: *${missionTextName(item.mission)}.*`);
+        lines.push(`> ${TEXT_HOURGLASS}${TEXT_CHECK} [ ${item.slot} ]: *${missionTextName(item.mission)}.*`);
     });
 
-    lines.push("", "ALOQUEM DE IMEDIATO NAS MISSÕES:", "");
+    lines.push("", TEXT_ALLOCATE_NOW, "");
 
     if (relocation.targetItems.length) {
         relocation.targetItems.forEach((item) => {
             lines.push(`> [ ${item.slot} ] ${missionTextName(item.mission)}: ${item.chosen.map((entry) => entry.operator).join(", ")}.`);
         });
     } else {
-        lines.push("> Nenhuma missão pendente disponível para realocar.");
+        lines.push(TEXT_NO_PENDING_MISSION);
     }
 
-    lines.push("", "⚠️🚨 COLOCAR OS OPERADORES NAS MISSÕES E ASSISTIR OS VÍDEOS DA LOJA! ⚠️🚨");
+    lines.push("", TEXT_COPY_FOOTER);
 
     return lines.join("\n");
 }
@@ -917,7 +932,7 @@ function handleMissionStatusClick(event) {
 
     const isDone = button.dataset.state === "done";
     button.dataset.state = isDone ? "pending" : "done";
-    button.textContent = isDone ? "Pendente" : "Concluído";
+    button.textContent = isDone ? "Pendente" : "Conclu\u00EDdo";
     updateMissionPlanner();
 }
 
@@ -931,7 +946,7 @@ async function handlePlannerUnlock(event) {
     }
 
     if (!/^\d+$/.test(password)) {
-        plannerEls.message.textContent = "A senha deve conter apenas números.";
+        plannerEls.message.textContent = "A senha deve conter apenas n\u00FAmeros.";
         return;
     }
 
@@ -1038,3 +1053,4 @@ function initOperatorPlanner() {
 }
 
 document.addEventListener("DOMContentLoaded", initOperatorPlanner);
+
