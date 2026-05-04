@@ -1,0 +1,384 @@
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+.app-shell,
+.topbar,
+.game-window,
+.grid-layout,
+.panel,
+.mission-tool,
+.operator-game {
+    max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .app-shell {
+        width: 100%;
+        padding: 0 0 32px;
+        overflow-x: hidden;
+    }
+
+    .topbar {
+        width: 100%;
+        margin: 0 0 8px;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .game-window,
+    .inventory-panel,
+    .manual-panel,
+    .mission-tool,
+    .operator-game {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .grid-layout {
+        width: 100%;
+        grid-template-columns: 1fr;
+        padding: 0;
+        gap: 0;
+    }
+
+    .section-divider {
+        width: 100%;
+        margin: 24px 0 10px;
+        padding: 13px 12px 12px;
+        border-left-width: 3px;
+    }
+
+    .section-divider:first-of-type {
+        margin-top: 14px;
+    }
+
+    .section-divider h1 {
+        font-size: 1.35rem;
+    }
+
+    .section-divider p {
+        font-size: 0.7rem;
+    }
+
+    .clan-banner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        width: 100%;
+        margin: 24px 0 0;
+        padding: 16px 12px;
+        border-left-width: 3px;
+    }
+
+    .clan-banner-logo {
+        width: min(220px, 88%);
+        max-height: 120px;
+        margin: 0 auto;
+        transform: scale(1.18);
+    }
+
+    .clan-banner a {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .site-footer {
+        width: 100%;
+        min-height: 64px;
+        margin: 18px 0 -32px;
+        padding: 10px 156px 9px 12px;
+        border-left-width: 3px;
+    }
+
+    .site-footer-copy p {
+        font-size: 0.68rem;
+    }
+
+    .site-footer-copy strong {
+        max-width: 170px;
+        font-size: 0.68rem;
+    }
+
+    .site-footer-mascot {
+        right: 4px;
+        bottom: 0;
+        width: 154px;
+        max-height: 118px;
+    }
+
+    .panel,
+    .mission-tool,
+    .operator-game {
+        clip-path: none;
+    }
+
+    .inventory-panel,
+    .manual-panel,
+    .mission-tool {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .manual-panel {
+        display: block;
+        overflow: hidden;
+    }
+
+    .manual-selectors,
+    .forge-preview,
+    .ratio-card,
+    .stepper-label,
+    .stepper,
+    #manualSlider,
+    .manual-panel .preview-grid,
+    .exchange-actions {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .mission-lock,
+    .mission-unlock-form,
+    .mission-import-panel,
+    .mission-import-actions,
+    .mission-output,
+    .mission-assignment {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-import-actions button {
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    .mission-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .mission-time-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-toolbar-actions,
+    .mission-share-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .mission-row {
+        grid-template-columns: 36px minmax(76px, 88px) minmax(0, 1fr);
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .mission-row select,
+    .mission-status-button {
+        min-width: 0;
+        max-width: 100%;
+        padding-inline: 6px;
+        font-size: 0.76rem;
+    }
+
+    .mission-status-button {
+        grid-column: 1 / -1;
+        min-height: 36px;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 217, 61, 0.18);
+        justify-content: center;
+        text-align: center;
+    }
+
+    .mission-meta {
+        min-width: 0;
+        padding: 0 7px;
+    }
+
+    .mission-meta strong,
+    .mission-meta small,
+    .mission-meta em,
+    .mission-row select,
+    .mission-status-button {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mission-copy-text {
+        max-width: 100%;
+    }
+
+    .operator-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .brand-mark {
+        width: 210px;
+        min-height: 104px;
+    }
+
+    .brand-mark img {
+        max-height: 108px;
+    }
+
+    .operator-mobile-logo {
+        display: block;
+        width: min(340px, 94%);
+        height: auto;
+        margin: -2px auto 12px;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.46));
+    }
+
+    .grid-layout {
+        padding: 0;
+        gap: 0;
+    }
+
+    .section-divider {
+        margin: 22px 0 8px;
+        padding: 12px;
+    }
+
+    .section-divider h1 {
+        font-size: 1.22rem;
+    }
+
+    .clan-banner {
+        margin-top: 22px;
+        padding: 14px 12px;
+    }
+
+    .site-footer {
+        margin-top: 14px;
+        padding: 10px 132px 9px 12px;
+    }
+
+    .site-footer-copy strong {
+        max-width: 145px;
+        font-size: 0.62rem;
+    }
+
+    .site-footer-mascot {
+        right: 2px;
+        width: 132px;
+        max-height: 104px;
+    }
+
+    .inventory-panel,
+    .manual-panel {
+        width: 100%;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .manual-panel {
+        margin-top: 0;
+        padding: 10px 12px;
+        overflow: hidden;
+    }
+
+    .manual-selectors,
+    .forge-preview,
+    .ratio-card,
+    .stepper-label,
+    .stepper,
+    #manualSlider,
+    .manual-panel .preview-grid,
+    .exchange-actions {
+        max-width: 100%;
+    }
+
+    .mission-tool {
+        width: 100%;
+        margin: 0 auto 24px;
+        padding: 14px 12px;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .mission-lock,
+    .mission-unlock-form,
+    .mission-import-panel,
+    .mission-import-actions,
+    .mission-output,
+    .mission-assignment {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-import-actions button {
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    .mission-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .mission-time-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-toolbar-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .mission-share-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .mission-row {
+        grid-template-columns: 38px 86px minmax(0, 1fr);
+    }
+
+    .mission-meta {
+        padding: 0 8px;
+    }
+
+    .mission-row select,
+    .mission-status-button {
+        font-size: 0.76rem;
+    }
+}
+
+@media (max-width: 430px) {
+    .grid-layout {
+        padding-inline: 0;
+    }
+
+    .manual-panel {
+        padding-inline: 12px;
+    }
+}
