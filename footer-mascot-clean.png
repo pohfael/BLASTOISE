@@ -395,7 +395,8 @@ h2 {
     text-transform: uppercase;
 }
 
-.section-divider h1 {
+.section-divider h1,
+.section-divider .section-heading {
     margin: 0;
     color: #fff8d0;
     font-size: clamp(1.45rem, 3vw, 2.35rem);

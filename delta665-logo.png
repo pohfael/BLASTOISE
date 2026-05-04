@@ -73,7 +73,8 @@ button {
         margin-top: 14px;
     }
 
-    .section-divider h1 {
+    .section-divider h1,
+    .section-divider .section-heading {
         font-size: 1.35rem;
     }
 
@@ -265,7 +266,8 @@ button {
         padding: 12px;
     }
 
-    .section-divider h1 {
+    .section-divider h1,
+    .section-divider .section-heading {
         font-size: 1.22rem;
     }
 
