@@ -127,6 +127,12 @@ button {
         max-height: 118px;
     }
 
+    .site-footer-badge {
+        right: 68px;
+        bottom: 70px;
+        width: 25px;
+    }
+
     .panel,
     .mission-tool,
     .operator-game {
@@ -290,6 +296,12 @@ button {
         right: 2px;
         width: 132px;
         max-height: 104px;
+    }
+
+    .site-footer-badge {
+        right: 58px;
+        bottom: 61px;
+        width: 22px;
     }
 
     .inventory-panel,

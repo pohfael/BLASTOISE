@@ -16,6 +16,42 @@ const STEP_RATIOS = {
 
 const COIN_SOURCE = { key: "coins", name: "Prata", color: "#DFF4F0" };
 
+const ANNOUNCEMENT_TEXT = [
+    "\u{1F6A8} VOC\u00CA EST\u00C1 PERDENDO RECURSOS TODO DIA \u{1F6A8}",
+    "",
+    "Enquanto muita gente ignora os v\u00EDdeos, quem assiste est\u00E1 acumulando MUITO mais recursos sem jogar mais partidas.",
+    "",
+    "\u{1F4FA} Assista aos v\u00EDdeos e receba diariamente:",
+    "\u26AA 16.500 moedas",
+    "\u{2B50} 1.100 cr\u00E9ditos",
+    "\u{1F4C1} 22 mods brancos",
+    "",
+    "\u{1F4C5} Em apenas 1 m\u00EAs assistindo diariamente isso vira:",
+    "\u26AA 495.000 moedas",
+    "\u{2B50} 33.000 cr\u00E9ditos",
+    "\u{1F4C1} 660 mods brancos",
+    "",
+    "Clique em ASSISTIR na conta e comece a farmar recursos gr\u00E1tis agora."
+].join("\n");
+
+const ANNOUNCEMENT_SAFE_TEXT = [
+    "ATENCAO: VOCE ESTA PERDENDO RECURSOS TODO DIA",
+    "",
+    "Enquanto muita gente ignora os videos, quem assiste esta acumulando MUITO mais recursos sem jogar mais partidas.",
+    "",
+    "Assista aos videos e receba diariamente:",
+    "- 16.500 moedas",
+    "- 1.100 creditos",
+    "- 22 mods brancos",
+    "",
+    "Em apenas 1 mes assistindo diariamente isso vira:",
+    "- 495.000 moedas",
+    "- 33.000 creditos",
+    "- 660 mods brancos",
+    "",
+    "Clique em ASSISTIR na conta e comece a farmar recursos gratis agora."
+].join("\n");
+
 const OPERATORS = [
     {
         name: "Moses",
@@ -82,7 +118,10 @@ const els = {
     operatorHint: document.getElementById("operatorHint"),
     operatorInstruction: document.getElementById("operatorInstruction"),
     operatorAudio: document.getElementById("operatorAudio"),
-    nextOperator: document.getElementById("nextOperatorButton")
+    nextOperator: document.getElementById("nextOperatorButton"),
+    announcementText: document.getElementById("announcementText"),
+    shareAnnouncement: document.getElementById("shareAnnouncementButton"),
+    announcementStatus: document.getElementById("announcementStatus")
 };
 
 const operatorState = {
@@ -424,6 +463,93 @@ function handleOperatorClick() {
     els.operatorInstruction.textContent = displayName;
 }
 
+function openWhatsAppText(text) {
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encodedText}`, "_blank", "noopener,noreferrer");
+}
+
+async function getAnnouncementImageFile() {
+    const image = document.querySelector(".announcement-art img");
+    if (!image) {
+        return null;
+    }
+
+    const response = await fetch(image.currentSrc || image.src);
+    const imageBlob = await response.blob();
+    return new File([imageBlob], "kit-recompensa-video.png", { type: imageBlob.type || "image/png" });
+}
+
+async function copyAnnouncementImage(file) {
+    if (!navigator.clipboard || !window.ClipboardItem) {
+        return false;
+    }
+
+    await navigator.clipboard.write([
+        new ClipboardItem({
+            [file.type || "image/png"]: file
+        })
+    ]);
+    return true;
+}
+
+async function shareAnnouncementText() {
+    if (!els.announcementText) {
+        return;
+    }
+
+    const text = ANNOUNCEMENT_TEXT.trim();
+    if (!text) {
+        return;
+    }
+
+    let imageFile = null;
+
+    try {
+        imageFile = await getAnnouncementImageFile();
+    } catch (error) {
+        imageFile = null;
+    }
+
+    try {
+        const canNativeShareFile = imageFile
+            && navigator.share
+            && (!navigator.canShare || navigator.canShare({ files: [imageFile] }));
+
+        if (canNativeShareFile) {
+            await navigator.share({
+                title: "Kit de recompensa de vídeo",
+                text,
+                files: [imageFile]
+            });
+            els.announcementStatus.textContent = "Escolha o WhatsApp para enviar";
+            return;
+        }
+    } catch (error) {
+        if (error?.name === "AbortError") {
+            els.announcementStatus.textContent = "Compartilhamento cancelado antes do envio";
+            return;
+        }
+    }
+
+    let imageCopied = false;
+    if (imageFile) {
+        try {
+            imageCopied = await copyAnnouncementImage(imageFile);
+        } catch (error) {
+            imageCopied = false;
+        }
+    }
+
+    openWhatsAppText(ANNOUNCEMENT_SAFE_TEXT);
+    els.announcementStatus.textContent = imageCopied
+        ? "Texto aberto no WhatsApp. A imagem foi copiada: cole no chat."
+        : "Texto aberto no WhatsApp sem caracteres quebrados. No Chrome do PC, anexe a imagem manualmente.";
+
+    setTimeout(() => {
+        els.announcementStatus.textContent = "";
+    }, 4200);
+}
+
 function bindEvents() {
     [els.coins, ...els.resourceInputs].forEach((input) => {
         input.addEventListener("input", () => {
@@ -472,10 +598,17 @@ function bindEvents() {
             loadRandomOperator();
         });
     }
+
+    if (els.shareAnnouncement) {
+        els.shareAnnouncement.addEventListener("click", shareAnnouncementText);
+    }
 }
 
 function init() {
     populateManualSelects();
+    if (els.announcementText) {
+        els.announcementText.value = ANNOUNCEMENT_TEXT;
+    }
     bindEvents();
     syncManualAmount(0);
     updateTotals();

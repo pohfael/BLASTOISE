@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260503-2248">
-    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260503-2248">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260508-0135">
+    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260508-0135">
 </head>
 <body>
     <main class="app-shell">
@@ -129,9 +129,39 @@
             </section>
         </section>
 
+        <div class="section-divider section-divider-announcement">
+            <p>Organização do clã</p>
+            <div class="section-heading">Disparo de anúncio</div>
+        </div>
+
+        <section class="panel announcement-tool" id="announcementTool" aria-label="Disparo de mensagem para assistir anúncio">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Aviso rápido</p>
+                    <h2>Assistir anúncios</h2>
+                </div>
+            </div>
+
+            <div class="announcement-layout">
+                <figure class="announcement-art">
+                    <img src="assets/img/ad-reward-banner.png" alt="Kit de recompensa de vídeo">
+                </figure>
+
+                <div class="announcement-copy">
+                    <p class="eyebrow">Mensagem de envio</p>
+                    <h3>Chamada para o clã</h3>
+                    <textarea id="announcementText" readonly aria-label="Texto para anúncio"></textarea>
+                    <div class="announcement-actions">
+                        <button type="button" id="shareAnnouncementButton">Enviar no WhatsApp</button>
+                    </div>
+                    <span id="announcementStatus" aria-live="polite"></span>
+                </div>
+            </div>
+        </section>
+
         <div class="section-divider section-divider-mission">
             <p>Organização do clã</p>
-            <h1>Locação de operadores</h1>
+            <div class="section-heading">Locação de operadores</div>
         </div>
 
         <section class="panel mission-tool" id="missionTool" aria-label="Ferramenta de locação de operadores">
@@ -222,7 +252,7 @@
 
         <div class="section-divider section-divider-game">
             <p>Desafio do clã</p>
-            <h1>Mini game</h1>
+            <div class="section-heading">Mini game</div>
         </div>
 
         <section class="operator-game" aria-label="Mini game">
@@ -254,11 +284,12 @@
                 <p>Projeto Delta 665</p>
                 <strong>Desenvolvido por Blastoise</strong>
             </div>
+            <img class="site-footer-badge" src="assets/img/footer-badge-emoji.png" alt="Ícone especial">
             <img class="site-footer-mascot" src="assets/img/footer-mascot-clean.png" alt="Mascote Blastoise">
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260503-2248"></script>
-    <script src="assets/js/operator-planner.js?v=20260503-2248"></script>
+    <script src="assets/js/app.js?v=20260508-0135"></script>
+    <script src="assets/js/operator-planner.js?v=20260508-0135"></script>
 </body>
 </html>

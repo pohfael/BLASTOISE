@@ -90,7 +90,7 @@ a {
     text-transform: uppercase;
     background:
         linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.38)),
-        #050607 url("../img/top-cover.png") center / cover no-repeat;
+        #050607 url("../img/top-cover.jpg") center / cover no-repeat;
     box-shadow: inset 0 0 0 1px rgba(5, 6, 7, 0.78), 0 20px 54px rgba(0, 0, 0, 0.42);
     animation: topbarNeonGlow 4s linear infinite;
     overflow: hidden;
@@ -150,7 +150,7 @@ a {
     border: 1px solid rgba(255, 217, 61, 0.28);
     background:
         linear-gradient(90deg, rgba(5, 6, 7, 0.9) 0%, rgba(5, 6, 7, 0.62) 44%, rgba(5, 6, 7, 0.1) 100%),
-        url("../img/tactical-hero.png") center / cover no-repeat;
+        url("../img/tactical-hero.jpg") center / cover no-repeat;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.52);
     overflow: hidden;
 }
@@ -419,6 +419,20 @@ h2 {
     color: #ffd93d;
 }
 
+.section-divider-announcement {
+    margin-top: 46px;
+    border-color: rgba(255, 75, 75, 0.52);
+    border-left-color: #ff4b4b;
+    background:
+        radial-gradient(circle at 8% 0%, rgba(255, 75, 75, 0.2), transparent 34%),
+        linear-gradient(90deg, rgba(72, 11, 18, 0.8), rgba(5, 7, 10, 0.78));
+    box-shadow: 0 0 28px rgba(255, 75, 75, 0.14), 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+.section-divider-announcement p {
+    color: #ff5f6d;
+}
+
 .section-divider-game {
     margin-top: 52px;
     border-color: rgba(59, 169, 255, 0.5);
@@ -435,6 +449,7 @@ h2 {
 
 .section-divider + .grid-layout,
 .section-divider + .mission-tool,
+.section-divider + .announcement-tool,
 .section-divider + .operator-game {
     margin-top: 0;
 }
@@ -559,6 +574,19 @@ h2 {
     object-fit: contain;
     object-position: right bottom;
     filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.58)) drop-shadow(0 0 20px rgba(155, 77, 255, 0.24));
+    pointer-events: none;
+}
+
+.site-footer-badge {
+    position: absolute;
+    right: clamp(96px, 9.4vw, 118px);
+    bottom: min(96px, 9.4vw);
+    z-index: 3;
+    width: clamp(28px, 3.1vw, 38px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(255, 75, 20, 0.48), 0 8px 18px rgba(0, 0, 0, 0.45);
+    object-fit: contain;
     pointer-events: none;
 }
 
@@ -1929,7 +1957,7 @@ body {
         justify-content: center;
         background:
             linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.52)),
-            #050607 url("../img/top-cover.png") center / cover no-repeat;
+            #050607 url("../img/top-cover.jpg") center / cover no-repeat;
     }
 
     .brand-mark {
@@ -2339,6 +2367,121 @@ body {
 }
 
 /* Operator mission planner */
+.announcement-tool {
+    width: min(1120px, calc(100% - 24px));
+    margin: 18px auto;
+    border-color: rgba(255, 75, 75, 0.52);
+    border-left: 4px solid #ff4b4b;
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255, 75, 75, 0.16), transparent 32%),
+        linear-gradient(145deg, rgba(72, 11, 18, 0.76), rgba(5, 7, 10, 0.94));
+    box-shadow: 0 0 34px rgba(255, 75, 75, 0.12), 0 26px 70px rgba(0, 0, 0, 0.42);
+    clip-path: none;
+}
+
+.announcement-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
+}
+
+.announcement-art {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border: 1px solid rgba(255, 75, 75, 0.4);
+    background:
+        linear-gradient(135deg, rgba(255, 75, 75, 0.12), transparent 46%),
+        rgba(5, 7, 10, 0.7);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.announcement-art img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: contain;
+}
+
+.announcement-copy h3 {
+    color: #fff8d0;
+    text-transform: uppercase;
+}
+
+.announcement-copy h3 {
+    font-size: 1.05rem;
+}
+
+.announcement-copy {
+    display: grid;
+    grid-template-rows: auto auto minmax(176px, 1fr) auto auto;
+    gap: 10px;
+    align-content: stretch;
+    align-self: stretch;
+    min-width: 0;
+}
+
+.announcement-copy h3 {
+    margin: 0;
+}
+
+.announcement-copy textarea {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    resize: vertical;
+    border: 1px solid rgba(255, 95, 109, 0.36);
+    padding: 12px;
+    background: rgba(5, 7, 10, 0.78);
+    color: #d8eef8;
+    font: 800 0.9rem/1.45 Arial, Helvetica, sans-serif;
+}
+
+.announcement-copy textarea:focus {
+    outline: none;
+    border-color: #ff5f6d;
+    box-shadow: 0 0 0 1px rgba(255, 95, 109, 0.25), 0 0 20px rgba(255, 75, 75, 0.14);
+}
+
+.announcement-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.announcement-actions button {
+    min-height: 46px;
+    border: 1px solid rgba(255, 95, 109, 0.72);
+    background: linear-gradient(180deg, rgba(255, 75, 75, 0.28), rgba(92, 10, 16, 0.82));
+    color: #ffffff;
+    font-weight: 950;
+    text-transform: uppercase;
+}
+
+.announcement-actions button {
+    border-color: rgba(255, 159, 28, 0.82);
+    background: linear-gradient(180deg, rgba(255, 159, 28, 0.28), rgba(104, 47, 0, 0.85));
+}
+
+#announcementStatus {
+    min-height: 18px;
+    color: #ff9aa0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+@media (min-width: 901px) {
+    .announcement-copy textarea {
+        height: 100%;
+    }
+}
+
 .mission-tool {
     width: min(1120px, calc(100% - 24px));
     margin: 18px auto;
@@ -2819,6 +2962,24 @@ body {
 }
 
 @media (max-width: 900px) {
+    .announcement-layout {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+
+    .announcement-art {
+        width: min(620px, 100%);
+        justify-self: center;
+    }
+
+    .announcement-copy {
+        grid-template-rows: auto;
+    }
+
+    .announcement-copy textarea {
+        min-height: 220px;
+    }
+
     .mission-tool {
         width: 100%;
         margin-inline: auto;
@@ -3059,6 +3220,16 @@ body {
 }
 
 @media (max-width: 520px) {
+    .announcement-tool {
+        width: 100%;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .announcement-actions {
+        grid-template-columns: 1fr;
+    }
+
     .operator-game {
         width: 100%;
         margin: 0 auto 24px;
