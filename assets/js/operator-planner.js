@@ -667,6 +667,9 @@ const PLANNER_SLOTS = [
     { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
 ];
 
+const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY"]);
+const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
+
 const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00", "06:00"];
 
 const plannerEls = {};
@@ -882,6 +885,32 @@ function getMissionScore(mission, operator, index) {
     return EXTRA_OPERATOR_SCORES[operator]?.[mission.key] || 55;
 }
 
+function isLimitedAccessOperator(operator) {
+    return LIMITED_ACCESS_OPERATORS.has(normalizeOperatorName(operator));
+}
+
+function operatorAvailabilityPriority(operator, slot) {
+    return isLimitedAccessOperator(operator) && Number(slot) <= LIMITED_ACCESS_RESERVED_UNTIL_SLOT ? 1 : 0;
+}
+
+function compareAssignmentCandidates(a, b) {
+    const availability = operatorAvailabilityPriority(a.operator, a.item.slot) - operatorAvailabilityPriority(b.operator, b.item.slot);
+    if (availability) {
+        return availability;
+    }
+
+    return b.score - a.score || a.item.slot - b.item.slot || a.operator.localeCompare(b.operator);
+}
+
+function compareRelocationTargets(operator, a, b) {
+    const availability = operatorAvailabilityPriority(operator, a.item.slot) - operatorAvailabilityPriority(operator, b.item.slot);
+    if (availability) {
+        return availability;
+    }
+
+    return b.score - a.score || a.item.slot - b.item.slot;
+}
+
 function buildRanking(selected) {
     return PLANNER_OPERATORS
         .map((operator, index) => {
@@ -921,7 +950,7 @@ function buildAssignment(selected) {
     ));
 
     candidates
-        .sort((a, b) => b.score - a.score || a.item.slot - b.item.slot || a.operator.localeCompare(b.operator))
+        .sort(compareAssignmentCandidates)
         .forEach((entry) => {
             if (used.has(entry.operator) || entry.item.chosen.length >= Number(entry.item.send)) {
                 return;
@@ -1043,7 +1072,7 @@ function buildRelocationAssignment(baseAssignment, completedSlots) {
                 item,
                 score: getMissionScore(item.mission, operator, operatorIndex >= 0 ? operatorIndex : 0)
             }))
-            .sort((a, b) => b.score - a.score || a.item.slot - b.item.slot)[0];
+            .sort((a, b) => compareRelocationTargets(operator, a, b))[0];
 
         if (bestTarget) {
             bestTarget.item.chosen.push({
