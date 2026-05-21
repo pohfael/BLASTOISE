@@ -17,46 +17,47 @@ const TEXT_ALLOCATE_NOW = "ALOQUEM DE IMEDIATO NAS MISS\u00D5ES:";
 const TEXT_NO_PENDING_MISSION = "> Nenhuma miss\u00E3o pendente dispon\u00EDvel para realocar.";
 
 const PLANNER_OPERATORS = [
-    "VARG",
-    "DAVID",
-    "SYNDROME",
-    "JOE",
-    "VALERA",
-    "CAPISCE",
-    "KLAUS",
-    "SHI",
-    "VICTOR",
-    "SPENCER",
-    "TRAVIS",
+    "APOLLO",
     "BATYA",
+    "BORIS",
+    "CAPISCE",
+    "CHARON",
+    "CHEN LI",
+    "CRAIG",
+    "DAVID",
+    "DIANA",
+    "DMITRY",
+    "DUTCH",
+    "FENIX",
+    "FERRY",
     "HAWK",
     "JASON",
-    "BORIS",
-    "THOR",
-    "RICK",
-    "MISHKA",
-    "ROOKIE",
-    "SNEK",
-    "DIANA",
-    "MIRO",
-    "MIA",
-    "MCMEAN",
-    "LENS",
     "JB",
-    "DUTCH",
-    "RAY",
-    "ZLOY",
-    "CHARON",
-    "APOLLO",
-    "SUSSURRO",
-    "CHEN LI",
-    "MOSES",
-    "FENIX",
-    "OWEN",
+    "JOE",
     "KIRIN",
-    "DMITRY",
-    "CRAIG",
-    "WOLF"
+    "KLAUS",
+    "LENS",
+    "MCMEAN",
+    "MIA",
+    "MIRO",
+    "MISHKA",
+    "MOSES",
+    "OWEN",
+    "RAY",
+    "RICK",
+    "ROOKIE",
+    "SHI",
+    "SNEK",
+    "SPENCER",
+    "SUSSURRO",
+    "SYNDROME",
+    "THOR",
+    "TRAVIS",
+    "VALERA",
+    "VARG",
+    "VICTOR",
+    "WOLF",
+    "ZLOY"
 ];
 
 const PLANNER_BASE_OPERATOR_COUNT = 19;
@@ -96,8 +97,8 @@ const UPDATED_MISSION_SCORES = {
         "DIANA": 253,
         "DMITRY": 202,
         "DUTCH": 280,
-        "FERRY": 185,
         "FENIX": 195,
+        "FERRY": 0,
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
@@ -127,49 +128,6 @@ const UPDATED_MISSION_SCORES = {
         "WOLF": 280,
         "ZLOY": 231
     },
-    "basica": {
-        "APOLLO": 338,
-        "BATYA": 302,
-        "BORIS": 351,
-        "CAPISCE": 282,
-        "CHARON": 358,
-        "CHEN LI": 433,
-        "CRAIG": 323,
-        "DAVID": 266,
-        "DIANA": 391,
-        "DMITRY": 312,
-        "DUTCH": 433,
-        "FERRY": 286,
-        "FENIX": 302,
-        "HAWK": 274,
-        "JASON": 310,
-        "JB": 363,
-        "JOE": 298,
-        "KIRIN": 323,
-        "KLAUS": 307,
-        "LENS": 85,
-        "MCMEAN": 270,
-        "MIA": 137,
-        "MIRO": 433,
-        "MISHKA": 275,
-        "MOSES": 433,
-        "OWEN": 298,
-        "RAY": 358,
-        "RICK": 230,
-        "ROOKIE": 275,
-        "SHI": 283,
-        "SNEK": 386,
-        "SPENCER": 322,
-        "SUSSURRO": 328,
-        "SYNDROME": 318,
-        "THOR": 310,
-        "TRAVIS": 511,
-        "VALERA": 310,
-        "VARG": 294,
-        "VICTOR": 311,
-        "WOLF": 433,
-        "ZLOY": 358
-    },
     "brecha": {
         "APOLLO": 218,
         "BATYA": 197,
@@ -183,6 +141,7 @@ const UPDATED_MISSION_SCORES = {
         "DMITRY": 358,
         "DUTCH": 496,
         "FENIX": 195,
+        "FERRY": 0,
         "HAWK": 178,
         "JASON": 199,
         "JB": 234,
@@ -212,260 +171,6 @@ const UPDATED_MISSION_SCORES = {
         "WOLF": 280,
         "ZLOY": 410
     },
-    "habitantes": {
-        "APOLLO": 218,
-        "BATYA": 341,
-        "BORIS": 229,
-        "CAPISCE": 323,
-        "CHARON": 231,
-        "CHEN LI": 280,
-        "CRAIG": 108,
-        "DAVID": 192,
-        "DIANA": 253,
-        "DMITRY": 202,
-        "DUTCH": 280,
-        "FENIX": 195,
-        "HAWK": 310,
-        "JASON": 199,
-        "JB": 234,
-        "JOE": 341,
-        "KIRIN": 353,
-        "KLAUS": 200,
-        "LENS": 55,
-        "MCMEAN": 173,
-        "MIA": 88,
-        "MIRO": 496,
-        "MISHKA": 324,
-        "MOSES": 280,
-        "OWEN": 192,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 184,
-        "SNEK": 250,
-        "SPENCER": 192,
-        "SUSSURRO": 108,
-        "SYNDROME": 346,
-        "THOR": 199,
-        "TRAVIS": 203,
-        "VALERA": 199,
-        "VARG": 189,
-        "VICTOR": 203,
-        "WOLF": 496,
-        "ZLOY": 231
-    },
-    "limpeza": {
-        "APOLLO": 218,
-        "BATYA": 197,
-        "BORIS": 229,
-        "CAPISCE": 181,
-        "CHARON": 231,
-        "CHEN LI": 280,
-        "CRAIG": 108,
-        "DAVID": 192,
-        "DIANA": 449,
-        "DMITRY": 202,
-        "DUTCH": 280,
-        "FENIX": 195,
-        "HAWK": 178,
-        "JASON": 199,
-        "JB": 416,
-        "JOE": 341,
-        "KIRIN": 199,
-        "KLAUS": 200,
-        "LENS": 100,
-        "MCMEAN": 309,
-        "MIA": 157,
-        "MIRO": 496,
-        "MISHKA": 178,
-        "MOSES": 280,
-        "OWEN": 192,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 184,
-        "SNEK": 443,
-        "SPENCER": 192,
-        "SUSSURRO": 108,
-        "SYNDROME": 194,
-        "THOR": 355,
-        "TRAVIS": 203,
-        "VALERA": 199,
-        "VARG": 189,
-        "VICTOR": 203,
-        "WOLF": 280,
-        "ZLOY": 231
-    },
-    "incomum": {
-        "APOLLO": 218,
-        "BATYA": 341,
-        "BORIS": 397,
-        "CAPISCE": 181,
-        "CHARON": 231,
-        "CHEN LI": 280,
-        "CRAIG": 209,
-        "DAVID": 171,
-        "DIANA": 253,
-        "DMITRY": 238,
-        "DUTCH": 280,
-        "FERRY": 185,
-        "FENIX": 228,
-        "HAWK": 178,
-        "JASON": 199,
-        "JB": 234,
-        "JOE": 192,
-        "KIRIN": 209,
-        "KLAUS": 347,
-        "LENS": 55,
-        "MCMEAN": 229,
-        "MIA": 88,
-        "MIRO": 280,
-        "MISHKA": 178,
-        "MOSES": 280,
-        "OWEN": 229,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 320,
-        "SNEK": 250,
-        "SPENCER": 207,
-        "SUSSURRO": 108,
-        "SYNDROME": 204,
-        "THOR": 199,
-        "TRAVIS": 352,
-        "VALERA": 199,
-        "VARG": 189,
-        "VICTOR": 352,
-        "WOLF": 280,
-        "ZLOY": 231
-    },
-    "hildr": {
-        "APOLLO": 218,
-        "BATYA": 197,
-        "BORIS": 229,
-        "CAPISCE": 181,
-        "CHARON": 231,
-        "CHEN LI": 280,
-        "CRAIG": 108,
-        "DAVID": 192,
-        "DIANA": 253,
-        "DMITRY": 202,
-        "DUTCH": 280,
-        "FENIX": 195,
-        "HAWK": 178,
-        "JASON": 355,
-        "JB": 234,
-        "JOE": 192,
-        "KIRIN": 199,
-        "KLAUS": 200,
-        "LENS": 100,
-        "MCMEAN": 173,
-        "MIA": 88,
-        "MIRO": 280,
-        "MISHKA": 178,
-        "MOSES": 280,
-        "OWEN": 192,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 184,
-        "SNEK": 250,
-        "SPENCER": 192,
-        "SUSSURRO": 192,
-        "SYNDROME": 194,
-        "THOR": 355,
-        "TRAVIS": 203,
-        "VALERA": 199,
-        "VARG": 337,
-        "VICTOR": 203,
-        "WOLF": 280,
-        "ZLOY": 231
-    },
-    "demonstracao": {
-        "APOLLO": 218,
-        "BATYA": 341,
-        "BORIS": 229,
-        "CAPISCE": 323,
-        "CHARON": 410,
-        "CHEN LI": 280,
-        "CRAIG": 108,
-        "DAVID": 192,
-        "DIANA": 253,
-        "DMITRY": 202,
-        "DUTCH": 280,
-        "FENIX": 195,
-        "HAWK": 178,
-        "JASON": 199,
-        "JB": 234,
-        "JOE": 192,
-        "KIRIN": 316,
-        "KLAUS": 200,
-        "LENS": 55,
-        "MCMEAN": 173,
-        "MIA": 88,
-        "MIRO": 280,
-        "MISHKA": 324,
-        "MOSES": 280,
-        "OWEN": 192,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 184,
-        "SNEK": 250,
-        "SPENCER": 192,
-        "SUSSURRO": 108,
-        "SYNDROME": 194,
-        "THOR": 199,
-        "TRAVIS": 203,
-        "VALERA": 355,
-        "VARG": 189,
-        "VICTOR": 203,
-        "WOLF": 280,
-        "ZLOY": 410
-    },
-    "logistica": {
-        "APOLLO": 388,
-        "BATYA": 197,
-        "BORIS": 397,
-        "CAPISCE": 181,
-        "CHARON": 231,
-        "CHEN LI": 496,
-        "CRAIG": 0,
-        "DAVID": 192,
-        "DIANA": 253,
-        "DMITRY": 202,
-        "DUTCH": 280,
-        "FERRY": 0,
-        "FENIX": 347,
-        "HAWK": 178,
-        "JASON": 355,
-        "JB": 234,
-        "JOE": 192,
-        "KIRIN": 174,
-        "KLAUS": 200,
-        "LENS": 55,
-        "MCMEAN": 173,
-        "MIA": 88,
-        "MIRO": 496,
-        "MISHKA": 178,
-        "MOSES": 280,
-        "OWEN": 192,
-        "RAY": 231,
-        "RICK": 149,
-        "ROOKIE": 178,
-        "SHI": 320,
-        "SNEK": 250,
-        "SPENCER": 192,
-        "SUSSURRO": 108,
-        "SYNDROME": 194,
-        "THOR": 199,
-        "TRAVIS": 203,
-        "VALERA": 199,
-        "VARG": 189,
-        "VICTOR": 352,
-        "WOLF": 280,
-        "ZLOY": 231
-    },
     "bss": {
         "APOLLO": 218,
         "BATYA": 197,
@@ -479,6 +184,7 @@ const UPDATED_MISSION_SCORES = {
         "DMITRY": 202,
         "DUTCH": 280,
         "FENIX": 195,
+        "FERRY": 0,
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
@@ -521,6 +227,7 @@ const UPDATED_MISSION_SCORES = {
         "DMITRY": 202,
         "DUTCH": 496,
         "FENIX": 347,
+        "FERRY": 0,
         "HAWK": 310,
         "JASON": 199,
         "JB": 416,
@@ -549,8 +256,265 @@ const UPDATED_MISSION_SCORES = {
         "VICTOR": 203,
         "WOLF": 496,
         "ZLOY": 231
-    }
-,
+    },
+    "demonstracao": {
+        "APOLLO": 218,
+        "BATYA": 341,
+        "BORIS": 229,
+        "CAPISCE": 323,
+        "CHARON": 410,
+        "CHEN LI": 280,
+        "CRAIG": 108,
+        "DAVID": 192,
+        "DIANA": 253,
+        "DMITRY": 202,
+        "DUTCH": 280,
+        "FENIX": 195,
+        "FERRY": 0,
+        "HAWK": 178,
+        "JASON": 199,
+        "JB": 234,
+        "JOE": 192,
+        "KIRIN": 316,
+        "KLAUS": 200,
+        "LENS": 55,
+        "MCMEAN": 173,
+        "MIA": 88,
+        "MIRO": 280,
+        "MISHKA": 324,
+        "MOSES": 280,
+        "OWEN": 192,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 184,
+        "SNEK": 250,
+        "SPENCER": 192,
+        "SUSSURRO": 108,
+        "SYNDROME": 194,
+        "THOR": 199,
+        "TRAVIS": 203,
+        "VALERA": 355,
+        "VARG": 189,
+        "VICTOR": 203,
+        "WOLF": 280,
+        "ZLOY": 410
+    },
+    "faca": {
+        "APOLLO": 55,
+        "BATYA": 60,
+        "BORIS": 55,
+        "CAPISCE": 90,
+        "CHARON": 55,
+        "CHEN LI": 55,
+        "CRAIG": 55,
+        "DAVID": 90,
+        "DIANA": 55,
+        "DMITRY": 55,
+        "DUTCH": 55,
+        "FENIX": 55,
+        "FERRY": 0,
+        "HAWK": 55,
+        "JASON": 55,
+        "JB": 55,
+        "JOE": 90,
+        "KIRIN": 55,
+        "KLAUS": 65,
+        "LENS": 55,
+        "MCMEAN": 55,
+        "MIA": 55,
+        "MIRO": 55,
+        "MISHKA": 55,
+        "MOSES": 55,
+        "OWEN": 55,
+        "RAY": 55,
+        "RICK": 55,
+        "ROOKIE": 45,
+        "SHI": 240,
+        "SNEK": 55,
+        "SPENCER": 65,
+        "SUSSURRO": 55,
+        "SYNDROME": 90,
+        "THOR": 55,
+        "TRAVIS": 240,
+        "VALERA": 320,
+        "VARG": 90,
+        "VICTOR": 240,
+        "WOLF": 55,
+        "ZLOY": 55
+    },
+    "habitantes": {
+        "APOLLO": 218,
+        "BATYA": 341,
+        "BORIS": 229,
+        "CAPISCE": 323,
+        "CHARON": 231,
+        "CHEN LI": 280,
+        "CRAIG": 108,
+        "DAVID": 192,
+        "DIANA": 253,
+        "DMITRY": 202,
+        "DUTCH": 280,
+        "FENIX": 195,
+        "FERRY": 0,
+        "HAWK": 310,
+        "JASON": 199,
+        "JB": 234,
+        "JOE": 341,
+        "KIRIN": 353,
+        "KLAUS": 200,
+        "LENS": 55,
+        "MCMEAN": 173,
+        "MIA": 88,
+        "MIRO": 496,
+        "MISHKA": 324,
+        "MOSES": 280,
+        "OWEN": 192,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 184,
+        "SNEK": 250,
+        "SPENCER": 192,
+        "SUSSURRO": 108,
+        "SYNDROME": 346,
+        "THOR": 199,
+        "TRAVIS": 203,
+        "VALERA": 199,
+        "VARG": 189,
+        "VICTOR": 203,
+        "WOLF": 496,
+        "ZLOY": 231
+    },
+    "hildr": {
+        "APOLLO": 218,
+        "BATYA": 197,
+        "BORIS": 229,
+        "CAPISCE": 181,
+        "CHARON": 231,
+        "CHEN LI": 280,
+        "CRAIG": 108,
+        "DAVID": 192,
+        "DIANA": 253,
+        "DMITRY": 202,
+        "DUTCH": 280,
+        "FENIX": 195,
+        "FERRY": 0,
+        "HAWK": 178,
+        "JASON": 355,
+        "JB": 234,
+        "JOE": 192,
+        "KIRIN": 199,
+        "KLAUS": 200,
+        "LENS": 100,
+        "MCMEAN": 173,
+        "MIA": 88,
+        "MIRO": 280,
+        "MISHKA": 178,
+        "MOSES": 280,
+        "OWEN": 192,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 184,
+        "SNEK": 250,
+        "SPENCER": 192,
+        "SUSSURRO": 192,
+        "SYNDROME": 194,
+        "THOR": 355,
+        "TRAVIS": 203,
+        "VALERA": 199,
+        "VARG": 337,
+        "VICTOR": 203,
+        "WOLF": 280,
+        "ZLOY": 231
+    },
+    "limpeza": {
+        "APOLLO": 218,
+        "BATYA": 197,
+        "BORIS": 229,
+        "CAPISCE": 181,
+        "CHARON": 231,
+        "CHEN LI": 280,
+        "CRAIG": 108,
+        "DAVID": 192,
+        "DIANA": 449,
+        "DMITRY": 202,
+        "DUTCH": 280,
+        "FENIX": 195,
+        "FERRY": 0,
+        "HAWK": 178,
+        "JASON": 199,
+        "JB": 416,
+        "JOE": 341,
+        "KIRIN": 199,
+        "KLAUS": 200,
+        "LENS": 100,
+        "MCMEAN": 309,
+        "MIA": 157,
+        "MIRO": 496,
+        "MISHKA": 178,
+        "MOSES": 280,
+        "OWEN": 192,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 184,
+        "SNEK": 443,
+        "SPENCER": 192,
+        "SUSSURRO": 108,
+        "SYNDROME": 194,
+        "THOR": 355,
+        "TRAVIS": 203,
+        "VALERA": 199,
+        "VARG": 189,
+        "VICTOR": 203,
+        "WOLF": 280,
+        "ZLOY": 231
+    },
+    "logistica": {
+        "APOLLO": 388,
+        "BATYA": 197,
+        "BORIS": 397,
+        "CAPISCE": 181,
+        "CHARON": 231,
+        "CHEN LI": 496,
+        "CRAIG": 0,
+        "DAVID": 192,
+        "DIANA": 253,
+        "DMITRY": 202,
+        "DUTCH": 280,
+        "FENIX": 347,
+        "FERRY": 0,
+        "HAWK": 178,
+        "JASON": 355,
+        "JB": 234,
+        "JOE": 192,
+        "KIRIN": 174,
+        "KLAUS": 200,
+        "LENS": 55,
+        "MCMEAN": 173,
+        "MIA": 88,
+        "MIRO": 496,
+        "MISHKA": 178,
+        "MOSES": 280,
+        "OWEN": 192,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 320,
+        "SNEK": 250,
+        "SPENCER": 192,
+        "SUSSURRO": 108,
+        "SYNDROME": 194,
+        "THOR": 199,
+        "TRAVIS": 203,
+        "VALERA": 199,
+        "VARG": 189,
+        "VICTOR": 352,
+        "WOLF": 280,
+        "ZLOY": 231
+    },
     "martelo": {
         "APOLLO": 218,
         "BATYA": 197,
@@ -564,6 +528,7 @@ const UPDATED_MISSION_SCORES = {
         "DMITRY": 202,
         "DUTCH": 280,
         "FENIX": 195,
+        "FERRY": 0,
         "HAWK": 178,
         "JASON": 199,
         "JB": 234,
@@ -592,8 +557,179 @@ const UPDATED_MISSION_SCORES = {
         "VICTOR": 352,
         "WOLF": 280,
         "ZLOY": 231
-    }
-,
+    },
+    "basica": {
+        "APOLLO": 338,
+        "BATYA": 302,
+        "BORIS": 351,
+        "CAPISCE": 282,
+        "CHARON": 358,
+        "CHEN LI": 433,
+        "CRAIG": 323,
+        "DAVID": 266,
+        "DIANA": 391,
+        "DMITRY": 312,
+        "DUTCH": 433,
+        "FENIX": 302,
+        "FERRY": 0,
+        "HAWK": 274,
+        "JASON": 310,
+        "JB": 363,
+        "JOE": 298,
+        "KIRIN": 323,
+        "KLAUS": 307,
+        "LENS": 85,
+        "MCMEAN": 270,
+        "MIA": 137,
+        "MIRO": 433,
+        "MISHKA": 275,
+        "MOSES": 433,
+        "OWEN": 298,
+        "RAY": 358,
+        "RICK": 230,
+        "ROOKIE": 275,
+        "SHI": 283,
+        "SNEK": 386,
+        "SPENCER": 322,
+        "SUSSURRO": 328,
+        "SYNDROME": 318,
+        "THOR": 310,
+        "TRAVIS": 511,
+        "VALERA": 310,
+        "VARG": 294,
+        "VICTOR": 311,
+        "WOLF": 433,
+        "ZLOY": 358
+    },
+    "reconhecimento": {
+        "APOLLO": 55,
+        "BATYA": 85,
+        "BORIS": 70,
+        "CAPISCE": 115,
+        "CHARON": 55,
+        "CHEN LI": 55,
+        "CRAIG": 55,
+        "DAVID": 115,
+        "DIANA": 55,
+        "DMITRY": 55,
+        "DUTCH": 55,
+        "FENIX": 55,
+        "FERRY": 0,
+        "HAWK": 150,
+        "JASON": 70,
+        "JB": 55,
+        "JOE": 115,
+        "KIRIN": 55,
+        "KLAUS": 180,
+        "LENS": 55,
+        "MCMEAN": 55,
+        "MIA": 55,
+        "MIRO": 55,
+        "MISHKA": 70,
+        "MOSES": 55,
+        "OWEN": 55,
+        "RAY": 55,
+        "RICK": 70,
+        "ROOKIE": 55,
+        "SHI": 85,
+        "SNEK": 55,
+        "SPENCER": 85,
+        "SUSSURRO": 55,
+        "SYNDROME": 115,
+        "THOR": 70,
+        "TRAVIS": 85,
+        "VALERA": 115,
+        "VARG": 240,
+        "VICTOR": 85,
+        "WOLF": 55,
+        "ZLOY": 55
+    },
+    "comum": {
+        "APOLLO": 55,
+        "BATYA": 50,
+        "BORIS": 150,
+        "CAPISCE": 65,
+        "CHARON": 55,
+        "CHEN LI": 55,
+        "CRAIG": 55,
+        "DAVID": 65,
+        "DIANA": 55,
+        "DMITRY": 55,
+        "DUTCH": 55,
+        "FENIX": 55,
+        "FERRY": 0,
+        "HAWK": 150,
+        "JASON": 150,
+        "JB": 55,
+        "JOE": 65,
+        "KIRIN": 55,
+        "KLAUS": 50,
+        "LENS": 55,
+        "MCMEAN": 55,
+        "MIA": 55,
+        "MIRO": 55,
+        "MISHKA": 150,
+        "MOSES": 55,
+        "OWEN": 55,
+        "RAY": 55,
+        "RICK": 150,
+        "ROOKIE": 120,
+        "SHI": 50,
+        "SNEK": 55,
+        "SPENCER": 50,
+        "SUSSURRO": 55,
+        "SYNDROME": 65,
+        "THOR": 150,
+        "TRAVIS": 50,
+        "VALERA": 65,
+        "VARG": 65,
+        "VICTOR": 50,
+        "WOLF": 55,
+        "ZLOY": 55
+    },
+    "incomum": {
+        "APOLLO": 218,
+        "BATYA": 341,
+        "BORIS": 397,
+        "CAPISCE": 181,
+        "CHARON": 231,
+        "CHEN LI": 280,
+        "CRAIG": 209,
+        "DAVID": 171,
+        "DIANA": 253,
+        "DMITRY": 238,
+        "DUTCH": 280,
+        "FENIX": 228,
+        "FERRY": 0,
+        "HAWK": 178,
+        "JASON": 199,
+        "JB": 234,
+        "JOE": 192,
+        "KIRIN": 209,
+        "KLAUS": 347,
+        "LENS": 55,
+        "MCMEAN": 229,
+        "MIA": 88,
+        "MIRO": 280,
+        "MISHKA": 178,
+        "MOSES": 280,
+        "OWEN": 229,
+        "RAY": 231,
+        "RICK": 149,
+        "ROOKIE": 178,
+        "SHI": 320,
+        "SNEK": 250,
+        "SPENCER": 207,
+        "SUSSURRO": 108,
+        "SYNDROME": 204,
+        "THOR": 199,
+        "TRAVIS": 352,
+        "VALERA": 199,
+        "VARG": 189,
+        "VICTOR": 352,
+        "WOLF": 280,
+        "ZLOY": 231
+    },
     "raro": {
         "APOLLO": 218,
         "BATYA": 197,
@@ -607,6 +743,7 @@ const UPDATED_MISSION_SCORES = {
         "DMITRY": 202,
         "DUTCH": 280,
         "FENIX": 195,
+        "FERRY": 0,
         "HAWK": 310,
         "JASON": 355,
         "JB": 234,
@@ -667,14 +804,68 @@ const PLANNER_SLOTS = [
     { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
 ];
 
-const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY"]);
+const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY", "LENS"]);
 const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
+const OPERATOR_DATA_STORAGE_KEY = "blastoise.operatorData.v3";
+const DEFAULT_OPERATOR_DETAILS = {
+    APOLLO: { rank: "4-1" },
+    BATYA: { rank: "4-5" },
+    BORIS: { rank: "5-6" },
+    CAPISCE: { rank: "4-2" },
+    CHARON: { rank: "4-5" },
+    "CHEN LI": { rank: "6-10" },
+    CRAIG: { rank: "1-1" },
+    DAVID: { rank: "4-6" },
+    DIANA: { rank: "5-2" },
+    DMITRY: { rank: "3-6" },
+    DUTCH: { rank: "6-10" },
+    FENIX: { rank: "3-4" },
+    FERRY: { rank: "" },
+    HAWK: { rank: "5-5" },
+    JASON: { rank: "4-9" },
+    JB: { rank: "4-6" },
+    JOE: { rank: "4-6" },
+    KIRIN: { rank: "3-5" },
+    KLAUS: { rank: "4-6" },
+    LENS: { rank: "1-1" },
+    MCMEAN: { rank: "3-9" },
+    MIA: { rank: "1-1" },
+    MIRO: { rank: "6-10" },
+    MISHKA: { rank: "6-10" },
+    MOSES: { rank: "6-10" },
+    OWEN: { rank: "4-6" },
+    RAY: { rank: "4-5" },
+    RICK: { rank: "4-7" },
+    ROOKIE: { rank: "6-10" },
+    SHI: { rank: "4-1" },
+    SNEK: { rank: "5-1" },
+    SPENCER: { rank: "4-6" },
+    SUSSURRO: { rank: "1-1" },
+    SYNDROME: { rank: "4-7" },
+    THOR: { rank: "4-9" },
+    TRAVIS: { rank: "4-7" },
+    VALERA: { rank: "4-9" },
+    VARG: { rank: "4-5" },
+    VICTOR: { rank: "4-7" },
+    WOLF: { rank: "" },
+    ZLOY: { rank: "4-5" }
+};
+const RANK_LEVELS = Array.from({ length: 60 }, (_, index) => {
+    const star = Math.floor(index / 10) + 1;
+    const level = (index % 10) + 1;
+    return {
+        value: `${star}-${level}`,
+        label: `${star}\u2605 ${level}/10`
+    };
+});
 
 const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00", "06:00"];
 
 const plannerEls = {};
 let plannerUnlocked = false;
 let importedAssignment = null;
+let operatorData = null;
+let operatorEditorSort = { key: "", direction: "desc" };
 
 function missionByKey(key) {
     return PLANNER_MISSIONS.find((mission) => mission.key === key);
@@ -774,11 +965,31 @@ function setPlannerControlsEnabled(enabled) {
         plannerEls.lastMissionText.disabled = !enabled;
     }
 
-    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.importButton].forEach((button) => {
+    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.importButton, plannerEls.saveOperatorDataButton, plannerEls.exportOperatorDataButton, plannerEls.importOperatorDataButton, plannerEls.resetOperatorDataButton].forEach((button) => {
         if (button) {
             button.disabled = !enabled;
         }
     });
+
+    if (plannerEls.operatorDataTransfer) {
+        plannerEls.operatorDataTransfer.disabled = !enabled;
+    }
+
+    if (plannerEls.operatorEditorBody) {
+        plannerEls.operatorEditorBody.querySelectorAll("input, select").forEach((control) => {
+            control.disabled = !enabled;
+        });
+    }
+
+    [plannerEls.operatorSearchFilter, plannerEls.operatorViewFilter, plannerEls.operatorMissionFilter].forEach((control) => {
+        if (control) {
+            control.disabled = !enabled;
+        }
+    });
+
+    if (plannerEls.operatorPanel) {
+        plannerEls.operatorPanel.classList.toggle("is-locked", !enabled);
+    }
 }
 
 function createMissionTimes() {
@@ -790,6 +1001,17 @@ function createMissionTimes() {
         `<option value="${time}">${time}</option>`
     )).join("");
     plannerEls.timeSelect.value = "09:00";
+}
+
+function createOperatorMissionFilter() {
+    if (!plannerEls.operatorMissionFilter) {
+        return;
+    }
+
+    plannerEls.operatorMissionFilter.innerHTML = [
+        '<option value="">Todas</option>',
+        ...PLANNER_MISSIONS.map((mission) => `<option value="${escapeHtml(mission.key)}">${escapeHtml(mission.name)}</option>`)
+    ].join("");
 }
 
 function createMissionOptions(currentValue = "", selectedValues = new Set()) {
@@ -863,16 +1085,15 @@ function normalizeOperatorName(operator) {
     return operator.toUpperCase().replace("CHE LI", "CHEN LI");
 }
 
-function scoreMission(mission) {
-    return PLANNER_OPERATORS
-        .map((operator, index) => ({
-            operator,
-            score: getMissionScore(mission, operator, index)
-        }))
-        .sort((a, b) => b.score - a.score || a.operator.localeCompare(b.operator));
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
 }
 
-function getMissionScore(mission, operator, index) {
+function getBaseMissionScore(mission, operator, index) {
     const updatedScore = UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
     if (Number.isFinite(updatedScore)) {
         return updatedScore;
@@ -883,6 +1104,97 @@ function getMissionScore(mission, operator, index) {
     }
 
     return EXTRA_OPERATOR_SCORES[operator]?.[mission.key] || 55;
+}
+
+function createDefaultOperatorData() {
+    return {
+        version: 1,
+        operators: Object.fromEntries(PLANNER_OPERATORS.map((operator, index) => [
+            operator,
+            {
+                rank: DEFAULT_OPERATOR_DETAILS[operator]?.rank || "",
+                scores: Object.fromEntries(PLANNER_MISSIONS.map((mission) => [
+                    mission.key,
+                    getBaseMissionScore(mission, operator, index)
+                ]))
+            }
+        ]))
+    };
+}
+
+function mergeOperatorData(savedData) {
+    const defaults = createDefaultOperatorData();
+    const savedOperators = savedData?.operators || {};
+
+    PLANNER_OPERATORS.forEach((operator) => {
+        const savedOperator = savedOperators[operator] || {};
+        const savedRank = String(savedOperator.rank ?? "");
+
+        defaults.operators[operator].rank = RANK_LEVELS.some((rank) => rank.value === savedRank) ? savedRank : "";
+
+        PLANNER_MISSIONS.forEach((mission) => {
+            const score = Number(savedOperator.scores?.[mission.key]);
+            if (Number.isFinite(score)) {
+                defaults.operators[operator].scores[mission.key] = Math.max(0, Math.floor(score));
+            }
+        });
+    });
+
+    return defaults;
+}
+
+function loadOperatorData() {
+    try {
+        const saved = localStorage.getItem(OPERATOR_DATA_STORAGE_KEY);
+        operatorData = mergeOperatorData(saved ? JSON.parse(saved) : null);
+    } catch (error) {
+        operatorData = createDefaultOperatorData();
+    }
+}
+
+function persistOperatorData() {
+    localStorage.setItem(OPERATOR_DATA_STORAGE_KEY, JSON.stringify(operatorData));
+}
+
+function serializeOperatorData(data = operatorData) {
+    return JSON.stringify(data, null, 2);
+}
+
+function replaceOperatorData(nextData) {
+    operatorData = mergeOperatorData(nextData);
+    persistOperatorData();
+    renderOperatorEditor();
+    setPlannerControlsEnabled(plannerUnlocked);
+    importedAssignment = null;
+    updateMissionPlanner();
+}
+
+
+function createRankOptions(value) {
+    return [
+        `<option value=""${value ? "" : " selected"}>-</option>`,
+        ...RANK_LEVELS.map((rank) => (
+            `<option value="${rank.value}"${String(value) === rank.value ? " selected" : ""}>${rank.label}</option>`
+        ))
+    ].join("");
+}
+
+function scoreMission(mission) {
+    return PLANNER_OPERATORS
+        .map((operator, index) => ({
+            operator,
+            score: getMissionScore(mission, operator, index)
+        }))
+        .sort((a, b) => b.score - a.score || a.operator.localeCompare(b.operator));
+}
+
+function getMissionScore(mission, operator, index) {
+    const editedScore = Number(operatorData?.operators?.[operator]?.scores?.[mission.key]);
+    if (Number.isFinite(editedScore)) {
+        return editedScore;
+    }
+
+    return getBaseMissionScore(mission, operator, index);
 }
 
 function isLimitedAccessOperator(operator) {
@@ -1274,6 +1586,304 @@ function shareMissionText() {
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 }
 
+function switchMissionTab(tabName) {
+    plannerEls.tabs.forEach((tab) => {
+        const active = tab.dataset.missionTab === tabName;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+    });
+
+    plannerEls.tabPanels.forEach((panel) => {
+        const active = panel.dataset.missionPanel === tabName;
+        panel.classList.toggle("is-active", active);
+        panel.hidden = !active;
+    });
+}
+
+function getOperatorEditorFilters() {
+    return {
+        query: normalizeLookupText(plannerEls.operatorSearchFilter?.value || ""),
+        view: plannerEls.operatorViewFilter?.value || "all",
+        mission: plannerEls.operatorMissionFilter?.value || ""
+    };
+}
+
+function getOperatorScoreStats(scores) {
+    const normalizedScores = scores.map((value) => Math.max(0, Number(value) || 0));
+    const uniquePositiveScores = [...new Set(normalizedScores.filter((value) => value > 0))]
+        .sort((a, b) => b - a);
+    const bestScore = uniquePositiveScores[0] || 0;
+    const goodScores = new Set(uniquePositiveScores.slice(1, 3));
+    const worstPositiveScore = uniquePositiveScores.length > 1 ? uniquePositiveScores[uniquePositiveScores.length - 1] : 0;
+
+    return {
+        normalizedScores,
+        bestScore,
+        goodScores,
+        worstPositiveScore,
+        hasWeakScore: bestScore > worstPositiveScore && normalizedScores.some((score) => score === 0 || score === worstPositiveScore)
+    };
+}
+
+function getOperatorScoreHighlightClass(stats, score) {
+    const normalizedScore = Math.max(0, Number(score) || 0);
+
+    if (normalizedScore > 0 && normalizedScore === stats.bestScore) {
+        return "is-best-score";
+    }
+
+    if (normalizedScore > 0 && stats.goodScores.has(normalizedScore)) {
+        return "is-good-score";
+    }
+
+    if (stats.bestScore > stats.worstPositiveScore && (normalizedScore === 0 || normalizedScore === stats.worstPositiveScore)) {
+        return "is-low-score";
+    }
+
+    return "";
+}
+
+function getOperatorMissionSummary(operator, data) {
+    const scores = PLANNER_MISSIONS.map((mission) => Number(data.scores[mission.key]) || 0);
+    const stats = getOperatorScoreStats(scores);
+    const bestMissions = PLANNER_MISSIONS
+        .filter((mission) => Number(data.scores[mission.key]) === stats.bestScore && stats.bestScore > 0)
+        .map((mission) => mission.name);
+    const weakMissions = PLANNER_MISSIONS
+        .filter((mission) => getOperatorScoreHighlightClass(stats, data.scores[mission.key]) === "is-low-score")
+        .map((mission) => mission.name);
+
+    return {
+        operator,
+        stats,
+        bestMissions,
+        weakMissions,
+        text: `${operator}: melhor em ${bestMissions.slice(0, 3).join(", ") || "sem destaque"} | fraco em ${weakMissions.slice(0, 4).join(", ") || "sem ponto fraco"}`
+    };
+}
+
+function operatorMatchesEditorFilters(operator, data, summary, filters) {
+    if (filters.query && !normalizeLookupText(operator).includes(filters.query)) {
+        return false;
+    }
+
+    if (filters.mission) {
+        const mission = missionByKey(filters.mission);
+        const missionScore = Number(data.scores[filters.mission]) || 0;
+        const missionClass = getOperatorScoreHighlightClass(summary.stats, missionScore);
+
+        if (!mission || missionScore <= 0 || (missionClass !== "is-best-score" && missionClass !== "is-good-score")) {
+            return false;
+        }
+    }
+
+    if (filters.view === "missing-rank") {
+        return !data.rank;
+    }
+
+    if (filters.view === "new") {
+        return isLimitedAccessOperator(operator);
+    }
+
+    if (filters.view === "strong") {
+        return summary.stats.bestScore >= 300;
+    }
+
+    if (filters.view === "weak") {
+        return summary.weakMissions.length > 0;
+    }
+
+    return true;
+}
+
+function getSortedOperatorNames(filters) {
+    const operators = [...PLANNER_OPERATORS];
+    const sortKey = operatorEditorSort.key || filters.mission;
+
+    if (!sortKey || !missionByKey(sortKey)) {
+        return operators;
+    }
+
+    return operators.sort((first, second) => {
+        const firstScore = Number(operatorData.operators[first]?.scores?.[sortKey]) || 0;
+        const secondScore = Number(operatorData.operators[second]?.scores?.[sortKey]) || 0;
+        const direction = operatorEditorSort.direction === "asc" ? 1 : -1;
+        const scoreCompare = (firstScore - secondScore) * direction;
+
+        return scoreCompare || first.localeCompare(second);
+    });
+}
+
+function createMissionSortHeader(mission) {
+    const active = operatorEditorSort.key === mission.key;
+    const directionLabel = operatorEditorSort.direction === "asc" ? "crescente" : "decrescente";
+    const indicator = active ? (operatorEditorSort.direction === "asc" ? " ↑" : " ↓") : "";
+
+    return `<th><button type="button" class="operator-sort-button${active ? " is-active" : ""}" data-sort-mission="${escapeHtml(mission.key)}" aria-label="Ordenar ${escapeHtml(mission.name)} em ordem ${directionLabel}">${escapeHtml(mission.name)}${indicator}</button></th>`;
+}
+
+function renderOperatorEditor() {
+    if (!plannerEls.operatorEditorHead || !plannerEls.operatorEditorBody) {
+        return;
+    }
+
+    plannerEls.operatorEditorHead.innerHTML = `
+        <tr>
+            <th>Operador</th>
+            <th>Patente</th>
+            ${PLANNER_MISSIONS.map(createMissionSortHeader).join("")}
+        </tr>
+    `;
+
+    const filters = getOperatorEditorFilters();
+    const visibleOperators = [];
+
+    plannerEls.operatorEditorBody.innerHTML = getSortedOperatorNames(filters).map((operator) => {
+        const data = operatorData.operators[operator];
+        const scores = PLANNER_MISSIONS.map((mission) => Number(data.scores[mission.key]) || 0);
+        const stats = getOperatorScoreStats(scores);
+        const summary = getOperatorMissionSummary(operator, data);
+        const visible = operatorMatchesEditorFilters(operator, data, summary, filters);
+
+        if (visible) {
+            visibleOperators.push(operator);
+        }
+
+        return `
+            <tr${visible ? "" : ' class="is-filtered-out"'}>
+                <th>${escapeHtml(operator)}</th>
+                <td><select data-operator="${escapeHtml(operator)}" data-field="rank" disabled>${createRankOptions(data.rank)}</select></td>
+                ${PLANNER_MISSIONS.map((mission) => {
+                    const score = Number(data.scores[mission.key]) || 0;
+                    const highlightClass = getOperatorScoreHighlightClass(stats, score);
+                    const classAttribute = highlightClass ? ` class="${highlightClass}"` : "";
+                    return `
+                    <td${classAttribute}><input type="number" min="0" step="1" data-operator="${escapeHtml(operator)}" data-mission="${escapeHtml(mission.key)}" value="${score}" disabled></td>
+                `;
+                }).join("")}
+            </tr>
+        `;
+    }).join("");
+
+}
+
+function updateOperatorBestScoreHighlights(row) {
+    const scoreInputs = [...row.querySelectorAll("input[data-mission]")];
+    const scores = scoreInputs.map((input) => Math.max(0, Number.parseInt(input.value, 10) || 0));
+    const stats = getOperatorScoreStats(scores);
+
+    scoreInputs.forEach((input, index) => {
+        const cell = input.closest("td");
+        const highlightClass = getOperatorScoreHighlightClass(stats, scores[index]);
+
+        cell?.classList.toggle("is-best-score", highlightClass === "is-best-score");
+        cell?.classList.toggle("is-good-score", highlightClass === "is-good-score");
+        cell?.classList.toggle("is-low-score", highlightClass === "is-low-score");
+    });
+}
+
+function handleOperatorEditorInput(event) {
+    const input = event.target.closest("input[data-mission]");
+
+    if (!input) {
+        return;
+    }
+
+    const row = input.closest("tr");
+    if (row) {
+        updateOperatorBestScoreHighlights(row);
+    }
+}
+
+function handleOperatorEditorFilterChange() {
+    operatorData = readOperatorEditorData();
+    if (plannerEls.operatorMissionFilter?.value && !operatorEditorSort.key) {
+        operatorEditorSort = { key: plannerEls.operatorMissionFilter.value, direction: "desc" };
+    }
+    renderOperatorEditor();
+    setPlannerControlsEnabled(plannerUnlocked);
+}
+
+function handleOperatorEditorSortClick(event) {
+    const button = event.target.closest("[data-sort-mission]");
+
+    if (!button) {
+        return;
+    }
+
+    const missionKey = button.dataset.sortMission;
+    operatorData = readOperatorEditorData();
+    operatorEditorSort = {
+        key: missionKey,
+        direction: operatorEditorSort.key === missionKey && operatorEditorSort.direction === "desc" ? "asc" : "desc"
+    };
+    renderOperatorEditor();
+    setPlannerControlsEnabled(plannerUnlocked);
+}
+
+function readOperatorEditorData() {
+    const nextData = mergeOperatorData(operatorData);
+
+    plannerEls.operatorEditorBody.querySelectorAll("input[data-operator], select[data-operator]").forEach((control) => {
+        const operator = control.dataset.operator;
+        if (!nextData.operators[operator]) {
+            return;
+        }
+
+        if (control.dataset.field === "rank") {
+            nextData.operators[operator].rank = RANK_LEVELS.some((rank) => rank.value === control.value) ? control.value : "";
+            return;
+        }
+
+        const missionKey = control.dataset.mission;
+        if (missionKey) {
+            const score = Number.parseInt(control.value, 10);
+            nextData.operators[operator].scores[missionKey] = Number.isFinite(score) ? Math.max(0, score) : 0;
+        }
+    });
+
+    return nextData;
+}
+
+function saveOperatorEditor() {
+    operatorData = readOperatorEditorData();
+    persistOperatorData();
+    renderOperatorEditor();
+    setPlannerControlsEnabled(plannerUnlocked);
+    importedAssignment = null;
+    updateMissionPlanner();
+    plannerEls.operatorEditorStatus.textContent = "Base salva. A locação já está usando as novas pontuações.";
+}
+
+function exportOperatorEditor() {
+    operatorData = readOperatorEditorData();
+    persistOperatorData();
+    plannerEls.operatorDataTransfer.value = serializeOperatorData(operatorData);
+    plannerEls.operatorDataTransfer.focus();
+    plannerEls.operatorDataTransfer.select();
+    plannerEls.operatorEditorStatus.textContent = "Base exportada. Copie o texto para atualizar a base raiz.";
+}
+
+function importOperatorEditor() {
+    const rawData = plannerEls.operatorDataTransfer.value.trim();
+    if (!rawData) {
+        plannerEls.operatorEditorStatus.textContent = "Cole uma base exportada antes de importar.";
+        return;
+    }
+
+    try {
+        replaceOperatorData(JSON.parse(rawData));
+        plannerEls.operatorEditorStatus.textContent = "Base importada e salva. A locação já foi recalculada.";
+    } catch (error) {
+        plannerEls.operatorEditorStatus.textContent = "Não consegui importar. Confira se o texto exportado está completo.";
+    }
+}
+
+function resetOperatorEditor() {
+    replaceOperatorData(createDefaultOperatorData());
+    plannerEls.operatorEditorStatus.textContent = "Base restaurada para as pontuações originais.";
+}
+
 function clearMissionPlanner() {
     importedAssignment = null;
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
@@ -1315,9 +1925,26 @@ function initOperatorPlanner() {
     plannerEls.lastMissionText = document.getElementById("lastMissionText");
     plannerEls.importButton = document.getElementById("importMissionButton");
     plannerEls.importMessage = document.getElementById("missionImportMessage");
+    plannerEls.tabs = [...tool.querySelectorAll(".mission-tab")];
+    plannerEls.tabPanels = [...tool.querySelectorAll(".mission-tab-panel")];
+    plannerEls.operatorPanel = tool.querySelector('[data-mission-panel="operators"]');
+    plannerEls.operatorEditorHead = document.getElementById("operatorEditorHead");
+    plannerEls.operatorEditorBody = document.getElementById("operatorEditorBody");
+    plannerEls.operatorEditorStatus = document.getElementById("operatorEditorStatus");
+    plannerEls.operatorDataTransfer = document.getElementById("operatorDataTransfer");
+    plannerEls.operatorSearchFilter = document.getElementById("operatorSearchFilter");
+    plannerEls.operatorViewFilter = document.getElementById("operatorViewFilter");
+    plannerEls.operatorMissionFilter = document.getElementById("operatorMissionFilter");
+    plannerEls.saveOperatorDataButton = document.getElementById("saveOperatorDataButton");
+    plannerEls.exportOperatorDataButton = document.getElementById("exportOperatorDataButton");
+    plannerEls.importOperatorDataButton = document.getElementById("importOperatorDataButton");
+    plannerEls.resetOperatorDataButton = document.getElementById("resetOperatorDataButton");
 
+    loadOperatorData();
     createMissionTimes();
+    createOperatorMissionFilter();
     createMissionRows();
+    renderOperatorEditor();
     setPlannerControlsEnabled(false);
     plannerEls.form.addEventListener("submit", handlePlannerUnlock);
     plannerEls.workbench.addEventListener("click", (event) => {
@@ -1332,6 +1959,18 @@ function initOperatorPlanner() {
     plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
     plannerEls.copyButton.addEventListener("click", copyMissionText);
     plannerEls.shareButton.addEventListener("click", shareMissionText);
+    plannerEls.tabs.forEach((tab) => {
+        tab.addEventListener("click", () => switchMissionTab(tab.dataset.missionTab));
+    });
+    plannerEls.saveOperatorDataButton.addEventListener("click", saveOperatorEditor);
+    plannerEls.exportOperatorDataButton.addEventListener("click", exportOperatorEditor);
+    plannerEls.importOperatorDataButton.addEventListener("click", importOperatorEditor);
+    plannerEls.resetOperatorDataButton.addEventListener("click", resetOperatorEditor);
+    plannerEls.operatorEditorBody.addEventListener("input", handleOperatorEditorInput);
+    plannerEls.operatorEditorHead.addEventListener("click", handleOperatorEditorSortClick);
+    plannerEls.operatorSearchFilter.addEventListener("input", handleOperatorEditorFilterChange);
+    plannerEls.operatorViewFilter.addEventListener("change", handleOperatorEditorFilterChange);
+    plannerEls.operatorMissionFilter.addEventListener("change", handleOperatorEditorFilterChange);
 
     renderEmptyState();
 }

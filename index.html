@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260511-2125">
-    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260511-2125">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260521-mission-5k-red-card">
+    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
     <main class="app-shell">
@@ -159,6 +159,35 @@
             </div>
         </section>
 
+        <section class="panel mission5k-tool" id="mission5kTool" aria-label="Disparo de mensagem para missão 5K">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Aviso rápido</p>
+                    <h2>Missão 5K</h2>
+                </div>
+            </div>
+
+            <div class="announcement-layout mission5k-layout">
+                <figure class="announcement-art mission5k-art">
+                    <img src="assets/img/mission-5k-banner.png?v=20260521-1717x916-acentos" alt="Arte de aviso da missão 5K">
+                </figure>
+
+                <div class="announcement-copy mission5k-copy">
+                    <p class="eyebrow">Mensagem automática</p>
+                    <h3>Aviso para o grupo</h3>
+                    <label class="mission5k-time-field">
+                        <span>Hora atual</span>
+                        <input type="time" id="mission5kTimeInput" step="60">
+                    </label>
+                    <textarea id="mission5kText" readonly aria-label="Texto para missão 5K"></textarea>
+                    <div class="announcement-actions">
+                        <button type="button" id="shareMission5kButton">Enviar no WhatsApp</button>
+                    </div>
+                    <span id="mission5kStatus" aria-live="polite"></span>
+                </div>
+            </div>
+        </section>
+
         <div class="section-divider section-divider-mission">
             <p>Organização do clã</p>
             <div class="section-heading">Locação de operadores</div>
@@ -185,58 +214,116 @@
             </div>
 
             <div class="mission-workbench" id="missionWorkbench">
-                <div class="mission-import-panel">
-                    <div>
-                        <p class="eyebrow">Realocação de operadores</p>
-                        <h3>Use a última mensagem enviada</h3>
-                        <p>Cole o texto da última missão, clique em Enviar e marque como Concluído apenas as missões já finalizadas.</p>
-                    </div>
-                    <div class="mission-import-actions">
-                        <textarea id="lastMissionText" aria-label="Texto da última missão" placeholder="Cole aqui o texto da última missão enviada ao clã" disabled></textarea>
-                        <button type="button" id="importMissionButton" disabled>Enviar</button>
-                        <span id="missionImportMessage" aria-live="polite"></span>
-                    </div>
+                <div class="mission-tabs" role="tablist" aria-label="Áreas da ferramenta de missões">
+                    <button type="button" class="mission-tab is-active" data-mission-tab="allocation" role="tab" aria-selected="true">Locação</button>
+                    <button type="button" class="mission-tab" data-mission-tab="operators" role="tab" aria-selected="false">Operadores</button>
                 </div>
 
-                <div class="mission-time-panel">
-                    <div>
-                        <p class="eyebrow">Horário da missão</p>
-                        <h3>Escolha o horário de envio</h3>
+                <div class="mission-tab-panel is-active" data-mission-panel="allocation" role="tabpanel">
+                    <div class="mission-import-panel">
+                        <div>
+                            <p class="eyebrow">Realocação de operadores</p>
+                            <h3>Use a última mensagem enviada</h3>
+                            <p>Cole o texto da última missão, clique em Enviar e marque como Concluído apenas as missões já finalizadas.</p>
+                        </div>
+                        <div class="mission-import-actions">
+                            <textarea id="lastMissionText" aria-label="Texto da última missão" placeholder="Cole aqui o texto da última missão enviada ao clã" disabled></textarea>
+                            <button type="button" id="importMissionButton" disabled>Enviar</button>
+                            <span id="missionImportMessage" aria-live="polite"></span>
+                        </div>
                     </div>
-                    <label for="missionTimeSelect">
-                        <span>Início</span>
-                        <select id="missionTimeSelect" disabled></select>
-                    </label>
+
+                    <div class="mission-time-panel">
+                        <div>
+                            <p class="eyebrow">Horário da missão</p>
+                            <h3>Escolha o horário de envio</h3>
+                        </div>
+                        <label for="missionTimeSelect">
+                            <span>Início</span>
+                            <select id="missionTimeSelect" disabled></select>
+                        </label>
+                    </div>
+
+                    <div class="mission-toolbar">
+                        <div>
+                            <p class="eyebrow">Lista de missões</p>
+                            <h3>Escolha os tipos de missão</h3>
+                        </div>
+                        <div class="mission-toolbar-actions">
+                            <button type="button" id="clearMissionButton">Limpar</button>
+                        </div>
+                    </div>
+
+                    <div class="mission-grid" id="missionRows"></div>
+
+                    <div class="mission-output">
+                        <div class="mission-box">
+                            <span>Locação sugerida</span>
+                            <div id="missionAssignment" class="mission-assignment"></div>
+                        </div>
+                        <div class="mission-box mission-ranking-box" hidden>
+                            <span>Ranking geral</span>
+                            <ol id="missionRanking" class="mission-ranking"></ol>
+                        </div>
+                    </div>
+
+                    <div class="mission-share-actions">
+                        <button type="button" id="copyMissionButton">Copiar texto</button>
+                        <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
+                    </div>
+                    <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
                 </div>
 
-                <div class="mission-toolbar">
-                    <div>
-                        <p class="eyebrow">Lista de missões</p>
-                        <h3>Escolha os tipos de missão</h3>
+                <div class="mission-tab-panel operator-panel is-locked" data-mission-panel="operators" role="tabpanel" hidden>
+                    <div class="operator-editor-toolbar">
+                        <div>
+                            <p class="eyebrow">Base de operadores</p>
+                            <h3>Pontuações editáveis</h3>
+                            <p class="operator-editor-note">Salvar guarda neste navegador. Exportar base gera o texto para atualizar a base raiz do site.</p>
+                        </div>
+                        <div class="operator-editor-actions">
+                            <button type="button" id="saveOperatorDataButton" disabled>Salvar</button>
+                            <button type="button" id="exportOperatorDataButton" disabled>Exportar base raiz</button>
+                            <button type="button" id="importOperatorDataButton" disabled>Importar base</button>
+                            <button type="button" id="resetOperatorDataButton" disabled>Restaurar base</button>
+                        </div>
                     </div>
-                    <div class="mission-toolbar-actions">
-                        <button type="button" id="clearMissionButton">Limpar</button>
+                    <div class="operator-score-legend" aria-label="Legenda das cores da pontuação">
+                        <span><i class="legend-dot legend-dot-best"></i>Verde: melhor missão do operador</span>
+                        <span><i class="legend-dot legend-dot-good"></i>Amarelo: segunda ou terceira melhor</span>
+                        <span><i class="legend-dot legend-dot-low"></i>Vermelho: missão fraca ou sem pontuação</span>
+                    </div>
+                    <div class="operator-editor-filters" aria-label="Filtros da base de operadores">
+                        <label>
+                            <span>Buscar</span>
+                            <input type="search" id="operatorSearchFilter" placeholder="Nome do operador" disabled>
+                        </label>
+                        <label>
+                            <span>Exibir</span>
+                            <select id="operatorViewFilter" disabled>
+                                <option value="all">Todos</option>
+                                <option value="missing-rank">Patente vazia</option>
+                                <option value="new">Operadores novos</option>
+                                <option value="strong">Com missão forte</option>
+                                <option value="weak">Com missão fraca</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Missão</span>
+                            <select id="operatorMissionFilter" disabled>
+                                <option value="">Todas</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="operator-editor-status" id="operatorEditorStatus" aria-live="polite"></div>
+                    <textarea id="operatorDataTransfer" class="operator-data-transfer" aria-label="Base de operadores exportada" placeholder="Use Exportar base para copiar os dados, ou cole uma base aqui e clique em Importar base." disabled></textarea>
+                    <div class="operator-editor-table-wrap">
+                        <table class="operator-editor-table">
+                            <thead id="operatorEditorHead"></thead>
+                            <tbody id="operatorEditorBody"></tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div class="mission-grid" id="missionRows"></div>
-
-                <div class="mission-output">
-                    <div class="mission-box">
-                        <span>Locação sugerida</span>
-                        <div id="missionAssignment" class="mission-assignment"></div>
-                    </div>
-                    <div class="mission-box mission-ranking-box" hidden>
-                        <span>Ranking geral</span>
-                        <ol id="missionRanking" class="mission-ranking"></ol>
-                    </div>
-                </div>
-
-                <div class="mission-share-actions">
-                    <button type="button" id="copyMissionButton">Copiar texto</button>
-                    <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
-                </div>
-                <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
             </div>
         </section>
 
@@ -289,8 +376,8 @@
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260511-2125"></script>
-    <script src="assets/js/operator-planner.js?v=20260511-2125"></script>
+    <script src="assets/js/app.js?v=20260521-mission-5k-started"></script>
+    <script src="assets/js/operator-planner.js?v=20260520-lens-list"></script>
 </body>
 </html>
 

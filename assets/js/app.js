@@ -52,6 +52,8 @@ const ANNOUNCEMENT_SAFE_TEXT = [
     "Clique em ASSISTIR na conta e comece a farmar recursos gratis agora."
 ].join("\n");
 
+const MISSION_5K_START_MINUTES = (19 * 60) + 30;
+
 const OPERATORS = [
     {
         name: "Moses",
@@ -121,7 +123,11 @@ const els = {
     nextOperator: document.getElementById("nextOperatorButton"),
     announcementText: document.getElementById("announcementText"),
     shareAnnouncement: document.getElementById("shareAnnouncementButton"),
-    announcementStatus: document.getElementById("announcementStatus")
+    announcementStatus: document.getElementById("announcementStatus"),
+    mission5kTime: document.getElementById("mission5kTimeInput"),
+    mission5kText: document.getElementById("mission5kText"),
+    shareMission5k: document.getElementById("shareMission5kButton"),
+    mission5kStatus: document.getElementById("mission5kStatus")
 };
 
 const operatorState = {
@@ -468,6 +474,69 @@ function openWhatsAppText(text) {
     window.open(`https://wa.me/?text=${encodedText}`, "_blank", "noopener,noreferrer");
 }
 
+function formatTimeValue(date = new Date()) {
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+}
+
+function timeValueToMinutes(value) {
+    const match = /^(\d{1,2}):(\d{2})$/.exec(value || "");
+    if (!match) {
+        return null;
+    }
+
+    const hours = Number.parseInt(match[1], 10);
+    const minutes = Number.parseInt(match[2], 10);
+    if (hours > 23 || minutes > 59) {
+        return null;
+    }
+
+    return (hours * 60) + minutes;
+}
+
+function getMission5kMinutesLeft() {
+    const currentMinutes = timeValueToMinutes(els.mission5kTime?.value);
+    if (currentMinutes === null) {
+        return 0;
+    }
+
+    return Math.max(0, MISSION_5K_START_MINUTES - currentMinutes);
+}
+
+function hasMission5kStarted() {
+    const currentMinutes = timeValueToMinutes(els.mission5kTime?.value);
+    return currentMinutes !== null && currentMinutes >= MISSION_5K_START_MINUTES;
+}
+
+function createMission5kText(minutesLeft = getMission5kMinutesLeft()) {
+    if (hasMission5kStarted()) {
+        return [
+            "\u26A0\uFE0F Aten\u00E7\u00E3o, time!",
+            "",
+            "A miss\u00E3o 5K j\u00E1 iniciou. Quem ainda n\u00E3o ajustou suas miss\u00F5es, por favor fa\u00E7a isso agora e entre organizado o quanto antes.",
+            "",
+            "Evitem confus\u00F5es e constrangimentos para que ningu\u00E9m fique sem pontuar. Vamos manter o time sincronizado. \u{1F4AA}"
+        ].join("\n");
+    }
+
+    return [
+        "\u26A0\uFE0F Aten\u00E7\u00E3o, time!",
+        "",
+        `Faltam apenas ${minutesLeft} minutos para o in\u00EDcio da miss\u00E3o 5K. Quem ainda n\u00E3o ajustou suas miss\u00F5es, por favor fa\u00E7a isso agora e evite deixar para a \u00FAltima hora.`,
+        "",
+        "Al\u00E9m de evitar confus\u00F5es e constrangimentos, isso garante que ningu\u00E9m fique sem pontuar na miss\u00E3o. Vamos entrar organizados e sincronizados. \u{1F4AA}"
+    ].join("\n");
+}
+
+function updateMission5kText() {
+    if (!els.mission5kText) {
+        return;
+    }
+
+    els.mission5kText.value = createMission5kText();
+}
+
 async function getAnnouncementImageFile() {
     const image = document.querySelector(".announcement-art img");
     if (!image) {
@@ -477,6 +546,17 @@ async function getAnnouncementImageFile() {
     const response = await fetch(image.currentSrc || image.src);
     const imageBlob = await response.blob();
     return new File([imageBlob], "kit-recompensa-video.png", { type: imageBlob.type || "image/png" });
+}
+
+async function getMission5kImageFile() {
+    const image = document.querySelector(".mission5k-art img");
+    if (!image) {
+        return null;
+    }
+
+    const response = await fetch(image.currentSrc || image.src);
+    const imageBlob = await response.blob();
+    return new File([imageBlob], "missao-5k.png", { type: imageBlob.type || "image/png" });
 }
 
 async function copyAnnouncementImage(file) {
@@ -550,6 +630,65 @@ async function shareAnnouncementText() {
     }, 4200);
 }
 
+async function shareMission5kText() {
+    if (!els.mission5kText) {
+        return;
+    }
+
+    updateMission5kText();
+    const text = els.mission5kText.value.trim();
+    if (!text) {
+        return;
+    }
+
+    let imageFile = null;
+
+    try {
+        imageFile = await getMission5kImageFile();
+    } catch (error) {
+        imageFile = null;
+    }
+
+    try {
+        const canNativeShareFile = imageFile
+            && navigator.share
+            && (!navigator.canShare || navigator.canShare({ files: [imageFile] }));
+
+        if (canNativeShareFile) {
+            await navigator.share({
+                title: "Miss\u00E3o 5K",
+                text,
+                files: [imageFile]
+            });
+            els.mission5kStatus.textContent = "Escolha o WhatsApp para enviar";
+            return;
+        }
+    } catch (error) {
+        if (error?.name === "AbortError") {
+            els.mission5kStatus.textContent = "Compartilhamento cancelado antes do envio";
+            return;
+        }
+    }
+
+    let imageCopied = false;
+    if (imageFile) {
+        try {
+            imageCopied = await copyAnnouncementImage(imageFile);
+        } catch (error) {
+            imageCopied = false;
+        }
+    }
+
+    openWhatsAppText(text);
+    els.mission5kStatus.textContent = imageCopied
+        ? "Texto aberto no WhatsApp. A imagem foi copiada: cole no chat."
+        : "Texto aberto no WhatsApp. No Chrome do PC, anexe a imagem manualmente.";
+
+    setTimeout(() => {
+        els.mission5kStatus.textContent = "";
+    }, 4200);
+}
+
 function bindEvents() {
     [els.coins, ...els.resourceInputs].forEach((input) => {
         input.addEventListener("input", () => {
@@ -602,12 +741,24 @@ function bindEvents() {
     if (els.shareAnnouncement) {
         els.shareAnnouncement.addEventListener("click", shareAnnouncementText);
     }
+
+    if (els.mission5kTime) {
+        els.mission5kTime.addEventListener("input", updateMission5kText);
+    }
+
+    if (els.shareMission5k) {
+        els.shareMission5k.addEventListener("click", shareMission5kText);
+    }
 }
 
 function init() {
     populateManualSelects();
     if (els.announcementText) {
         els.announcementText.value = ANNOUNCEMENT_TEXT;
+    }
+    if (els.mission5kTime) {
+        els.mission5kTime.value = formatTimeValue();
+        updateMission5kText();
     }
     bindEvents();
     syncManualAmount(0);

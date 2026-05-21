@@ -168,7 +168,8 @@ button {
     .mission-import-panel,
     .mission-import-actions,
     .mission-output,
-    .mission-assignment {
+    .mission-assignment,
+    .operator-editor-toolbar {
         grid-template-columns: 1fr;
     }
 
@@ -182,14 +183,24 @@ button {
         flex-direction: column;
     }
 
+    .operator-editor-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
     .mission-time-panel {
         grid-template-columns: 1fr;
     }
 
     .mission-toolbar-actions,
-    .mission-share-actions {
+    .mission-share-actions,
+    .operator-editor-actions {
         display: grid;
         grid-template-columns: 1fr;
+    }
+
+    .operator-editor-table-wrap {
+        max-height: 520px;
     }
 
     .mission-grid {
@@ -341,7 +352,8 @@ button {
     .mission-import-panel,
     .mission-import-actions,
     .mission-output,
-    .mission-assignment {
+    .mission-assignment,
+    .operator-editor-toolbar {
         grid-template-columns: 1fr;
     }
 
@@ -355,11 +367,17 @@ button {
         flex-direction: column;
     }
 
+    .operator-editor-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
     .mission-time-panel {
         grid-template-columns: 1fr;
     }
 
-    .mission-toolbar-actions {
+    .mission-toolbar-actions,
+    .operator-editor-actions {
         display: grid;
         grid-template-columns: 1fr;
     }
