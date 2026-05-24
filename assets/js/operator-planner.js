@@ -1,5 +1,7 @@
 const PLANNER_PASSWORD_SALT = "blastoise-burn-operator-tool-v1";
 const PLANNER_PASSWORD_HASH = "d8b5f6f84b2839d58d614e239fa1715620ad23d3ed733e46178db2c0ae37fb22";
+const CLAN_ROSTER_PASSWORD_SALT = "blastoise-clan-roster-v1";
+const CLAN_ROSTER_PASSWORD_HASH = "7d5cd7891d4c00335d48e7b1936d498d0c2a8b4c8aa80decf359a1d3c9734797";
 
 const TEXT_SIREN = "\u{1F6A8}";
 const TEXT_CLOCK = "\u{1F559}";
@@ -807,6 +809,100 @@ const PLANNER_SLOTS = [
 const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY", "LENS"]);
 const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
 const OPERATOR_DATA_STORAGE_KEY = "blastoise.operatorData.v3";
+const CLAN_ROSTER_STORAGE_KEY = "blastoise.clanRoster.v1";
+const DEFAULT_CLAN_ROSTER_NICKS = [
+    "[△665]¹¹ChapoTRUE♛",
+    "[△665]23core",
+    "[△665]2ezEloy",
+    "[△665]AbsolutCinema",
+    "[△665]Alonso",
+    "[△665]AngelTRUE",
+    "[△665]Assassin†.",
+    "[△665]BẮTTōu_ŚẤ†burn",
+    "[△665]BAGACERA",
+    "[△665]BLΛƧTOIZΣburn",
+    "[△665]BOB MAICON",
+    "[△665]Burn",
+    "[△665]CACTO&POEIRA",
+    "[△665]Caneco",
+    "[△665]Capiroto◇core",
+    "[△665]cbpjHO",
+    "[△665]CeeJooTaa",
+    "[△665]CHALA-YOUTOBA",
+    "[△665]CMDTRUE",
+    "[△665]danyBlood",
+    "[△665]Delta Mata",
+    "[△665]Delta Sioux",
+    "[△665]D♛NZO⁴²⁰",
+    "[△665]EFEITOESTUFA",
+    "[△665]evertonTaguai",
+    "[△665]Єxþloƶivᵉburn",
+    "[△665]FLPWAR",
+    "[△665]Fumaça",
+    "[△665]Garou-D.",
+    "[△665]HERO10",
+    "[△665]ICE",
+    "[△665]Idiotpay2win",
+    "[△665]JOETRUE",
+    "[△665]KANGTRUE",
+    "[△665]KBçaDBiLola",
+    "[△665]Kogdoi-D",
+    "[△665]MATAboots",
+    "[△665]Matrixcore",
+    "[△665]NoobMaster",
+    "[△665]N°ôhdaLund",
+    "[△665]Oooops△force",
+    "[△665]Peaél⊙?e",
+    "[△665]Pirata",
+    "[△665]RAMAcore",
+    "[△665]Redfield★core",
+    "[△665]Rickø",
+    "[△665]Seukuzincore",
+    "[△665]t.a.n.j.i.rō",
+    "[△665]THRAGGburn",
+    "[△665]TIO",
+    "[△665]TNTfresa",
+    "[△665]VaiTomarSuaCu",
+    "[△665]VI₦Ç₳ÐØRcore",
+    "[△665]Weis",
+    "[△665]Ximenão",
+    "[△665]ZEЯØMEIA⁶⁶⁵",
+    "[△665]ZOE",
+    "[△665]ⓚⓘⓡⓚ—デ——",
+    "[△665]ΣNIGMΛVRGs",
+    "[△665]△⁶⁶⁵Ç₳ĪØ$V",
+    "[△665]░⌂➒⊂oldįgR†",
+    "[△665]《《ROCK》》",
+    "[△665]万日爪乃尺卆burn",
+    "[△665]山モモ刀boots",
+    "[△665]—デ══ИΞΦburn"
+];
+const DEFAULT_CLAN_ROSTER_NAMES = {
+    "[△665]BLΛƧTOIZΣburn": "RAFAEL",
+    "[△665]BOB MAICON": "MAICON",
+    "[△665]Delta Sioux": "ADRIANO",
+    "[△665]RAMAcore": "RAMA",
+    "[△665]VI₦Ç₳ÐØRcore": "LEO"
+};
+const DEFAULT_CLAN_ROSTER_WHATSAPP = {
+    "[△665]BLΛƧTOIZΣburn": "32998418361",
+    "[△665]BOB MAICON": "555194676225",
+    "[△665]Delta Sioux": "5511993745723",
+    "[△665]RAMAcore": "558588785152",
+    "[△665]VI₦Ç₳ÐØRcore": "554891592539"
+};
+const CLAN_ROSTER_FEATURED = {
+    "[△665]Delta Sioux": { role: "ADM", order: 1 },
+    "[△665]Matrixcore": { role: "VP", order: 2 },
+    "[△665]BLΛƧTOIZΣburn": { role: "VP", order: 3 },
+    "[△665]RAMAcore": { role: "VP", order: 4 },
+    "[△665]MATAboots": { role: "VP", order: 5 },
+    "[△665]Delta Mata": { role: "VP", order: 6 },
+    "[△665]23core": { role: "VP", order: 7 },
+    "[△665]TIO": { role: "VP", order: 8 },
+    "[△665]Redfield★core": { role: "VP", order: 9 },
+    "[△665]Capiroto◇core": { role: "VP", order: 10 }
+};
 const DEFAULT_OPERATOR_DETAILS = {
     APOLLO: { rank: "4-1" },
     BATYA: { rank: "4-5" },
@@ -866,6 +962,8 @@ let plannerUnlocked = false;
 let importedAssignment = null;
 let operatorData = null;
 let operatorEditorSort = { key: "", direction: "desc" };
+let clanRosterUnlocked = false;
+let clanRoster = [];
 
 function missionByKey(key) {
     return PLANNER_MISSIONS.find((mission) => mission.key === key);
@@ -917,6 +1015,14 @@ function operatorByTextName(name) {
 
 async function hashPlannerPassword(password) {
     const data = new TextEncoder().encode(`${PLANNER_PASSWORD_SALT}${password}`);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return [...new Uint8Array(digest)]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+async function hashClanRosterPassword(password) {
+    const data = new TextEncoder().encode(`${CLAN_ROSTER_PASSWORD_SALT}${password}`);
     const digest = await crypto.subtle.digest("SHA-256", data);
     return [...new Uint8Array(digest)]
         .map((byte) => byte.toString(16).padStart(2, "0"))
@@ -1091,6 +1197,351 @@ function escapeHtml(value) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
+}
+
+function normalizeClanPhone(value) {
+    return String(value || "").replace(/\D/g, "");
+}
+
+function whatsappDigits(value) {
+    const digits = normalizeClanPhone(value);
+    if (digits.length === 10 || digits.length === 11) {
+        return `55${digits}`;
+    }
+
+    return digits;
+}
+
+function formatClanPhone(value) {
+    const digits = normalizeClanPhone(value);
+    if (digits.length === 11) {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+    }
+
+    if (digits.length === 10) {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    }
+
+    if (digits.length === 13 && digits.startsWith("55")) {
+        return `+55 (${digits.slice(2, 4)}) ${digits.slice(4, 9)}-${digits.slice(9)}`;
+    }
+
+    if (digits.length === 12 && digits.startsWith("55")) {
+        return `+55 (${digits.slice(2, 4)}) ${digits.slice(4, 8)}-${digits.slice(8)}`;
+    }
+
+    return value || "-";
+}
+
+function createClanPlayerId() {
+    if (window.crypto?.randomUUID) {
+        return window.crypto.randomUUID();
+    }
+
+    return `player-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function createDefaultClanRoster() {
+    return DEFAULT_CLAN_ROSTER_NICKS.map((nick, index) => ({
+        id: `seed-${index + 1}`,
+        name: DEFAULT_CLAN_ROSTER_NAMES[nick] || "",
+        nick,
+        whatsapp: DEFAULT_CLAN_ROSTER_WHATSAPP[nick] || ""
+    }));
+}
+
+function mergeDefaultClanRoster(players) {
+    const merged = [...players];
+    const savedNicks = new Set(merged.map((player) => player.nick));
+
+    createDefaultClanRoster().forEach((defaultPlayer) => {
+        if (!savedNicks.has(defaultPlayer.nick)) {
+            merged.push(defaultPlayer);
+        }
+    });
+
+    return merged;
+}
+
+function loadClanRoster() {
+    try {
+        const saved = localStorage.getItem(CLAN_ROSTER_STORAGE_KEY);
+        const parsed = saved ? JSON.parse(saved) : null;
+        const savedPlayers = Array.isArray(parsed?.players) ? parsed.players.map((player) => ({
+            id: String(player.id || createClanPlayerId()),
+            name: String(player.name || DEFAULT_CLAN_ROSTER_NAMES[player.nick] || "").trim(),
+            nick: String(player.nick || "").trim(),
+            whatsapp: normalizeClanPhone(player.whatsapp || DEFAULT_CLAN_ROSTER_WHATSAPP[player.nick])
+        })).filter((player) => player.nick) : [];
+        clanRoster = mergeDefaultClanRoster(savedPlayers);
+        saveClanRoster();
+    } catch (error) {
+        clanRoster = createDefaultClanRoster();
+        saveClanRoster();
+    }
+}
+
+function saveClanRoster() {
+    localStorage.setItem(CLAN_ROSTER_STORAGE_KEY, JSON.stringify({
+        version: 1,
+        players: clanRoster
+    }));
+}
+
+function setClanRosterStatus(message) {
+    if (!plannerEls.clanRosterStatus) {
+        return;
+    }
+
+    plannerEls.clanRosterStatus.textContent = message;
+    if (message) {
+        setTimeout(() => {
+            if (plannerEls.clanRosterStatus.textContent === message) {
+                plannerEls.clanRosterStatus.textContent = "";
+            }
+        }, 3200);
+    }
+}
+
+function clearClanRosterForm() {
+    if (!plannerEls.clanRosterForm) {
+        return;
+    }
+
+    plannerEls.clanPlayerId.value = "";
+    plannerEls.clanPlayerName.value = "";
+    plannerEls.clanPlayerNick.value = "";
+    plannerEls.clanPlayerWhatsapp.value = "";
+    plannerEls.saveClanPlayerButton.textContent = "Salvar jogador";
+}
+
+function filteredClanRoster() {
+    const query = normalizeLookupText(plannerEls.clanRosterSearch?.value || "");
+    if (!query) {
+        return [...clanRoster];
+    }
+
+    return clanRoster.filter((player) => {
+        const haystack = normalizeLookupText(`${player.name} ${player.nick} ${player.whatsapp}`);
+        return haystack.includes(query);
+    });
+}
+
+function getClanFeaturedInfo(player) {
+    return CLAN_ROSTER_FEATURED[player.nick] || null;
+}
+
+function sortClanPlayers(first, second) {
+    const firstFeatured = getClanFeaturedInfo(first);
+    const secondFeatured = getClanFeaturedInfo(second);
+
+    if (firstFeatured || secondFeatured) {
+        return (firstFeatured?.order || 999) - (secondFeatured?.order || 999);
+    }
+
+    return first.nick.localeCompare(second.nick, "pt-BR");
+}
+
+function renderClanRoster() {
+    if (!plannerEls.clanRosterBody) {
+        return;
+    }
+
+    const players = filteredClanRoster().sort(sortClanPlayers);
+    if (!players.length) {
+        plannerEls.clanRosterBody.innerHTML = '<tr><td colspan="4" class="clan-roster-empty">Nenhum jogador cadastrado.</td></tr>';
+        return;
+    }
+
+    plannerEls.clanRosterBody.innerHTML = players.map((player) => {
+        const digits = whatsappDigits(player.whatsapp);
+        const whatsappLink = digits ? `https://wa.me/${digits}` : "";
+        const whatsappButton = whatsappLink
+            ? `<a class="clan-roster-action" href="${escapeHtml(whatsappLink)}" target="_blank" rel="noopener noreferrer">Zap</a>`
+            : '<span class="clan-roster-action is-disabled">Pendente</span>';
+        const featured = getClanFeaturedInfo(player);
+        const rowClass = featured ? " class=\"is-featured\"" : "";
+        const roleBadge = featured ? `<span class="clan-role-badge clan-role-${featured.role.toLowerCase()}">${featured.role}</span>` : "";
+        return `
+            <tr${rowClass}>
+                <td>${escapeHtml(player.name || "-")}</td>
+                <th>${roleBadge}${escapeHtml(player.nick)}</th>
+                <td>${escapeHtml(formatClanPhone(player.whatsapp))}</td>
+                <td>
+                    <div class="clan-roster-row-actions">
+                        ${whatsappButton}
+                        <button type="button" class="clan-roster-action" data-action="copy" data-player-id="${escapeHtml(player.id)}">Copiar</button>
+                        <button type="button" class="clan-roster-action" data-action="edit" data-player-id="${escapeHtml(player.id)}">Editar</button>
+                        <button type="button" class="clan-roster-action" data-action="delete" data-player-id="${escapeHtml(player.id)}">X</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join("");
+}
+
+async function unlockClanRoster(event) {
+    event.preventDefault();
+
+    const password = plannerEls.clanRosterPassword.value.trim();
+    if (!password) {
+        plannerEls.clanRosterLockMessage.textContent = "Digite a senha extra.";
+        return;
+    }
+
+    if (!/^\d+$/.test(password)) {
+        plannerEls.clanRosterLockMessage.textContent = "A senha extra deve conter apenas n\u00FAmeros.";
+        return;
+    }
+
+    const hash = await hashClanRosterPassword(password);
+    if (hash === CLAN_ROSTER_PASSWORD_HASH) {
+        clanRosterUnlocked = true;
+        plannerEls.clanRosterGate.hidden = true;
+        plannerEls.clanRosterContent.hidden = false;
+        plannerEls.clanRosterPassword.value = "";
+        plannerEls.clanRosterLockMessage.textContent = "";
+        renderClanRoster();
+        return;
+    }
+
+    plannerEls.clanRosterLockMessage.textContent = "Senha extra incorreta.";
+    plannerEls.clanRosterPassword.value = "";
+}
+
+function saveClanPlayer(event) {
+    event.preventDefault();
+
+    if (!clanRosterUnlocked) {
+        return;
+    }
+
+    const id = plannerEls.clanPlayerId.value;
+    const nick = plannerEls.clanPlayerNick.value.trim();
+    const name = plannerEls.clanPlayerName.value.trim();
+    const whatsapp = normalizeClanPhone(plannerEls.clanPlayerWhatsapp.value);
+
+    if (!nick) {
+        setClanRosterStatus("Nick \u00E9 obrigat\u00F3rio.");
+        return;
+    }
+
+    const existingIndex = clanRoster.findIndex((player) => player.id === id);
+    const player = {
+        id: id || createClanPlayerId(),
+        name,
+        nick,
+        whatsapp
+    };
+
+    if (existingIndex >= 0) {
+        clanRoster[existingIndex] = player;
+        setClanRosterStatus("Jogador atualizado.");
+    } else {
+        clanRoster.push(player);
+        setClanRosterStatus("Jogador cadastrado.");
+    }
+
+    saveClanRoster();
+    clearClanRosterForm();
+    renderClanRoster();
+}
+
+async function copyClanText(text, message = "Copiado.") {
+    try {
+        await navigator.clipboard.writeText(text);
+        setClanRosterStatus(message);
+    } catch (error) {
+        if (plannerEls.clanRosterTransfer) {
+            plannerEls.clanRosterTransfer.value = text;
+            plannerEls.clanRosterTransfer.focus();
+            plannerEls.clanRosterTransfer.select();
+        }
+        setClanRosterStatus("Texto pronto para copiar.");
+    }
+}
+
+function handleClanRosterAction(event) {
+    const actionButton = event.target.closest("[data-action][data-player-id]");
+    if (!actionButton || !clanRosterUnlocked) {
+        return;
+    }
+
+    const player = clanRoster.find((item) => item.id === actionButton.dataset.playerId);
+    if (!player) {
+        return;
+    }
+
+    if (actionButton.dataset.action === "edit") {
+        plannerEls.clanPlayerId.value = player.id;
+        plannerEls.clanPlayerName.value = player.name;
+        plannerEls.clanPlayerNick.value = player.nick;
+        plannerEls.clanPlayerWhatsapp.value = player.whatsapp;
+        plannerEls.saveClanPlayerButton.textContent = "Atualizar jogador";
+        plannerEls.clanPlayerNick.focus();
+        return;
+    }
+
+    if (actionButton.dataset.action === "delete") {
+        clanRoster = clanRoster.filter((item) => item.id !== player.id);
+        saveClanRoster();
+        clearClanRosterForm();
+        renderClanRoster();
+        setClanRosterStatus("Jogador removido.");
+        return;
+    }
+
+    if (actionButton.dataset.action === "copy") {
+        copyClanText(`${player.nick} - ${formatClanPhone(player.whatsapp)}`, "Contato copiado.");
+    }
+}
+
+function exportClanRoster() {
+    if (!clanRosterUnlocked) {
+        return;
+    }
+
+    const text = JSON.stringify({ version: 1, players: clanRoster }, null, 2);
+    plannerEls.clanRosterTransfer.value = text;
+    copyClanText(text, "Backup copiado.");
+}
+
+function importClanRoster() {
+    if (!clanRosterUnlocked) {
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(plannerEls.clanRosterTransfer.value || "{}");
+        if (!Array.isArray(parsed.players)) {
+            throw new Error("Formato inv\u00E1lido");
+        }
+
+        clanRoster = parsed.players.map((player) => ({
+            id: String(player.id || createClanPlayerId()),
+            name: String(player.name || "").trim(),
+            nick: String(player.nick || "").trim(),
+            whatsapp: normalizeClanPhone(player.whatsapp)
+        })).filter((player) => player.nick);
+        saveClanRoster();
+        clearClanRosterForm();
+        renderClanRoster();
+        setClanRosterStatus("Backup importado.");
+    } catch (error) {
+        setClanRosterStatus("Backup inv\u00E1lido.");
+    }
+}
+
+function copyClanRosterList() {
+    if (!clanRosterUnlocked) {
+        return;
+    }
+
+    const players = [...clanRoster].sort(sortClanPlayers);
+    const text = players.length
+        ? players.map((player) => `${player.nick}${player.name ? ` (${player.name})` : ""}: ${formatClanPhone(player.whatsapp)}`).join("\n")
+        : "Nenhum jogador cadastrado.";
+    copyClanText(text, "Lista copiada.");
 }
 
 function getBaseMissionScore(mission, operator, index) {
@@ -1940,8 +2391,28 @@ function initOperatorPlanner() {
     plannerEls.exportOperatorDataButton = document.getElementById("exportOperatorDataButton");
     plannerEls.importOperatorDataButton = document.getElementById("importOperatorDataButton");
     plannerEls.resetOperatorDataButton = document.getElementById("resetOperatorDataButton");
+    plannerEls.clanRosterGate = document.getElementById("clanRosterGate");
+    plannerEls.clanRosterContent = document.getElementById("clanRosterContent");
+    plannerEls.clanRosterUnlockForm = document.getElementById("clanRosterUnlockForm");
+    plannerEls.clanRosterPassword = document.getElementById("clanRosterPassword");
+    plannerEls.clanRosterLockMessage = document.getElementById("clanRosterLockMessage");
+    plannerEls.clanRosterForm = document.getElementById("clanRosterForm");
+    plannerEls.clanPlayerId = document.getElementById("clanPlayerId");
+    plannerEls.clanPlayerName = document.getElementById("clanPlayerName");
+    plannerEls.clanPlayerNick = document.getElementById("clanPlayerNick");
+    plannerEls.clanPlayerWhatsapp = document.getElementById("clanPlayerWhatsapp");
+    plannerEls.saveClanPlayerButton = document.getElementById("saveClanPlayerButton");
+    plannerEls.clearClanPlayerFormButton = document.getElementById("clearClanPlayerFormButton");
+    plannerEls.exportClanRosterButton = document.getElementById("exportClanRosterButton");
+    plannerEls.importClanRosterButton = document.getElementById("importClanRosterButton");
+    plannerEls.copyClanRosterButton = document.getElementById("copyClanRosterButton");
+    plannerEls.clanRosterSearch = document.getElementById("clanRosterSearch");
+    plannerEls.clanRosterStatus = document.getElementById("clanRosterStatus");
+    plannerEls.clanRosterTransfer = document.getElementById("clanRosterTransfer");
+    plannerEls.clanRosterBody = document.getElementById("clanRosterBody");
 
     loadOperatorData();
+    loadClanRoster();
     createMissionTimes();
     createOperatorMissionFilter();
     createMissionRows();
@@ -1972,6 +2443,14 @@ function initOperatorPlanner() {
     plannerEls.operatorSearchFilter.addEventListener("input", handleOperatorEditorFilterChange);
     plannerEls.operatorViewFilter.addEventListener("change", handleOperatorEditorFilterChange);
     plannerEls.operatorMissionFilter.addEventListener("change", handleOperatorEditorFilterChange);
+    plannerEls.clanRosterUnlockForm.addEventListener("submit", unlockClanRoster);
+    plannerEls.clanRosterForm.addEventListener("submit", saveClanPlayer);
+    plannerEls.clearClanPlayerFormButton.addEventListener("click", clearClanRosterForm);
+    plannerEls.exportClanRosterButton.addEventListener("click", exportClanRoster);
+    plannerEls.importClanRosterButton.addEventListener("click", importClanRoster);
+    plannerEls.copyClanRosterButton.addEventListener("click", copyClanRosterList);
+    plannerEls.clanRosterSearch.addEventListener("input", renderClanRoster);
+    plannerEls.clanRosterBody.addEventListener("click", handleClanRosterAction);
 
     renderEmptyState();
 }

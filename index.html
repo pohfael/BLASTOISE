@@ -228,6 +228,7 @@
                 <div class="mission-tabs" role="tablist" aria-label="Áreas da ferramenta de missões">
                     <button type="button" class="mission-tab is-active" data-mission-tab="allocation" role="tab" aria-selected="true">Locação</button>
                     <button type="button" class="mission-tab" data-mission-tab="operators" role="tab" aria-selected="false">Operadores</button>
+                    <button type="button" class="mission-tab" data-mission-tab="clan" role="tab" aria-selected="false">Jogadores</button>
                 </div>
 
                 <div class="mission-tab-panel is-active" data-mission-panel="allocation" role="tabpanel">
@@ -338,6 +339,78 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="mission-tab-panel clan-roster-panel" data-mission-panel="clan" role="tabpanel" hidden>
+                    <div class="clan-roster-gate" id="clanRosterGate">
+                        <div>
+                            <p class="eyebrow">Acesso máximo</p>
+                            <h3>Lista de jogadores do clã</h3>
+                            <p>Use uma senha extra para visualizar contatos e organizar exigências de envio nas missões.</p>
+                        </div>
+                        <form id="clanRosterUnlockForm" class="mission-unlock-form">
+                            <input type="password" id="clanRosterPassword" autocomplete="off" placeholder="Senha extra" aria-label="Senha extra" inputmode="numeric" pattern="[0-9]*">
+                            <button type="submit">Desbloquear</button>
+                        </form>
+                        <p id="clanRosterLockMessage" class="mission-lock-message" aria-live="polite"></p>
+                    </div>
+
+                    <div class="clan-roster-content" id="clanRosterContent" hidden>
+                        <div class="operator-editor-toolbar">
+                            <div>
+                                <p class="eyebrow">Contatos protegidos</p>
+                                <h3>Jogadores cadastrados</h3>
+                                <p class="operator-editor-note">Os contatos ficam salvos apenas neste navegador. Não entram na base raiz nem no GitHub.</p>
+                            </div>
+                            <div class="operator-editor-actions">
+                                <button type="button" id="exportClanRosterButton">Exportar backup</button>
+                                <button type="button" id="importClanRosterButton">Importar backup</button>
+                                <button type="button" id="copyClanRosterButton">Copiar lista</button>
+                            </div>
+                        </div>
+
+                        <form id="clanRosterForm" class="clan-roster-form">
+                            <input type="hidden" id="clanPlayerId">
+                            <label>
+                                <span>Nome opcional</span>
+                                <input type="text" id="clanPlayerName" autocomplete="off" placeholder="Nome real ou apelido">
+                            </label>
+                            <label>
+                                <span>Nick no jogo</span>
+                                <input type="text" id="clanPlayerNick" autocomplete="off" placeholder="Nick obrigatório" required>
+                            </label>
+                            <label>
+                                <span>WhatsApp</span>
+                                <input type="tel" id="clanPlayerWhatsapp" autocomplete="off" placeholder="DDD + número">
+                            </label>
+                            <div class="clan-roster-form-actions">
+                                <button type="submit" id="saveClanPlayerButton">Salvar jogador</button>
+                                <button type="button" id="clearClanPlayerFormButton">Limpar</button>
+                            </div>
+                        </form>
+
+                        <div class="operator-editor-filters clan-roster-filters" aria-label="Filtros da lista de jogadores">
+                            <label>
+                                <span>Buscar jogador</span>
+                                <input type="search" id="clanRosterSearch" placeholder="Nome, nick ou WhatsApp">
+                            </label>
+                        </div>
+                        <div class="operator-editor-status" id="clanRosterStatus" aria-live="polite"></div>
+                        <textarea id="clanRosterTransfer" class="operator-data-transfer" aria-label="Backup da lista de jogadores" placeholder="Use Exportar backup para copiar os dados, ou cole um backup aqui e clique em Importar backup."></textarea>
+                        <div class="operator-editor-table-wrap clan-roster-table-wrap">
+                            <table class="operator-editor-table clan-roster-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Nick</th>
+                                        <th>WhatsApp</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clanRosterBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -391,7 +464,7 @@
     </main>
 
     <script src="assets/js/app.js?v=20260523-copy-sticky"></script>
-    <script src="assets/js/operator-planner.js?v=20260524-incomum-cycle"></script>
+    <script src="assets/js/operator-planner.js?v=20260524-restore-default-clan"></script>
 </body>
 </html>
 
