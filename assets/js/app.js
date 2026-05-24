@@ -126,6 +126,7 @@ const els = {
     announcementStatus: document.getElementById("announcementStatus"),
     mission5kTime: document.getElementById("mission5kTimeInput"),
     mission5kText: document.getElementById("mission5kText"),
+    copyMission5k: document.getElementById("copyMission5kButton"),
     shareMission5k: document.getElementById("shareMission5kButton"),
     mission5kStatus: document.getElementById("mission5kStatus")
 };
@@ -689,6 +690,34 @@ async function shareMission5kText() {
     }, 4200);
 }
 
+async function copyMission5kText() {
+    if (!els.mission5kText) {
+        return;
+    }
+
+    updateMission5kText();
+    const text = els.mission5kText.value.trim();
+    if (!text) {
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (error) {
+        els.mission5kText.focus();
+        els.mission5kText.select();
+        document.execCommand("copy");
+        els.mission5kText.setSelectionRange(0, 0);
+    }
+
+    if (els.mission5kStatus) {
+        els.mission5kStatus.textContent = "Texto copiado";
+        setTimeout(() => {
+            els.mission5kStatus.textContent = "";
+        }, 2600);
+    }
+}
+
 function bindEvents() {
     [els.coins, ...els.resourceInputs].forEach((input) => {
         input.addEventListener("input", () => {
@@ -748,6 +777,10 @@ function bindEvents() {
 
     if (els.shareMission5k) {
         els.shareMission5k.addEventListener("click", shareMission5kText);
+    }
+
+    if (els.copyMission5k) {
+        els.copyMission5k.addEventListener("click", copyMission5kText);
     }
 }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260521-mission-5k-red-card">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260523-copy-sticky">
     <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
@@ -13,6 +13,14 @@
             <a class="brand-mark" href="#manualPanel" aria-label="Blastoise Burn">
                 <img src="assets/img/blastoise-burn-logo.png" alt="Blastoise Burn">
             </a>
+        </nav>
+
+        <nav class="quick-nav" aria-label="Atalhos do painel">
+            <a href="#manualPanel">Conversor</a>
+            <a href="#announcementTool">Anúncios</a>
+            <a href="#mission5kTool">Missão 5K</a>
+            <a href="#missionTool">Locação</a>
+            <a href="#operatorGame">Jogo</a>
         </nav>
 
         <div class="section-divider section-divider-calculator">
@@ -131,61 +139,64 @@
 
         <div class="section-divider section-divider-announcement">
             <p>Organização do clã</p>
-            <div class="section-heading">Disparo de anúncio</div>
+            <div class="section-heading">Ferramentas do clã</div>
         </div>
 
-        <section class="panel announcement-tool" id="announcementTool" aria-label="Disparo de mensagem para assistir anúncio">
-            <div class="panel-heading">
-                <div>
-                    <p class="eyebrow">Aviso rápido</p>
-                    <h2>Assistir anúncios</h2>
-                </div>
-            </div>
-
-            <div class="announcement-layout">
-                <figure class="announcement-art">
-                    <img src="assets/img/ad-reward-banner.png" alt="Kit de recompensa de vídeo">
-                </figure>
-
-                <div class="announcement-copy">
-                    <p class="eyebrow">Mensagem de envio</p>
-                    <h3>Chamada para o clã</h3>
-                    <textarea id="announcementText" readonly aria-label="Texto para anúncio"></textarea>
-                    <div class="announcement-actions">
-                        <button type="button" id="shareAnnouncementButton">Enviar no WhatsApp</button>
+        <section class="clan-tools-grid" aria-label="Ferramentas de comunicação do clã">
+            <section class="panel announcement-tool" id="announcementTool" aria-label="Disparo de mensagem para assistir anúncio">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Aviso rápido</p>
+                        <h2>Assistir anúncios</h2>
                     </div>
-                    <span id="announcementStatus" aria-live="polite"></span>
                 </div>
-            </div>
-        </section>
 
-        <section class="panel mission5k-tool" id="mission5kTool" aria-label="Disparo de mensagem para missão 5K">
-            <div class="panel-heading">
-                <div>
-                    <p class="eyebrow">Aviso rápido</p>
-                    <h2>Missão 5K</h2>
-                </div>
-            </div>
+                <div class="announcement-layout">
+                    <figure class="announcement-art">
+                        <img src="assets/img/ad-reward-banner.png" alt="Kit de recompensa de vídeo">
+                    </figure>
 
-            <div class="announcement-layout mission5k-layout">
-                <figure class="announcement-art mission5k-art">
-                    <img src="assets/img/mission-5k-banner.png?v=20260521-1717x916-acentos" alt="Arte de aviso da missão 5K">
-                </figure>
-
-                <div class="announcement-copy mission5k-copy">
-                    <p class="eyebrow">Mensagem automática</p>
-                    <h3>Aviso para o grupo</h3>
-                    <label class="mission5k-time-field">
-                        <span>Hora atual</span>
-                        <input type="time" id="mission5kTimeInput" step="60">
-                    </label>
-                    <textarea id="mission5kText" readonly aria-label="Texto para missão 5K"></textarea>
-                    <div class="announcement-actions">
-                        <button type="button" id="shareMission5kButton">Enviar no WhatsApp</button>
+                    <div class="announcement-copy">
+                        <p class="eyebrow">Mensagem de envio</p>
+                        <h3>Chamada para o clã</h3>
+                        <textarea id="announcementText" readonly aria-label="Texto para anúncio"></textarea>
+                        <div class="announcement-actions">
+                            <button type="button" id="shareAnnouncementButton">Enviar no WhatsApp</button>
+                        </div>
+                        <span id="announcementStatus" aria-live="polite"></span>
                     </div>
-                    <span id="mission5kStatus" aria-live="polite"></span>
                 </div>
-            </div>
+            </section>
+
+            <section class="panel mission5k-tool" id="mission5kTool" aria-label="Disparo de mensagem para missão 5K">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Aviso rápido</p>
+                        <h2>Missão 5K</h2>
+                    </div>
+                </div>
+
+                <div class="announcement-layout mission5k-layout">
+                    <figure class="announcement-art mission5k-art">
+                        <img src="assets/img/mission-5k-banner.png?v=20260521-1717x916-acentos" alt="Arte de aviso da missão 5K">
+                    </figure>
+
+                    <div class="announcement-copy mission5k-copy">
+                        <p class="eyebrow">Mensagem automática</p>
+                        <h3>Aviso para o grupo</h3>
+                        <label class="mission5k-time-field">
+                            <span>Hora atual</span>
+                            <input type="time" id="mission5kTimeInput" step="60">
+                        </label>
+                        <textarea id="mission5kText" readonly aria-label="Texto para missão 5K"></textarea>
+                        <div class="announcement-actions mission5k-actions">
+                            <button type="button" id="copyMission5kButton">Copiar texto</button>
+                            <button type="button" id="shareMission5kButton">Enviar no WhatsApp</button>
+                        </div>
+                        <span id="mission5kStatus" aria-live="polite"></span>
+                    </div>
+                </div>
+            </section>
         </section>
 
         <div class="section-divider section-divider-mission">
@@ -275,47 +286,50 @@
                 </div>
 
                 <div class="mission-tab-panel operator-panel is-locked" data-mission-panel="operators" role="tabpanel" hidden>
-                    <div class="operator-editor-toolbar">
-                        <div>
-                            <p class="eyebrow">Base de operadores</p>
-                            <h3>Pontuações editáveis</h3>
-                            <p class="operator-editor-note">Salvar guarda neste navegador. Exportar base gera o texto para atualizar a base raiz do site.</p>
+                    <div class="operator-editor-sticky">
+                        <div class="operator-editor-toolbar">
+                            <div>
+                                <p class="eyebrow">Base de operadores</p>
+                                <h3>Pontuações editáveis</h3>
+                                <p class="operator-editor-note">Salvar guarda neste navegador. Exportar base gera o texto para atualizar a base raiz do site.</p>
+                            </div>
+                            <div class="operator-editor-actions">
+                                <button type="button" id="saveOperatorDataButton" disabled>Salvar</button>
+                                <button type="button" id="exportOperatorDataButton" disabled>Exportar base raiz</button>
+                                <button type="button" id="importOperatorDataButton" disabled>Importar base</button>
+                                <button type="button" id="resetOperatorDataButton" disabled>Restaurar base</button>
+                            </div>
                         </div>
-                        <div class="operator-editor-actions">
-                            <button type="button" id="saveOperatorDataButton" disabled>Salvar</button>
-                            <button type="button" id="exportOperatorDataButton" disabled>Exportar base raiz</button>
-                            <button type="button" id="importOperatorDataButton" disabled>Importar base</button>
-                            <button type="button" id="resetOperatorDataButton" disabled>Restaurar base</button>
+                        <div class="operator-score-legend" aria-label="Legenda das cores da pontuação">
+                            <span><i class="legend-dot legend-dot-best"></i>Verde: melhor missão do operador</span>
+                            <span><i class="legend-dot legend-dot-good"></i>Amarelo: segunda ou terceira melhor</span>
+                            <span><i class="legend-dot legend-dot-neutral"></i>Azul: missão intermediária</span>
+                            <span><i class="legend-dot legend-dot-low"></i>Vermelho: missão fraca ou sem pontuação</span>
                         </div>
+                        <div class="operator-editor-filters" aria-label="Filtros da base de operadores">
+                            <label>
+                                <span>Buscar</span>
+                                <input type="search" id="operatorSearchFilter" placeholder="Nome do operador" disabled>
+                            </label>
+                            <label>
+                                <span>Exibir</span>
+                                <select id="operatorViewFilter" disabled>
+                                    <option value="all">Todos</option>
+                                    <option value="missing-rank">Patente vazia</option>
+                                    <option value="new">Operadores novos</option>
+                                    <option value="strong">Com missão forte</option>
+                                    <option value="weak">Com missão fraca</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Missão</span>
+                                <select id="operatorMissionFilter" disabled>
+                                    <option value="">Todas</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="operator-editor-status" id="operatorEditorStatus" aria-live="polite"></div>
                     </div>
-                    <div class="operator-score-legend" aria-label="Legenda das cores da pontuação">
-                        <span><i class="legend-dot legend-dot-best"></i>Verde: melhor missão do operador</span>
-                        <span><i class="legend-dot legend-dot-good"></i>Amarelo: segunda ou terceira melhor</span>
-                        <span><i class="legend-dot legend-dot-low"></i>Vermelho: missão fraca ou sem pontuação</span>
-                    </div>
-                    <div class="operator-editor-filters" aria-label="Filtros da base de operadores">
-                        <label>
-                            <span>Buscar</span>
-                            <input type="search" id="operatorSearchFilter" placeholder="Nome do operador" disabled>
-                        </label>
-                        <label>
-                            <span>Exibir</span>
-                            <select id="operatorViewFilter" disabled>
-                                <option value="all">Todos</option>
-                                <option value="missing-rank">Patente vazia</option>
-                                <option value="new">Operadores novos</option>
-                                <option value="strong">Com missão forte</option>
-                                <option value="weak">Com missão fraca</option>
-                            </select>
-                        </label>
-                        <label>
-                            <span>Missão</span>
-                            <select id="operatorMissionFilter" disabled>
-                                <option value="">Todas</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="operator-editor-status" id="operatorEditorStatus" aria-live="polite"></div>
                     <textarea id="operatorDataTransfer" class="operator-data-transfer" aria-label="Base de operadores exportada" placeholder="Use Exportar base para copiar os dados, ou cole uma base aqui e clique em Importar base." disabled></textarea>
                     <div class="operator-editor-table-wrap">
                         <table class="operator-editor-table">
@@ -376,8 +390,8 @@
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260521-mission-5k-started"></script>
-    <script src="assets/js/operator-planner.js?v=20260520-lens-list"></script>
+    <script src="assets/js/app.js?v=20260523-copy-sticky"></script>
+    <script src="assets/js/operator-planner.js?v=20260524-incomum-cycle"></script>
 </body>
 </html>
 
