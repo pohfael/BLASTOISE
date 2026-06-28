@@ -718,6 +718,96 @@ async function copyMission5kText() {
     }
 }
 
+function setCollapsibleSectionState(divider, content, collapsed) {
+    const button = divider.querySelector(".section-toggle");
+
+    content.hidden = collapsed;
+    divider.classList.toggle("is-collapsed", collapsed);
+    divider.classList.toggle("is-open", !collapsed);
+
+    if (button) {
+        button.setAttribute("aria-expanded", String(!collapsed));
+        button.querySelector("span").textContent = collapsed ? "Abrir" : "Fechar";
+    }
+}
+
+function openCollapsibleContent(content) {
+    const divider = document.querySelector(`.section-divider[data-collapsible-controls="${content.id}"]`);
+    if (!divider) {
+        return;
+    }
+
+    setCollapsibleSectionState(divider, content, false);
+}
+
+function setupCollapsibleSections() {
+    const dividers = [...document.querySelectorAll(".section-divider:not(.section-divider-game)")];
+
+    dividers.forEach((divider, index) => {
+        const content = divider.nextElementSibling;
+        if (!content || content.classList.contains("clan-banner") || content.classList.contains("operator-game")) {
+            return;
+        }
+
+        const contentId = content.id || `collapsibleSection${index + 1}`;
+        content.id = contentId;
+        content.dataset.collapsibleContent = "true";
+        content.classList.add("collapsible-section-content");
+        divider.classList.add("is-collapsible");
+        divider.dataset.collapsibleControls = contentId;
+
+        if (!divider.querySelector(".section-toggle")) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "section-toggle";
+            button.setAttribute("aria-controls", contentId);
+            button.innerHTML = '<span>Abrir</span><i aria-hidden="true"></i>';
+            divider.appendChild(button);
+        }
+
+        const button = divider.querySelector(".section-toggle");
+        const toggle = () => setCollapsibleSectionState(divider, content, !content.hidden);
+
+        button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            toggle();
+        });
+
+        divider.addEventListener("click", (event) => {
+            if (event.target.closest("button")) {
+                return;
+            }
+            toggle();
+        });
+
+        setCollapsibleSectionState(divider, content, true);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const id = link.getAttribute("href").slice(1);
+            const target = document.getElementById(id);
+            const content = target?.closest("[data-collapsible-content]");
+
+            if (!target || !content) {
+                return;
+            }
+
+            event.preventDefault();
+            openCollapsibleContent(content);
+            requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+        });
+    });
+
+    if (window.location.hash) {
+        const target = document.getElementById(window.location.hash.slice(1));
+        const content = target?.closest("[data-collapsible-content]");
+        if (content) {
+            openCollapsibleContent(content);
+        }
+    }
+}
+
 function bindEvents() {
     [els.coins, ...els.resourceInputs].forEach((input) => {
         input.addEventListener("input", () => {
@@ -785,6 +875,7 @@ function bindEvents() {
 }
 
 function init() {
+    setupCollapsibleSections();
     populateManualSelects();
     if (els.announcementText) {
         els.announcementText.value = ANNOUNCEMENT_TEXT;

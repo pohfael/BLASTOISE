@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260628-operator-mobile-two-cols">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260628-relocation-latest-source">
     <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
@@ -284,6 +284,16 @@
                         <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
                     </div>
                     <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
+
+                    <div id="missionShareModal" class="mission-share-modal" hidden>
+                        <div class="mission-share-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="missionShareModalTitle" aria-describedby="missionShareModalBody">
+                            <button type="button" class="mission-share-modal-close" id="missionShareModalClose" aria-label="Fechar aviso">×</button>
+                            <span class="mission-share-modal-eyebrow">Envio bloqueado</span>
+                            <h3 id="missionShareModalTitle">Falta completar operadores</h3>
+                            <div id="missionShareModalBody" class="mission-share-modal-body"></div>
+                            <button type="button" id="missionShareModalOk" class="mission-share-modal-ok">OK, vou ajustar</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mission-tab-panel operator-panel is-locked" data-mission-panel="operators" role="tabpanel" hidden>
@@ -464,8 +474,8 @@
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260523-copy-sticky"></script>
-    <script src="assets/js/operator-planner.js?v=20260628-share-complete-lock"></script>
+    <script src="assets/js/app.js?v=20260628-collapsible-sections"></script>
+    <script src="assets/js/operator-planner.js?v=20260628-completed-editable"></script>
 </body>
 </html>
 
