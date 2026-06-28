@@ -1068,11 +1068,13 @@ const RANK_LEVELS = Array.from({ length: 60 }, (_, index) => {
 });
 
 const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00", "06:00"];
+const MISSION_CODE_PREFIX = "BLASTOISE:";
 
 const plannerEls = {};
 let plannerUnlocked = false;
 let importedAssignment = null;
 const manualMissionSelections = {};
+const importedFixedOperatorsBySlot = {};
 const recentRemovedOperatorsBySlot = {};
 let latestMissionAssignment = [];
 let latestMissionExpected = new Map();
@@ -1187,7 +1189,7 @@ function setPlannerControlsEnabled(enabled) {
         plannerEls.lastMissionText.disabled = !enabled;
     }
 
-    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.importButton, plannerEls.saveOperatorDataButton, plannerEls.exportOperatorDataButton, plannerEls.importOperatorDataButton, plannerEls.resetOperatorDataButton].forEach((button) => {
+    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.copyMissionCodeButton, plannerEls.importButton, plannerEls.saveOperatorDataButton, plannerEls.exportOperatorDataButton, plannerEls.importOperatorDataButton, plannerEls.resetOperatorDataButton].forEach((button) => {
         if (button) {
             button.disabled = !enabled;
         }
@@ -1259,7 +1261,7 @@ function createMissionRows() {
             <select class="mission-select" data-slot="${item.slot}" disabled>
                 ${options}
             </select>
-            <button type="button" class="mission-status-button" data-state="pending" disabled>Pendente</button>
+            <button type="button" class="mission-status-button" data-slot="${item.slot}" data-state="pending" disabled>Pendente</button>
         </div>
     `).join("");
 }
@@ -1301,6 +1303,13 @@ function completedMissionSlots() {
     return new Set([...plannerEls.rows.querySelectorAll(".mission-status-button[data-state='done']")]
         .map((button) => Number(button.closest(".mission-row")?.querySelector(".mission-select")?.dataset.slot))
         .filter(Boolean));
+}
+
+function setMissionStatus(button, state) {
+    const isDone = state === "done";
+    button.dataset.state = isDone ? "done" : "pending";
+    button.textContent = isDone ? "Conclu\u00EDdo" : "Pendente";
+    button.closest(".mission-row")?.classList.toggle("is-completed", isDone);
 }
 
 function normalizeOperatorName(operator) {
@@ -1845,12 +1854,16 @@ function compareRelocationTargets(operator, a, b) {
 function clearManualMissionSelections(slot) {
     if (Number.isFinite(Number(slot))) {
         delete manualMissionSelections[slot];
+        delete importedFixedOperatorsBySlot[slot];
         delete recentRemovedOperatorsBySlot[slot];
         return;
     }
 
     Object.keys(manualMissionSelections).forEach((key) => {
         delete manualMissionSelections[key];
+    });
+    Object.keys(importedFixedOperatorsBySlot).forEach((key) => {
+        delete importedFixedOperatorsBySlot[key];
     });
     Object.keys(recentRemovedOperatorsBySlot).forEach((key) => {
         delete recentRemovedOperatorsBySlot[key];
@@ -1862,6 +1875,15 @@ function selectedOperatorsForSlot(slot) {
 }
 
 function missionSelectionLimit(item) {
+    const completedSlots = completedMissionSlots();
+    if (completedSlots.size && RELOCATION_TARGET_SLOTS.has(Number(item.slot)) && !completedSlots.has(Number(item.slot))) {
+        return Number.POSITIVE_INFINITY;
+    }
+
+    if (item.isRelocationTarget) {
+        return Number.POSITIVE_INFINITY;
+    }
+
     if (Number(item.slot) >= 6) {
         return Number.POSITIVE_INFINITY;
     }
@@ -1961,6 +1983,8 @@ function forgetRemovedOperator(slot, operator) {
 function renderMissionOperatorPicker(item, operatorSlotMap) {
     const candidates = scoreMission(item.mission, item.slot);
     const selectedOperators = new Set(item.chosen.map((entry) => entry.operator));
+    const relocationAllowedOperators = item.relocationAllowedOperators instanceof Set ? item.relocationAllowedOperators : null;
+    const completedSourceOperators = item.completedSourceOperators instanceof Set ? item.completedSourceOperators : null;
     const limit = missionSelectionLimit(item);
     const selectedCount = selectedOperators.size;
     const limitReached = Number.isFinite(limit) && selectedCount >= limit;
@@ -1982,15 +2006,28 @@ function renderMissionOperatorPicker(item, operatorSlotMap) {
                     const className = getMissionCandidateClass(candidates, entry.score);
                     const usedSlot = operatorSlotMap.get(entry.operator);
                     const usedElsewhere = usedSlot && usedSlot !== item.slot;
-                    const disabled = pickerLocked || usedElsewhere || (limitReached && !selectedOperators.has(entry.operator));
-                    const usageLabel = usedElsewhere ? `miss\u00E3o ${usedSlot}` : "";
-                    const title = usedElsewhere
-                        ? `Usado na miss\u00E3o ${usedSlot}`
-                        : pickerLocked
-                            ? "Esta miss\u00E3o n\u00E3o recebe operadores"
-                            : "";
+                    const sourceCompleted = item.isCompletedRelocationSource && completedSourceOperators?.has(entry.operator);
+                    const lockedByRelocation = relocationAllowedOperators && !relocationAllowedOperators.has(entry.operator);
+                    const sourceLocked = item.isCompletedRelocationSource;
+                    const disabled = sourceLocked || pickerLocked || usedElsewhere || lockedByRelocation || (limitReached && !selectedOperators.has(entry.operator));
+                    const usageLabel = sourceCompleted
+                        ? "conclu\u00EDdo"
+                        : usedElsewhere
+                            ? `miss\u00E3o ${usedSlot}`
+                            : lockedByRelocation
+                                ? "fixo"
+                                : "";
+                    const title = sourceCompleted
+                        ? "Operador desta miss\u00E3o conclu\u00EDda"
+                        : usedElsewhere
+                            ? `Usado na miss\u00E3o ${usedSlot}`
+                            : pickerLocked
+                                ? "Esta miss\u00E3o n\u00E3o recebe operadores"
+                                : lockedByRelocation
+                                    ? "Operador fixo da programa\u00E7\u00E3o inicial"
+                                    : "";
                     return `
-                        <label class="mission-operator-option ${className}${usedElsewhere ? " is-unavailable" : ""}${disabled && !usedElsewhere && !checked ? " is-limit-blocked" : ""}" title="${escapeHtml(title)}">
+                        <label class="mission-operator-option ${className}${usedElsewhere || lockedByRelocation || sourceLocked ? " is-unavailable" : ""}${disabled && !usedElsewhere && !lockedByRelocation && !sourceLocked && !checked ? " is-limit-blocked" : ""}" title="${escapeHtml(title)}">
                             <input type="checkbox" data-slot="${item.slot}" data-operator="${escapeHtml(entry.operator)}"${checked}${disabled ? " disabled" : ""}>
                             <span>${escapeHtml(entry.operator)}${usageLabel ? `<small>${escapeHtml(usageLabel)}</small>` : ""}</span>
                             <strong>${formatScore(entry.score)}</strong>
@@ -2116,32 +2153,155 @@ function parseMissionText(text) {
     return parsed;
 }
 
+function base64UrlEncode(text) {
+    const bytes = new TextEncoder().encode(text);
+    let binary = "";
+    bytes.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+    });
+
+    return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/g, "");
+}
+
+function base64UrlDecode(text) {
+    const padded = String(text || "")
+        .replace(/-/g, "+")
+        .replace(/_/g, "/")
+        .padEnd(Math.ceil(String(text || "").length / 4) * 4, "=");
+    const binary = atob(padded);
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+
+    return new TextDecoder().decode(bytes);
+}
+
+function buildMissionCode(assignment) {
+    const statusBySlot = new Map([...plannerEls.rows.querySelectorAll(".mission-status-button")].map((button) => [
+        Number(button.dataset.slot || button.closest(".mission-row")?.querySelector(".mission-select")?.dataset.slot),
+        button.dataset.state === "done" ? "done" : "pending"
+    ]));
+    const payload = {
+        version: 1,
+        type: "blastoise-missions",
+        time: plannerEls.timeSelect?.value || "09:00",
+        missions: assignment.map((item) => ({
+            slot: item.slot,
+            key: item.mission.key,
+            state: statusBySlot.get(item.slot) || "pending",
+            operators: item.chosen.map((entry) => entry.operator)
+        }))
+    };
+
+    return `${MISSION_CODE_PREFIX}${base64UrlEncode(JSON.stringify(payload))}`;
+}
+
+function parseMissionCode(text) {
+    const rawText = String(text || "").trim();
+    const code = rawText.startsWith(MISSION_CODE_PREFIX)
+        ? rawText.slice(MISSION_CODE_PREFIX.length).trim()
+        : "";
+
+    if (!code) {
+        return null;
+    }
+
+    const payload = JSON.parse(base64UrlDecode(code));
+    if (payload?.type !== "blastoise-missions" || !Array.isArray(payload.missions)) {
+        throw new Error("Invalid mission code");
+    }
+
+    const parsed = payload.missions
+        .map((entry) => {
+            const slot = Number(entry.slot);
+            const slotInfo = PLANNER_SLOTS.find((item) => item.slot === slot);
+            const mission = missionByKey(entry.key);
+
+            if (!slotInfo || !mission) {
+                return null;
+            }
+
+            const chosen = Array.isArray(entry.operators)
+                ? entry.operators
+                    .map((operator) => operatorByTextName(operator))
+                    .filter(Boolean)
+                    .map((operator, index) => ({
+                        operator,
+                        score: getMissionScore(mission, operator, PLANNER_OPERATORS.indexOf(operator) >= 0 ? PLANNER_OPERATORS.indexOf(operator) : index, slot)
+                    }))
+                : [];
+
+            return {
+                ...slotInfo,
+                mission,
+                chosen,
+                alternatives: [],
+                state: entry.state === "done" ? "done" : "pending"
+            };
+        })
+        .filter(Boolean);
+
+    return {
+        time: MISSION_TIMES.includes(payload.time) ? payload.time : "",
+        missions: parsed
+    };
+}
+
 function importMissionText() {
-    const parsed = parseMissionText(plannerEls.lastMissionText.value);
+    let parsed = [];
+    let parsedCode = null;
+
+    try {
+        parsedCode = parseMissionCode(plannerEls.lastMissionText.value);
+    } catch (error) {
+        plannerEls.importMessage.textContent = "Código Blastoise inválido. Confira se copiou completo.";
+        return;
+    }
+
+    if (parsedCode) {
+        parsed = parsedCode.missions;
+    } else {
+        parsed = parseMissionText(plannerEls.lastMissionText.value);
+    }
 
     if (!parsed.length) {
-        plannerEls.importMessage.textContent = "N\u00E3o encontrei miss\u00F5es v\u00E1lidas no texto colado.";
+        plannerEls.importMessage.textContent = "N\u00E3o encontrei c\u00F3digo ou miss\u00F5es v\u00E1lidas no texto colado.";
         return;
     }
 
     importedAssignment = parsed;
     clearManualMissionSelections();
+    if (parsedCode) {
+        parsed
+            .filter((item) => item.state !== "done")
+            .forEach((item) => {
+                const operators = item.chosen.map((entry) => entry.operator);
+                manualMissionSelections[item.slot] = operators;
+                importedFixedOperatorsBySlot[item.slot] = operators;
+            });
+    }
+    if (parsedCode?.time && plannerEls.timeSelect) {
+        plannerEls.timeSelect.value = parsedCode.time;
+    }
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
         const item = parsed.find((entry) => entry.slot === Number(select.dataset.slot));
         select.value = item?.mission.key || "";
     });
     plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
-        button.dataset.state = "pending";
-        button.textContent = "Pendente";
+        const item = parsed.find((entry) => entry.slot === Number(button.dataset.slot));
+        setMissionStatus(button, item?.state === "done" ? "done" : "pending");
     });
     updateMissionSelectOptions();
     updateMissionPlanner();
-    plannerEls.importMessage.textContent = `${parsed.length} miss\u00F5es importadas. Marque como conclu\u00EDdas as miss\u00F5es finalizadas.`;
+    plannerEls.importMessage.textContent = parsedCode
+        ? `${parsed.length} miss\u00F5es importadas pelo c\u00F3digo Blastoise.`
+        : `${parsed.length} miss\u00F5es importadas. Marque como conclu\u00EDdas as miss\u00F5es finalizadas.`;
 }
 
-function buildRelocationAssignment(baseAssignment, completedSlots) {
+function buildRelocationAssignment(baseAssignment, completedSlots, originalAssignment = baseAssignment) {
     const movingOperators = [];
-    const sourceItems = baseAssignment.filter((item) => completedSlots.has(item.slot) && item.chosen.length);
+    const sourceItems = originalAssignment.filter((item) => completedSlots.has(item.slot) && item.chosen.length);
     const targetItems = selectedMissions().filter((item) => (
         RELOCATION_TARGET_SLOTS.has(item.slot)
         && !completedSlots.has(item.slot)
@@ -2179,8 +2339,9 @@ function buildRelocationAssignment(baseAssignment, completedSlots) {
     });
 
     return {
+        movingOperators,
         sourceItems,
-        targetItems: targets.filter((item) => item.chosen.length)
+        targetItems: targets
     };
 }
 
@@ -2189,27 +2350,59 @@ function buildRelocationDisplayAssignment(assignment, relocation, completedSlots
         return assignment;
     }
 
+    const movingOperatorSet = new Set(relocation.movingOperators || []);
+    const fixedImportedOperators = new Set(Object.entries(importedFixedOperatorsBySlot)
+        .filter(([slot]) => !completedSlots.has(Number(slot)))
+        .flatMap(([, operators]) => operators));
+    const editableMovingOperatorSet = new Set([...movingOperatorSet].filter((operator) => !fixedImportedOperators.has(operator)));
+    const sourceBySlot = new Map(relocation.sourceItems.map((item) => [item.slot, item]));
+    const sourceOperatorSetBySlot = new Map(relocation.sourceItems.map((item) => [
+        item.slot,
+        new Set(item.chosen.map((entry) => entry.operator))
+    ]));
     const targetsBySlot = new Map(relocation.targetItems.map((item) => [item.slot, item]));
 
     return assignment.map((item) => {
         if (completedSlots.has(item.slot)) {
+            const sourceItem = sourceBySlot.get(item.slot);
+            const sourceOperators = sourceOperatorSetBySlot.get(item.slot) || new Set();
             return {
                 ...item,
-                isCompletedRelocationSource: true
+                chosen: sourceItem?.chosen || item.chosen,
+                isCompletedRelocationSource: true,
+                completedSourceOperators: sourceOperators,
+                relocationAllowedOperators: sourceOperators
             };
         }
 
         const target = targetsBySlot.get(item.slot);
         if (target) {
+            const manualTargetOperators = selectedOperatorsForSlot(item.slot);
+            const chosen = manualTargetOperators
+                ? manualTargetOperators
+                    .filter((operator) => movingOperatorSet.has(operator))
+                    .map((operator) => {
+                        const operatorIndex = PLANNER_OPERATORS.indexOf(operator);
+                        return {
+                            operator,
+                            score: getMissionScore(item.mission, operator, operatorIndex >= 0 ? operatorIndex : 0, item.slot)
+                        };
+                    })
+                : target.chosen;
+
             return {
                 ...item,
-                chosen: target.chosen,
+                chosen,
                 alternatives: target.alternatives || [],
-                isRelocationTarget: true
+                isRelocationTarget: true,
+                relocationAllowedOperators: editableMovingOperatorSet
             };
         }
 
-        return item;
+        return {
+            ...item,
+            relocationAllowedOperators: editableMovingOperatorSet
+        };
     });
 }
 
@@ -2219,6 +2412,9 @@ function renderEmptyState() {
     plannerEls.assignment.innerHTML = '<p class="mission-empty">Escolha pelo menos uma miss\u00E3o para gerar a loca\u00E7\u00E3o.</p>';
     plannerEls.ranking.innerHTML = '<li class="mission-empty">Aguardando miss\u00F5es.</li>';
     plannerEls.copyText.value = "";
+    if (plannerEls.missionCodeText) {
+        plannerEls.missionCodeText.value = "";
+    }
 }
 
 function renderMissionPlanner(selected) {
@@ -2242,8 +2438,18 @@ function renderMissionPlanner(selected) {
         ...item,
         alternatives: item.alternatives || []
     })));
-    const relocation = completedSlots.size ? buildRelocationAssignment(assignment, completedSlots) : null;
+    const relocation = completedSlots.size ? buildRelocationAssignment(assignment, completedSlots, baseAssignment) : null;
     const displayAssignment = buildRelocationDisplayAssignment(assignment, relocation, completedSlots);
+    const relocationForText = relocation?.sourceItems.length
+        ? {
+            ...relocation,
+            targetItems: displayAssignment.filter((item) => (
+                !item.isCompletedRelocationSource
+                && RELOCATION_TARGET_SLOTS.has(item.slot)
+                && item.chosen.length
+            ))
+        }
+        : null;
     latestMissionAssignment = displayAssignment;
     const operatorSlotMap = selectedOperatorSlotMap(displayAssignment.filter((item) => !item.isCompletedRelocationSource));
 
@@ -2259,7 +2465,7 @@ function renderMissionPlanner(selected) {
                 <strong>${item.chosen.length ? `${item.chosen.length} enviados` : "N\u00E3o envia"}</strong>
                 <small>${item.chosen.length ? `${formatScore(item.chosen.reduce((sum, entry) => sum + entry.score, 0))} pontos somados` : "Sem loca\u00E7\u00E3o nesta miss\u00E3o"}</small>
             </div>
-            ${item.isCompletedRelocationSource ? '<p class="assignment-completed-note">Miss\u00E3o conclu\u00EDda. Desmarque algum operador se precisar ajustar a realoca\u00E7\u00E3o.</p>' : ""}
+            ${item.isCompletedRelocationSource ? '<p class="assignment-completed-note">Miss\u00E3o conclu\u00EDda. Operadores realocados automaticamente para o melhor destino.</p>' : ""}
             ${renderMissionOperatorPicker(item, item.isCompletedRelocationSource ? new Map() : operatorSlotMap)}
         </article>
     `).join("");
@@ -2272,9 +2478,13 @@ function renderMissionPlanner(selected) {
         </li>
     `).join("");
 
-    plannerEls.copyText.value = relocation?.sourceItems.length
-        ? buildRelocationText(relocation)
+    plannerEls.copyText.value = relocationForText
+        ? buildRelocationText(relocationForText)
         : buildCopyText(assignment, ranking);
+
+    if (plannerEls.missionCodeText) {
+        plannerEls.missionCodeText.value = buildMissionCode(displayAssignment);
+    }
 }
 
 function buildCopyText(assignment) {
@@ -2383,8 +2593,7 @@ function handleMissionStatusClick(event) {
     }
 
     const isDone = button.dataset.state === "done";
-    button.dataset.state = isDone ? "pending" : "done";
-    button.textContent = isDone ? "Pendente" : "Conclu\u00EDdo";
+    setMissionStatus(button, isDone ? "pending" : "done");
     updateMissionPlanner();
 }
 
@@ -2414,7 +2623,32 @@ async function handlePlannerUnlock(event) {
 
 function missionShareBlocks() {
     if (completedMissionSlots().size) {
-        return [];
+        const selectedTargets = new Set(latestMissionAssignment
+            .filter((item) => !item.isCompletedRelocationSource)
+            .flatMap((item) => item.chosen.map((entry) => entry.operator)));
+        const movingOperators = new Set(latestMissionAssignment
+            .filter((item) => !item.isCompletedRelocationSource && item.relocationAllowedOperators instanceof Set)
+            .flatMap((item) => [...item.relocationAllowedOperators]));
+        const sourceItems = latestMissionAssignment.filter((item) => item.isCompletedRelocationSource && item.completedSourceOperators instanceof Set);
+
+        return sourceItems
+            .map((item) => {
+                const missingOperators = [...item.completedSourceOperators]
+                    .filter((operator) => movingOperators.has(operator) && !selectedTargets.has(operator));
+
+                if (!missingOperators.length) {
+                    return null;
+                }
+
+                return {
+                    slot: item.slot,
+                    missionName: item.mission.name,
+                    missingCount: missingOperators.length,
+                    missingOperators,
+                    suggestions: missingOperators.map((operator) => suggestRelocationMission(operator)).filter(Boolean)
+                };
+            })
+            .filter(Boolean);
     }
 
     const selectedAnywhere = new Set(latestMissionAssignment.flatMap((item) => (
@@ -2447,14 +2681,60 @@ function missionShareBlocks() {
         .filter(Boolean);
 }
 
+function suggestRelocationMission(operator) {
+    const completedSlots = completedMissionSlots();
+    const targets = latestMissionAssignment.filter((item) => (
+        !item.isCompletedRelocationSource
+        && RELOCATION_TARGET_SLOTS.has(Number(item.slot))
+        && !completedSlots.has(Number(item.slot))
+        && item.send !== 0
+    ));
+    const operatorIndex = PLANNER_OPERATORS.indexOf(operator);
+
+    return targets
+        .map((item) => ({
+            operator,
+            slot: item.slot,
+            missionName: item.mission.name,
+            score: getMissionScore(item.mission, operator, operatorIndex >= 0 ? operatorIndex : 0, item.slot)
+        }))
+        .sort((a, b) => b.score - a.score || a.slot - b.slot)[0] || null;
+}
+
 function missionShareBlockMessage(blocks) {
     return blocks.map((block) => {
         const missingLabel = block.missingOperators.length
             ? block.missingOperators.join(", ")
             : `${block.missingCount} operador${block.missingCount === 1 ? "" : "es"}`;
+        const suggestions = block.suggestions?.length
+            ? ` Sugest\u00E3o: ${block.suggestions.map((suggestion) => (
+                `${suggestion.operator} > Miss\u00E3o ${suggestion.slot} (${suggestion.missionName}, ${formatScore(suggestion.score)} pts)`
+            )).join("; ")}`
+            : "";
 
-        return `Miss\u00E3o ${block.slot} (${block.missionName}): ${missingLabel}`;
+        return `Miss\u00E3o ${block.slot} (${block.missionName}): ${missingLabel}.${suggestions}`;
     });
+}
+
+function missionShareBlockHtml(blocks) {
+    return blocks.map((block) => {
+        const missingLabel = block.missingOperators.length
+            ? block.missingOperators.join(", ")
+            : `${block.missingCount} operador${block.missingCount === 1 ? "" : "es"}`;
+        const suggestions = block.suggestions || [];
+
+        return `
+            <li>
+                <strong>Miss\u00E3o ${block.slot} (${escapeHtml(block.missionName)}): ${escapeHtml(missingLabel)}</strong>
+                ${suggestions.length ? `
+                    <span>Sugest\u00E3o de loca\u00E7\u00E3o</span>
+                    ${suggestions.map((suggestion) => `
+                        <small>${escapeHtml(suggestion.operator)} &gt; Miss\u00E3o ${suggestion.slot} (${escapeHtml(suggestion.missionName)}, ${formatScore(suggestion.score)} pts)</small>
+                    `).join("")}
+                ` : ""}
+            </li>
+        `;
+    }).join("");
 }
 
 function closeMissionShareModal() {
@@ -2467,24 +2747,31 @@ function closeMissionShareModal() {
 
 function showMissionShareModal(blocks) {
     const details = missionShareBlockMessage(blocks);
+    const isRelocation = completedMissionSlots().size > 0;
+    const intro = isRelocation
+        ? "Falta realocar operador de missão concluída."
+        : "Falta operador marcado para liberar o envio ao clã.";
+    const instruction = isRelocation
+        ? "Marque os operadores nas missões destino para liberar Copiar ou Compartilhar."
+        : "Selecione nas respectivas missões para liberar Copiar ou Compartilhar.";
 
     if (!plannerEls.shareModal || !plannerEls.shareModalBody) {
         window.alert([
-            "Falta completar a sele\u00E7\u00E3o de operadores.",
+            intro,
             "",
             ...details,
             "",
-            "Selecione nas respectivas miss\u00F5es para liberar Copiar ou Compartilhar."
+            instruction
         ].join("\n"));
         return;
     }
 
     plannerEls.shareModalBody.innerHTML = `
-        <p>Falta operador marcado para liberar o envio ao cl\u00E3.</p>
+        <p>${escapeHtml(intro)}</p>
         <ul>
-            ${details.map((detail) => `<li>${escapeHtml(detail)}</li>`).join("")}
+            ${missionShareBlockHtml(blocks)}
         </ul>
-        <p>Selecione nas respectivas miss\u00F5es para liberar Copiar ou Compartilhar.</p>
+        <p>${escapeHtml(instruction)}</p>
     `;
     plannerEls.shareModal.hidden = false;
     plannerEls.shareModalOk?.focus();
@@ -2521,6 +2808,27 @@ async function copyMissionText() {
     plannerEls.copyButton.textContent = "Copiado";
     setTimeout(() => {
         plannerEls.copyButton.textContent = "Copiar texto";
+    }, 1300);
+}
+
+async function copyMissionCode() {
+    const code = plannerEls.missionCodeText?.value.trim() || "";
+    if (!code) {
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(code);
+    } catch (error) {
+        plannerEls.missionCodeText.focus();
+        plannerEls.missionCodeText.select();
+        document.execCommand("copy");
+        plannerEls.missionCodeText.setSelectionRange(0, 0);
+    }
+
+    plannerEls.copyMissionCodeButton.textContent = "Código copiado";
+    setTimeout(() => {
+        plannerEls.copyMissionCodeButton.textContent = "Copiar código";
     }, 1300);
 }
 
@@ -2844,8 +3152,7 @@ function clearMissionPlanner() {
         select.value = "";
     });
     plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
-        button.dataset.state = "pending";
-        button.textContent = "Pendente";
+        setMissionStatus(button, "pending");
     });
     if (plannerEls.lastMissionText) {
         plannerEls.lastMissionText.value = "";
@@ -2873,7 +3180,9 @@ function initOperatorPlanner() {
     plannerEls.assignment = document.getElementById("missionAssignment");
     plannerEls.ranking = document.getElementById("missionRanking");
     plannerEls.copyText = document.getElementById("missionCopyText");
+    plannerEls.missionCodeText = document.getElementById("missionCodeText");
     plannerEls.copyButton = document.getElementById("copyMissionButton");
+    plannerEls.copyMissionCodeButton = document.getElementById("copyMissionCodeButton");
     plannerEls.shareButton = document.getElementById("shareMissionButton");
     plannerEls.shareModal = document.getElementById("missionShareModal");
     plannerEls.shareModalBody = document.getElementById("missionShareModalBody");
@@ -2937,6 +3246,7 @@ function initOperatorPlanner() {
     plannerEls.importButton.addEventListener("click", importMissionText);
     plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
     plannerEls.copyButton.addEventListener("click", copyMissionText);
+    plannerEls.copyMissionCodeButton.addEventListener("click", copyMissionCode);
     plannerEls.shareButton.addEventListener("click", shareMissionText);
     plannerEls.shareModalClose.addEventListener("click", closeMissionShareModal);
     plannerEls.shareModalOk.addEventListener("click", closeMissionShareModal);

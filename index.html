@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260628-relocation-latest-source">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260628-missing-suggestions">
     <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
@@ -235,11 +235,11 @@
                     <div class="mission-import-panel">
                         <div>
                             <p class="eyebrow">Realocação de operadores</p>
-                            <h3>Use a última mensagem enviada</h3>
-                            <p>Cole o texto da última missão, clique em Enviar e marque como Concluído apenas as missões já finalizadas.</p>
+                            <h3>Use o código da última locação</h3>
+                            <p>Cole o código Blastoise da última missão. Se não tiver o código, cole a mensagem antiga como antes.</p>
                         </div>
                         <div class="mission-import-actions">
-                            <textarea id="lastMissionText" aria-label="Texto da última missão" placeholder="Cole aqui o texto da última missão enviada ao clã" disabled></textarea>
+                            <textarea id="lastMissionText" aria-label="Código ou texto da última missão" placeholder="Cole aqui o código Blastoise da última locação ou a mensagem antiga enviada ao clã" disabled></textarea>
                             <button type="button" id="importMissionButton" disabled>Enviar</button>
                             <span id="missionImportMessage" aria-live="polite"></span>
                         </div>
@@ -284,6 +284,14 @@
                         <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
                     </div>
                     <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
+                    <div class="mission-code-panel">
+                        <div>
+                            <span>Código para futura realocação</span>
+                            <small>Copie este código junto com a mensagem para continuar a próxima realocação sem perder os ajustes manuais.</small>
+                        </div>
+                        <button type="button" id="copyMissionCodeButton">Copiar código</button>
+                    </div>
+                    <textarea id="missionCodeText" class="mission-copy-text mission-code-text" readonly aria-label="Código interno da locação"></textarea>
 
                     <div id="missionShareModal" class="mission-share-modal" hidden>
                         <div class="mission-share-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="missionShareModalTitle" aria-describedby="missionShareModalBody">
@@ -475,7 +483,7 @@
     </main>
 
     <script src="assets/js/app.js?v=20260628-collapsible-sections"></script>
-    <script src="assets/js/operator-planner.js?v=20260628-completed-editable"></script>
+    <script src="assets/js/operator-planner.js?v=20260628-missing-suggestions"></script>
 </body>
 </html>
 
