@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260628-missing-suggestions">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260704-fixed-choice-layer">
     <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
@@ -138,8 +138,8 @@
         </section>
 
         <div class="section-divider section-divider-announcement">
-            <p>Organização do clã</p>
-            <div class="section-heading">Ferramentas do clã</div>
+            <p>Envio de Mensagem para o Clã</p>
+            <div class="section-heading">Mensagens para o Clã</div>
         </div>
 
         <section class="clan-tools-grid" aria-label="Ferramentas de comunicação do clã">
@@ -200,7 +200,7 @@
         </section>
 
         <div class="section-divider section-divider-mission">
-            <p>Organização do clã</p>
+            <p>Calculadora de Missões</p>
             <div class="section-heading">Locação de operadores</div>
         </div>
 
@@ -228,27 +228,13 @@
                 <div class="mission-tabs" role="tablist" aria-label="Áreas da ferramenta de missões">
                     <button type="button" class="mission-tab is-active" data-mission-tab="allocation" role="tab" aria-selected="true">Locação</button>
                     <button type="button" class="mission-tab" data-mission-tab="operators" role="tab" aria-selected="false">Operadores</button>
-                    <button type="button" class="mission-tab" data-mission-tab="clan" role="tab" aria-selected="false">Jogadores</button>
                 </div>
 
                 <div class="mission-tab-panel is-active" data-mission-panel="allocation" role="tabpanel">
-                    <div class="mission-import-panel">
-                        <div>
-                            <p class="eyebrow">Realocação de operadores</p>
-                            <h3>Use o código da última locação</h3>
-                            <p>Cole o código Blastoise da última missão. Se não tiver o código, cole a mensagem antiga como antes.</p>
-                        </div>
-                        <div class="mission-import-actions">
-                            <textarea id="lastMissionText" aria-label="Código ou texto da última missão" placeholder="Cole aqui o código Blastoise da última locação ou a mensagem antiga enviada ao clã" disabled></textarea>
-                            <button type="button" id="importMissionButton" disabled>Enviar</button>
-                            <span id="missionImportMessage" aria-live="polite"></span>
-                        </div>
-                    </div>
-
                     <div class="mission-time-panel">
                         <div>
                             <p class="eyebrow">Horário da missão</p>
-                            <h3>Escolha o horário de envio</h3>
+                            <h3>Escolha o horário da missão</h3>
                         </div>
                         <label for="missionTimeSelect">
                             <span>Início</span>
@@ -284,14 +270,6 @@
                         <button type="button" id="shareMissionButton">Compartilhar no WhatsApp</button>
                     </div>
                     <textarea id="missionCopyText" class="mission-copy-text" readonly aria-label="Texto da orientação"></textarea>
-                    <div class="mission-code-panel">
-                        <div>
-                            <span>Código para futura realocação</span>
-                            <small>Copie este código junto com a mensagem para continuar a próxima realocação sem perder os ajustes manuais.</small>
-                        </div>
-                        <button type="button" id="copyMissionCodeButton">Copiar código</button>
-                    </div>
-                    <textarea id="missionCodeText" class="mission-copy-text mission-code-text" readonly aria-label="Código interno da locação"></textarea>
 
                     <div id="missionShareModal" class="mission-share-modal" hidden>
                         <div class="mission-share-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="missionShareModalTitle" aria-describedby="missionShareModalBody">
@@ -304,19 +282,13 @@
                     </div>
                 </div>
 
-                <div class="mission-tab-panel operator-panel is-locked" data-mission-panel="operators" role="tabpanel" hidden>
+                <div class="mission-tab-panel operator-panel" data-mission-panel="operators" role="tabpanel" hidden>
                     <div class="operator-editor-sticky">
                         <div class="operator-editor-toolbar">
                             <div>
                                 <p class="eyebrow">Base de operadores</p>
-                                <h3>Pontuações editáveis</h3>
-                                <p class="operator-editor-note">Salvar guarda neste navegador. Exportar base gera o texto para atualizar a base raiz do site.</p>
-                            </div>
-                            <div class="operator-editor-actions">
-                                <button type="button" id="saveOperatorDataButton" disabled>Salvar</button>
-                                <button type="button" id="exportOperatorDataButton" disabled>Exportar base raiz</button>
-                                <button type="button" id="importOperatorDataButton" disabled>Importar base</button>
-                                <button type="button" id="resetOperatorDataButton" disabled>Restaurar base</button>
+                                <h3>Pontuações dos operadores</h3>
+                                <p class="operator-editor-note">Consulta pública. A edição da base fica fora do site.</p>
                             </div>
                         </div>
                         <div class="operator-score-legend" aria-label="Legenda das cores da pontuação">
@@ -334,7 +306,6 @@
                                 <span>Exibir</span>
                                 <select id="operatorViewFilter" disabled>
                                     <option value="all">Todos</option>
-                                    <option value="missing-rank">Patente vazia</option>
                                     <option value="new">Operadores novos</option>
                                     <option value="strong">Com missão forte</option>
                                     <option value="weak">Com missão fraca</option>
@@ -347,104 +318,20 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="operator-editor-status" id="operatorEditorStatus" aria-live="polite"></div>
                     </div>
-                    <textarea id="operatorDataTransfer" class="operator-data-transfer" aria-label="Base de operadores exportada" placeholder="Use Exportar base para copiar os dados, ou cole uma base aqui e clique em Importar base." disabled></textarea>
                     <div class="operator-editor-table-wrap">
-                        <table class="operator-editor-table">
+                        <table class="operator-editor-table operator-readonly-table">
                             <thead id="operatorEditorHead"></thead>
                             <tbody id="operatorEditorBody"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="mission-tab-panel clan-roster-panel" data-mission-panel="clan" role="tabpanel" hidden>
-                    <div class="clan-roster-gate" id="clanRosterGate">
-                        <div>
-                            <p class="eyebrow">Acesso máximo</p>
-                            <h3>Lista de jogadores do clã</h3>
-                            <p>Use uma senha extra para visualizar contatos e organizar exigências de envio nas missões.</p>
-                        </div>
-                        <form id="clanRosterUnlockForm" class="mission-unlock-form">
-                            <input type="password" id="clanRosterPassword" autocomplete="off" placeholder="Senha extra" aria-label="Senha extra" inputmode="numeric" pattern="[0-9]*">
-                            <button type="submit">Desbloquear</button>
-                        </form>
-                        <p id="clanRosterLockMessage" class="mission-lock-message" aria-live="polite"></p>
-                    </div>
-
-                    <div class="clan-roster-content" id="clanRosterContent" hidden>
-                        <div class="operator-editor-toolbar">
-                            <div>
-                                <p class="eyebrow">Contatos protegidos</p>
-                                <h3>Jogadores cadastrados</h3>
-                                <p class="operator-editor-note">Os contatos ficam salvos apenas neste navegador. Não entram na base raiz nem no GitHub.</p>
-                            </div>
-                            <div class="operator-editor-actions">
-                                <button type="button" id="exportClanRosterButton">Exportar backup</button>
-                                <button type="button" id="importClanRosterButton">Importar backup</button>
-                                <button type="button" id="copyClanRosterButton">Copiar lista</button>
-                            </div>
-                        </div>
-
-                        <form id="clanRosterForm" class="clan-roster-form">
-                            <input type="hidden" id="clanPlayerId">
-                            <label>
-                                <span>Nome opcional</span>
-                                <input type="text" id="clanPlayerName" autocomplete="off" placeholder="Nome real ou apelido">
-                            </label>
-                            <label>
-                                <span>Nick no jogo</span>
-                                <input type="text" id="clanPlayerNick" autocomplete="off" placeholder="Nick obrigatório" required>
-                            </label>
-                            <label>
-                                <span>WhatsApp</span>
-                                <input type="tel" id="clanPlayerWhatsapp" autocomplete="off" placeholder="DDD + número">
-                            </label>
-                            <div class="clan-roster-form-actions">
-                                <button type="submit" id="saveClanPlayerButton">Salvar jogador</button>
-                                <button type="button" id="clearClanPlayerFormButton">Limpar</button>
-                            </div>
-                        </form>
-
-                        <div class="operator-editor-filters clan-roster-filters" aria-label="Filtros da lista de jogadores">
-                            <label>
-                                <span>Buscar jogador</span>
-                                <input type="search" id="clanRosterSearch" placeholder="Nome, nick ou WhatsApp">
-                            </label>
-                        </div>
-                        <div class="operator-editor-status" id="clanRosterStatus" aria-live="polite"></div>
-                        <textarea id="clanRosterTransfer" class="operator-data-transfer" aria-label="Backup da lista de jogadores" placeholder="Use Exportar backup para copiar os dados, ou cole um backup aqui e clique em Importar backup."></textarea>
-                        <div class="operator-editor-table-wrap clan-roster-table-wrap">
-                            <table class="operator-editor-table clan-roster-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nº</th>
-                                        <th>Nome</th>
-                                        <th>Nick</th>
-                                        <th>WhatsApp</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="clanRosterBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
-
-        <section class="clan-banner" aria-label="Convite para o clã Delta 665">
-            <img class="clan-banner-logo" src="assets/img/delta665-logo.png" alt="Delta 665">
-            <div class="clan-banner-copy">
-                <p>Recrutamento aberto</p>
-                <h2>Entre para o clã Delta 665</h2>
-                <span>Participe e jogue com a equipe.</span>
-            </div>
-            <a href="https://chat.whatsapp.com/DYj6PwPdjHs1Mp4bFgiFTi" target="_blank" rel="noopener noreferrer">Entrar no clã</a>
         </section>
 
         <div class="section-divider section-divider-game">
-            <p>Desafio do clã</p>
+            <p>Entretenimento</p>
             <div class="section-heading">Mini game</div>
         </div>
 
@@ -474,7 +361,6 @@
 
         <footer class="site-footer" aria-label="Créditos do site">
             <div class="site-footer-copy">
-                <p>Projeto Delta 665</p>
                 <strong>Desenvolvido por Blastoise</strong>
             </div>
             <img class="site-footer-badge" src="assets/img/footer-badge-emoji.png" alt="Ícone especial">
@@ -482,8 +368,8 @@
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260628-collapsible-sections"></script>
-    <script src="assets/js/operator-planner.js?v=20260628-missing-suggestions"></script>
+    <script src="assets/js/app.js?v=20260703-game-collapsible"></script>
+    <script src="assets/js/operator-planner.js?v=20260704-fixed-choice-layer"></script>
 </body>
 </html>
 

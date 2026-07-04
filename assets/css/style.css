@@ -403,8 +403,8 @@ h2 {
 
 .section-divider {
     width: min(1120px, 100%);
-    margin: 30px auto 14px;
-    padding: 16px 18px 14px;
+    margin: 18px auto 8px;
+    padding: 12px 18px 11px;
     border: 1px solid rgba(255, 217, 61, 0.28);
     border-left: 4px solid #ffd93d;
     background:
@@ -464,7 +464,7 @@ h2 {
 }
 
 .section-divider:first-of-type {
-    margin-top: 18px;
+    margin-top: 12px;
 }
 
 .section-divider-calculator {
@@ -500,7 +500,7 @@ h2 {
 }
 
 .section-divider-mission {
-    margin-top: 46px;
+    margin-top: 24px;
     border-color: rgba(255, 217, 61, 0.5);
     border-left-color: #ffd93d;
     background:
@@ -514,7 +514,7 @@ h2 {
 }
 
 .section-divider-announcement {
-    margin-top: 46px;
+    margin-top: 24px;
     border-color: rgba(255, 75, 75, 0.52);
     border-left-color: #ff4b4b;
     background:
@@ -528,7 +528,7 @@ h2 {
 }
 
 .section-divider-game {
-    margin-top: 52px;
+    margin-top: 24px;
     border-color: rgba(59, 169, 255, 0.5);
     border-left-color: #3ba9ff;
     background:
@@ -2045,17 +2045,18 @@ body {
     .section-divider.is-collapsible {
         grid-template-columns: minmax(0, 1fr) 42px;
         gap: 8px;
-        padding: 12px 10px;
+        margin: 12px auto 6px;
+        padding: 9px 10px;
     }
 
     .section-divider.is-collapsible .section-heading {
-        font-size: 1.12rem;
+        font-size: 1.02rem;
     }
 
     .section-toggle {
         min-width: 42px;
         width: 42px;
-        min-height: 38px;
+        min-height: 34px;
         padding: 0;
     }
 
@@ -3832,6 +3833,21 @@ a.clan-roster-action {
     -webkit-appearance: none;
 }
 
+.operator-readonly-table .operator-readonly-value,
+.operator-readonly-table .operator-readonly-score {
+    display: block;
+    min-width: 44px;
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.84rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.operator-readonly-table .operator-readonly-value {
+    color: #c8d4dc;
+}
+
 .mission-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
@@ -3839,13 +3855,18 @@ a.clan-roster-action {
 }
 
 .mission-row {
+    position: relative;
     display: grid;
-    grid-template-columns: 44px minmax(82px, 0.6fr) minmax(0, 1fr) 86px;
+    grid-template-columns: 44px minmax(82px, 0.6fr) 86px minmax(0, 1fr);
     align-items: center;
     min-height: 64px;
     border: 1px solid rgba(216, 238, 248, 0.13);
     background: rgba(5, 7, 10, 0.52);
-    overflow: hidden;
+    overflow: visible;
+}
+
+.mission-row.has-open-choice {
+    z-index: 80;
 }
 
 .mission-row.is-completed {
@@ -3910,6 +3931,190 @@ a.clan-roster-action {
     border-width: 0 0 0 1px;
     border-color: rgba(216, 238, 248, 0.13);
     padding: 0 8px;
+}
+
+.mission-count-wrap {
+    position: relative;
+    display: grid;
+    height: 100%;
+    min-height: 64px;
+    min-width: 0;
+    border-left: 1px solid rgba(216, 238, 248, 0.13);
+    background: #05070a;
+}
+
+.mission-select-wrap {
+    position: relative;
+    display: grid;
+    height: 100%;
+    min-height: 64px;
+    min-width: 0;
+}
+
+.mission-count-label,
+.mission-count-wrap > select,
+.mission-select-wrap > select {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mission-choice-widget {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    height: 100%;
+    min-height: inherit;
+    z-index: 4;
+}
+
+.mission-choice-widget.is-open {
+    z-index: 90;
+}
+
+.mission-choice-button {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 14px;
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: 8px;
+    width: 100%;
+    height: 100%;
+    min-height: 64px;
+    padding: 8px 11px;
+    border: 0;
+    border-left: 1px solid rgba(216, 238, 248, 0.13);
+    background:
+        linear-gradient(135deg, rgba(255, 217, 61, 0.1), rgba(5, 7, 10, 0.88) 48%),
+        #05070a;
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.mission-choice-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    background: linear-gradient(120deg, transparent, rgba(255, 217, 61, 0.24), transparent);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 160ms ease, transform 360ms ease;
+    pointer-events: none;
+}
+
+.mission-choice-button:hover::before,
+.mission-choice-widget.is-open .mission-choice-button::before {
+    opacity: 1;
+    transform: translateX(100%);
+}
+
+.mission-choice-button:focus-visible {
+    outline: 2px solid rgba(255, 217, 61, 0.72);
+    outline-offset: -2px;
+}
+
+.mission-choice-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.mission-choice-button small {
+    grid-column: 1;
+    color: #ffd93d;
+    font-size: 0.58rem;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: 0;
+}
+
+.mission-choice-button strong {
+    grid-column: 1;
+    min-width: 0;
+    color: #fff8d0;
+    font-size: 0.86rem;
+    font-weight: 950;
+    line-height: 1.05;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mission-choice-button i {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    justify-self: end;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid #ffd93d;
+    border-bottom: 2px solid #ffd93d;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 180ms ease;
+}
+
+.mission-choice-widget.is-open .mission-choice-button i {
+    transform: translateY(2px) rotate(225deg);
+}
+
+.mission-choice-list {
+    position: fixed;
+    top: var(--choice-top, 0);
+    left: var(--choice-left, 0);
+    right: auto;
+    width: var(--choice-width, 180px);
+    display: none;
+    max-height: 210px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 217, 61, 0.56);
+    background: #05070a;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.48), 0 0 22px rgba(255, 217, 61, 0.12);
+    z-index: 9999;
+}
+
+.mission-choice-widget.is-open .mission-choice-list {
+    display: grid;
+}
+
+.mission-choice-option {
+    min-height: 42px;
+    padding: 0 10px;
+    border: 0;
+    border-bottom: 1px solid rgba(216, 238, 248, 0.08);
+    background: rgba(5, 7, 10, 0.96);
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.mission-choice-option:hover,
+.mission-choice-option.is-selected {
+    background: linear-gradient(90deg, rgba(255, 217, 61, 0.28), rgba(255, 217, 61, 0.08));
+    color: #ffd93d;
+}
+
+.mission-choice-widget.is-count .mission-choice-button {
+    text-align: center;
+}
+
+.mission-choice-widget.is-count .mission-choice-button small,
+.mission-choice-widget.is-count .mission-choice-button strong {
+    justify-self: center;
+}
+
+.mission-choice-widget.is-count .mission-choice-option {
+    text-align: center;
 }
 
 .mission-status-button {
@@ -4312,6 +4517,93 @@ a.clan-roster-action {
 }
 
 @media (max-width: 520px) {
+    .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+
+    .mission-row {
+        grid-template-columns: 48px minmax(92px, 0.48fr) minmax(96px, 1fr);
+        grid-template-areas:
+            "slot meta meta"
+            "count count mission";
+        align-items: stretch;
+        min-height: 112px;
+    }
+
+    .mission-slot {
+        grid-area: slot;
+        min-height: 58px;
+        border-right: 1px solid rgba(255, 217, 61, 0.18);
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+    }
+
+    .mission-meta {
+        grid-area: meta;
+        min-height: 58px;
+        padding: 7px 10px;
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+        align-content: center;
+    }
+
+    .mission-meta strong {
+        font-size: 0.78rem;
+    }
+
+    .mission-meta small {
+        font-size: 0.62rem;
+    }
+
+    .mission-meta em {
+        font-size: 0.58rem;
+    }
+
+    .mission-row select {
+        min-height: 54px;
+        height: 54px;
+        border-top: 0;
+        padding: 0 9px;
+    }
+
+    .mission-count-wrap {
+        grid-area: count;
+        min-height: 54px;
+        border-left: 0;
+    }
+
+    .mission-select-wrap {
+        grid-area: mission;
+        min-height: 54px;
+    }
+
+    .mission-choice-widget {
+        min-height: 54px;
+    }
+
+    .mission-choice-button {
+        height: auto;
+        min-height: 54px;
+        padding: 7px 10px;
+    }
+
+    .mission-choice-button small {
+        font-size: 0.66rem;
+    }
+
+    .mission-choice-button strong {
+        font-size: 0.9rem;
+    }
+
+    .mission-choice-list {
+        max-height: 205px;
+        min-width: min(180px, calc(100vw - 16px));
+    }
+
+    .mission-choice-option {
+        min-height: 41px;
+        font-size: 0.78rem;
+    }
+
     .mission-operator-options {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 6px;

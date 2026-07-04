@@ -741,11 +741,11 @@ function openCollapsibleContent(content) {
 }
 
 function setupCollapsibleSections() {
-    const dividers = [...document.querySelectorAll(".section-divider:not(.section-divider-game)")];
+    const dividers = [...document.querySelectorAll(".section-divider")];
 
     dividers.forEach((divider, index) => {
         const content = divider.nextElementSibling;
-        if (!content || content.classList.contains("clan-banner") || content.classList.contains("operator-game")) {
+        if (!content || content.classList.contains("clan-banner")) {
             return;
         }
 

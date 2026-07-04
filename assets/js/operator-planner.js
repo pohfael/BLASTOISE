@@ -812,209 +812,14 @@ const PLANNER_SLOTS = [
 
 const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY", "LENS", "MECHARI"]);
 const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
-const RELOCATION_TARGET_SLOTS = new Set([4, 5, 6, 7]);
+const RELOCATION_TARGET_SLOTS = new Set([1, 2, 3, 4, 5, 6, 7]);
 const OPERATOR_DATA_STORAGE_KEY = "blastoise.operatorData.v3";
 const CLAN_ROSTER_STORAGE_KEY = "blastoise.clanRoster.v1";
-const DEFAULT_CLAN_ROSTER_NICKS = [
-    "[△665]♛ Delta Sioux",
-    "[△665]Matrixcore",
-    "[△665]BLΛƧTOIZΣburn",
-    "[△665]R A M A core",
-    "[△665]MATA boots",
-    "[△665]Delta Mata",
-    "[△665]23core",
-    "[△665]TIO",
-    "[△665]Redfield★core",
-    "[△665]Capiroto◇core",
-    "[△665]⁶⁹·Kogϑoi-D",
-    "[△665]░⌂➒⊂oldįgR†",
-    "[△665]ⓚⓘⓡⓚ▰デ══",
-    "[△665]Pırαtα",
-    "[△665]万日爪乃尺卆burn",
-    "[△665]AbsolutCinema",
-    "[△665]★.VᵄG.★",
-    "[△665]山モモ刀boots",
-    "[△665]VI₦Ç₳ÐØRcore",
-    "[△665]△⁶⁶⁵ Ç₳ĪØ $V",
-    "[△665]Fumaça",
-    "[△665]t a n j i r ō",
-    "[△665]Seukuzincore",
-    "[△665]cb pjᵞHO",
-    "[△665]BẮTTōu乄ŚẤ†burn",
-    "[△665]Peaél⊙?e",
-    "[△665]¹¹ChapoTRUE♛",
-    "[△665]Assassin†.",
-    "[△665]Burn",
-    "[△665]Caneco",
-    "[△665]KBça D BiLola",
-    "[△665]AngelTRUE",
-    "[△665]danyBlood",
-    "[△665]Garou-D.",
-    "[△665]FLP WAR",
-    "[△665]NoobMaster",
-    "[△665]Weis",
-    "[△665]THRAGG burn",
-    "[△665]Niko(0-0)core",
-    "[△665]Rickø",
-    "[△665]▰デ══ИΞΦburn",
-    "[△665]BAGACERA",
-    "[△665]2ezEloy",
-    "[△665]Alonso",
-    "[△665]Bob Maicocore",
-    "[△665]CACTO&POEIRA",
-    "[△665]CeeJooTaa",
-    "[△665]CHALA-YOUTOBA",
-    "[△665]CMDTRUE",
-    "[△665]D♛NZO⁴²⁰",
-    "[△665]EFEITO ESTUFA",
-    "[△665]evertonTaguai",
-    "[△665]Єxþloƶivᵉburn",
-    "[△665]HERO 10",
-    "[△665]ICE",
-    "[△665]Idiot pay2win",
-    "[△665]⌃Joe⌃Λ",
-    "[△665]C⚡♙⊙C⁶⁶⁵",
-    "[△665]JOETRUE",
-    "[△665]KANGTRUE",
-    "[△665]M4LV4D4O",
-    "[△665]N°ôhdaLund",
-    "[△665]Oooops△force",
-    "[△665]TNTfresa",
-    "[△665]VaiTomarSuaCu",
-    "[△665]Ximenão",
-    "[△665]ZEЯØMEIA⁶⁶⁵",
-    "[△665]ZOE",
-    "[△665]ΣNIGMΛVRGs",
-    "[△665]xeni@",
-    "[△665]CRAZYGIRL",
-    "[△665]SECURA XTREMA",
-    "[△665]△⁶⁶⁵ Łio ¥",
-    "[△665]Sonecaᵇᵒᵒᵗˢ",
-    "[△665]hắψάβψsάˣ³²⁰",
-    "[△665]♕Vinђas ELITE",
-    "[△665]orange",
-    "[△665]0099",
-    "[△665]BoTy Bee",
-    "[△665]SmG_K75",
-    "[△665]ⓅŁŁÊÃÖⓅ",
-    "[△665]NıxEVILTRUE",
-    "[△665]apichinpiche",
-    "[△665]卆ら丁尺日",
-    "[△665]665",
-    "[△665]Madruga",
-    "[△665]EnisonFJcore",
-    "[△665]Meliodasᵇᵘʳⁿ",
-    "[△665]Joaozytos 1.0",
-    "[△665]Albano",
-    "[△665]B乇ℓʊHØW Riot",
-    "[△665]FΛβiO TRUE",
-    "[△665]H¥ĐŘΛ",
-    "[△665]Bonce",
-    "[△665]eˡitePΛŦØTRUE",
-    "[△665]JøαøzytøsBurn",
-    "[△665]Á•burn",
-    "[△665]TheBlackWolf",
-    "[△665]SNEK",
-    "[△665]乞乞りら⁹⁹⁹",
-    "[△665]GrilliWilli",
-    "[△665]LçfømTRUE",
-    "[△665]FROSTPsΨ",
-    "[△665]W E S K E R",
-    "[△665]Léo",
-    "[△665]△⁶⁶⁵C4TURR4S",
-    "[△665]Lc.bala$",
-    "[△665]RuDão_Tking",
-    "[△665]Esteban",
-    "[△665]☆DELTA FORCE☆",
-    "[△665]ΘVI",
-    "[△665]El Bori",
-    "[△665]GLOBAL burn",
-    "[△665]Krob-X",
-    "[△665]△⁶⁶⁵Bison",
-    "[△665]Pro Master",
-    "[△665]VI₦¢I△force",
-    "[△665]ППЛΛ’",
-    "[△665]GangAnDTeK≥",
-    "[△665]POWER GUIDO",
-    "[△665]PEĐŘÖBØŦ♤GØĐ♤",
-    "[△665]☣ЭЛØВЦИЙ☣",
-    "[△665]Dauloncore",
-    "[△665]Flango ツ",
-    "[△665]wer",
-    "[△665]Smoke★",
-    "[△665]ROBEĹENO AP",
-    "[△665]★彡GÄNRAIZEN彡★",
-    "[△665]JUV",
-    "[△665]PANZER LADRA",
-    "[△665]ZeroMeiaboots",
-    "[△665]hudson-bsn",
-    "[△665]〽SEREP³",
-    "[△665]MarretaTRUE",
-    "[△665]エスケルズ",
-    "[△665]Ʒ⁹☆Barón 15",
-    "[△665]Husin",
-    "[△665]☣$ŦI҂$ŦЯØ☣",
-    "[△665]fFΛq☻PsΨ",
-    "[△665]U CANT C ME",
-    "[△665]☠REAPER☠",
-    "[△665]TakeN",
-    "[△665]Tripeiro",
-    "[△665]黑龍波01",
-    "[△665]D3STƷM1D8spar",
-    "[△665]kanleas",
-    "[△665].....",
-    "[△665]ALAN/Fenomeno",
-    "[△665]ᴹᴰ Phú nè :v"
-];
-const CLAN_ROSTER_NICK_ALIASES = {
-    "[△665]Delta Sioux": "[△665]♛ Delta Sioux",
-    "[△665]RAMAcore": "[△665]R A M A core",
-    "[△665]MATAboots": "[△665]MATA boots",
-    "[△665]Kogdoi-D": "[△665]⁶⁹·Kogϑoi-D",
-    "[△665]░⌂➒⊂oldįgR†": "[△665]░⌂➒⊂oldįgR†",
-    "[△665]ⓚⓘⓡⓚ—デ——": "[△665]ⓚⓘⓡⓚ▰デ══",
-    "[△665]Pirata": "[△665]Pırαtα",
-    "[△665]△⁶⁶⁵Ç₳ĪØ$V": "[△665]△⁶⁶⁵ Ç₳ĪØ $V",
-    "[△665]t.a.n.j.i.rō": "[△665]t a n j i r ō",
-    "[△665]cbpjHO": "[△665]cb pjᵞHO",
-    "[△665]BẮTTōu_ŚẤ†burn": "[△665]BẮTTōu乄ŚẤ†burn",
-    "[△665]KBçaDBiLola": "[△665]KBça D BiLola",
-    "[△665]FLPWAR": "[△665]FLP WAR",
-    "[△665]THRAGGburn": "[△665]THRAGG burn",
-    "[△665]—デ══ИΞΦburn": "[△665]▰デ══ИΞΦburn",
-    "[△665]EFEITOESTUFA": "[△665]EFEITO ESTUFA",
-    "[△665]HERO10": "[△665]HERO 10",
-    "[△665]Idiotpay2win": "[△665]Idiot pay2win",
-    "[△665]Sonecaboots": "[△665]Sonecaᵇᵒᵒᵗˢ",
-    "[△665]Meliodasburn": "[△665]Meliodasᵇᵘʳⁿ",
-    "[△665]BOB MAICON": "[△665]Bob Maicocore"
-};
-const DEFAULT_CLAN_ROSTER_NAMES = {
-    "[△665]BLΛƧTOIZΣburn": "RAFAEL",
-    "[△665]Bob Maicocore": "MAICON",
-    "[△665]♛ Delta Sioux": "ADRIANO",
-    "[△665]R A M A core": "RAMA",
-    "[△665]VI₦Ç₳ÐØRcore": "LEO"
-};
-const DEFAULT_CLAN_ROSTER_WHATSAPP = {
-    "[△665]BLΛƧTOIZΣburn": "32998418361",
-    "[△665]Bob Maicocore": "555194676225",
-    "[△665]♛ Delta Sioux": "5511993745723",
-    "[△665]R A M A core": "558588785152",
-    "[△665]VI₦Ç₳ÐØRcore": "554891592539"
-};
-const CLAN_ROSTER_FEATURED = {
-    "[△665]♛ Delta Sioux": { role: "ADM", order: 1 },
-    "[△665]Matrixcore": { role: "VP", order: 2 },
-    "[△665]BLΛƧTOIZΣburn": { role: "VP", order: 3 },
-    "[△665]R A M A core": { role: "VP", order: 4 },
-    "[△665]MATA boots": { role: "VP", order: 5 },
-    "[△665]Delta Mata": { role: "VP", order: 6 },
-    "[△665]23core": { role: "VP", order: 7 },
-    "[△665]TIO": { role: "VP", order: 8 },
-    "[△665]Redfield★core": { role: "VP", order: 9 },
-    "[△665]Capiroto◇core": { role: "VP", order: 10 }
-};
+const DEFAULT_CLAN_ROSTER_NICKS = [];
+const CLAN_ROSTER_NICK_ALIASES = {};
+const DEFAULT_CLAN_ROSTER_NAMES = {};
+const DEFAULT_CLAN_ROSTER_WHATSAPP = {};
+const CLAN_ROSTER_FEATURED = {};
 const DEFAULT_OPERATOR_DETAILS = {
     APOLLO: { rank: "4-1" },
     BATYA: { rank: "4-5" },
@@ -1068,13 +873,10 @@ const RANK_LEVELS = Array.from({ length: 60 }, (_, index) => {
 });
 
 const MISSION_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00", "06:00"];
-const MISSION_CODE_PREFIX = "BLASTOISE:";
 
 const plannerEls = {};
 let plannerUnlocked = false;
-let importedAssignment = null;
 const manualMissionSelections = {};
-const importedFixedOperatorsBySlot = {};
 const recentRemovedOperatorsBySlot = {};
 let latestMissionAssignment = [];
 let latestMissionExpected = new Map();
@@ -1177,19 +979,15 @@ function setPlannerControlsEnabled(enabled) {
         select.disabled = !enabled;
     });
 
-    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
-        button.disabled = !enabled;
+    plannerEls.rows.querySelectorAll(".mission-operator-count").forEach((select) => {
+        select.disabled = !enabled;
     });
 
     if (plannerEls.timeSelect) {
         plannerEls.timeSelect.disabled = !enabled;
     }
 
-    if (plannerEls.lastMissionText) {
-        plannerEls.lastMissionText.disabled = !enabled;
-    }
-
-    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton, plannerEls.copyMissionCodeButton, plannerEls.importButton, plannerEls.saveOperatorDataButton, plannerEls.exportOperatorDataButton, plannerEls.importOperatorDataButton, plannerEls.resetOperatorDataButton].forEach((button) => {
+    [plannerEls.clearButton, plannerEls.copyButton, plannerEls.shareButton].forEach((button) => {
         if (button) {
             button.disabled = !enabled;
         }
@@ -1214,6 +1012,7 @@ function setPlannerControlsEnabled(enabled) {
     if (plannerEls.operatorPanel) {
         plannerEls.operatorPanel.classList.toggle("is-locked", !enabled);
     }
+    syncMissionChoiceWidgets();
 }
 
 function createMissionTimes() {
@@ -1221,8 +1020,17 @@ function createMissionTimes() {
         return;
     }
 
+    const formatMissionTimeOption = (time) => {
+        const [hourText, minuteText] = time.split(":");
+        const hour = Number(hourText);
+        const period = hour >= 12 ? "PM" : "AM";
+        const displayHour = hour % 12 || 12;
+
+        return `${String(displayHour).padStart(2, "0")}:${minuteText} ${period}`;
+    };
+
     plannerEls.timeSelect.innerHTML = MISSION_TIMES.map((time) => (
-        `<option value="${time}">${time}</option>`
+        `<option value="${time}">${formatMissionTimeOption(time)}</option>`
     )).join("");
     plannerEls.timeSelect.value = "09:00";
 }
@@ -1240,7 +1048,7 @@ function createOperatorMissionFilter() {
 
 function createMissionOptions(currentValue = "", selectedValues = new Set()) {
     return [
-        '<option value="">Selecione</option>',
+        '<option value="">MISSÃO</option>',
         ...PLANNER_MISSIONS
             .filter((mission) => mission.key === currentValue || !selectedValues.has(mission.key))
             .map((mission) => `<option value="${mission.key}">${mission.name}</option>`)
@@ -1249,6 +1057,7 @@ function createMissionOptions(currentValue = "", selectedValues = new Set()) {
 
 function createMissionRows() {
     const options = createMissionOptions();
+    const countOptions = createMissionCountOptions(PLANNER_OPERATORS.length, 0);
 
     plannerEls.rows.innerHTML = PLANNER_SLOTS.map((item) => `
         <div class="mission-row">
@@ -1256,14 +1065,23 @@ function createMissionRows() {
             <span class="mission-meta">
                 <strong>${item.points}</strong>
                 <small>${item.reward}</small>
-                <em>${missionSendLabel(item)}</em>
+                <em>${missionSendLabel({ ...item, send: 0 })}</em>
             </span>
-            <select class="mission-select" data-slot="${item.slot}" disabled>
-                ${options}
-            </select>
-            <button type="button" class="mission-status-button" data-slot="${item.slot}" data-state="pending" disabled>Pendente</button>
+            <span class="mission-count-wrap">
+                <span class="mission-count-label">QTD<br>OPERADOR</span>
+                <select class="mission-operator-count" data-slot="${item.slot}" aria-label="Quantidade de operadores da miss\u00E3o ${item.slot}" disabled>
+                    ${countOptions}
+                </select>
+            </span>
+            <span class="mission-select-wrap">
+                <select class="mission-select" data-slot="${item.slot}" disabled>
+                    ${options}
+                </select>
+            </span>
         </div>
     `).join("");
+    updateMissionCountOptions();
+    syncMissionChoiceWidgets();
 }
 
 function updateMissionSelectOptions() {
@@ -1275,41 +1093,182 @@ function updateMissionSelectOptions() {
         select.innerHTML = createMissionOptions(currentValue, selectedValues);
         select.value = currentValue;
     });
+    syncMissionChoiceWidgets();
+}
+
+function createMissionCountOptions(maxValue, currentValue) {
+    return Array.from({ length: maxValue + 1 }, (_, count) => (
+        `<option value="${count}"${count === currentValue ? " selected" : ""}>${count}</option>`
+    )).join("");
+}
+
+function updateMissionCountOptions() {
+    const selects = [...plannerEls.rows.querySelectorAll(".mission-operator-count")];
+    const totalOperators = PLANNER_OPERATORS.length;
+    const selectedTotal = selects.reduce((sum, select) => sum + Math.max(0, Number(select.value) || 0), 0);
+
+    selects.forEach((select) => {
+        const currentValue = Math.max(0, Number(select.value) || 0);
+        const maxValue = Math.max(0, totalOperators - selectedTotal + currentValue);
+        const nextValue = Math.min(currentValue, maxValue);
+        select.innerHTML = createMissionCountOptions(maxValue, nextValue);
+        select.value = String(nextValue);
+    });
+    syncMissionChoiceWidgets();
+}
+
+function syncMissionChoiceWidgets() {
+    if (!plannerEls.rows) {
+        return;
+    }
+
+    plannerEls.rows.querySelectorAll(".mission-operator-count, .mission-select").forEach((select) => {
+        const isCount = select.classList.contains("mission-operator-count");
+        const wrapper = select.closest(isCount ? ".mission-count-wrap" : ".mission-select-wrap");
+        if (!wrapper) {
+            return;
+        }
+
+        let widget = wrapper.querySelector(".mission-choice-widget");
+        if (!widget) {
+            widget = document.createElement("span");
+            widget.className = `mission-choice-widget ${isCount ? "is-count" : "is-mission"}`;
+            widget.innerHTML = `
+                <button type="button" class="mission-choice-button" aria-haspopup="listbox" aria-expanded="false"></button>
+                <span class="mission-choice-list" role="listbox"></span>
+            `;
+            wrapper.appendChild(widget);
+        }
+
+        const button = widget.querySelector(".mission-choice-button");
+        const list = widget.querySelector(".mission-choice-list");
+        const selectedOption = select.options[select.selectedIndex] || select.options[0];
+        const label = isCount ? "QTD OPERADOR" : "MISS\u00C3O";
+        const valueText = selectedOption ? selectedOption.textContent : (isCount ? "0" : "MISS\u00C3O");
+
+        button.disabled = select.disabled;
+        button.dataset.slot = select.dataset.slot || "";
+        button.innerHTML = `<small>${label}</small><strong>${escapeHtml(valueText)}</strong><i aria-hidden="true"></i>`;
+
+        list.innerHTML = [...select.options].map((option) => `
+            <button type="button"
+                class="mission-choice-option${option.value === select.value ? " is-selected" : ""}"
+                role="option"
+                aria-selected="${option.value === select.value ? "true" : "false"}"
+                data-value="${escapeHtml(option.value)}">
+                ${escapeHtml(option.textContent)}
+            </button>
+        `).join("");
+    });
+}
+
+function closeMissionChoiceWidgets(exceptWidget = null) {
+    plannerEls.rows?.querySelectorAll(".mission-choice-widget.is-open").forEach((widget) => {
+        if (widget === exceptWidget) {
+            return;
+        }
+
+        widget.classList.remove("is-open");
+        widget.closest(".mission-row")?.classList.remove("has-open-choice");
+        widget.style.removeProperty("--choice-left");
+        widget.style.removeProperty("--choice-top");
+        widget.style.removeProperty("--choice-width");
+        widget.querySelector(".mission-choice-button")?.setAttribute("aria-expanded", "false");
+    });
+}
+
+function positionMissionChoiceList(widget, button) {
+    const rect = button.getBoundingClientRect();
+    const margin = 8;
+    const width = Math.min(Math.max(rect.width, 160), window.innerWidth - (margin * 2));
+    const left = Math.min(Math.max(rect.left, margin), window.innerWidth - width - margin);
+    const top = Math.min(rect.bottom + 4, window.innerHeight - 60);
+
+    widget.style.setProperty("--choice-left", `${left}px`);
+    widget.style.setProperty("--choice-top", `${top}px`);
+    widget.style.setProperty("--choice-width", `${width}px`);
+}
+
+function repositionOpenMissionChoiceWidget() {
+    const widget = plannerEls.rows?.querySelector(".mission-choice-widget.is-open");
+    const button = widget?.querySelector(".mission-choice-button");
+    if (widget && button) {
+        positionMissionChoiceList(widget, button);
+    }
+}
+
+function handleMissionChoiceClick(event) {
+    const button = event.target.closest(".mission-choice-button");
+    const option = event.target.closest(".mission-choice-option");
+
+    if (!button && !option) {
+        return;
+    }
+
+    const widget = event.target.closest(".mission-choice-widget");
+    const wrapper = event.target.closest(".mission-count-wrap, .mission-select-wrap");
+    const select = wrapper?.querySelector("select");
+
+    if (!widget || !select || select.disabled) {
+        return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (button) {
+        const willOpen = !widget.classList.contains("is-open");
+        closeMissionChoiceWidgets(widget);
+        widget.classList.toggle("is-open", willOpen);
+        widget.closest(".mission-row")?.classList.toggle("has-open-choice", willOpen);
+        button.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        if (willOpen) {
+            positionMissionChoiceList(widget, button);
+        }
+        return;
+    }
+
+    if (option) {
+        select.value = option.dataset.value || "";
+        closeMissionChoiceWidgets();
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+    }
 }
 
 function missionSendLabel(item) {
-    if (item.send === 0) {
+    const send = item.send;
+
+    if (send === 0) {
         return "Sem operador";
     }
 
-    if (item.send === "remaining") {
+    if (send === "remaining") {
         return "Sobras";
     }
 
-    return `${item.send} operadores`;
+    return `${send} operadores`;
 }
 
 function selectedMissions() {
     return [...plannerEls.rows.querySelectorAll(".mission-select")]
         .map((select) => {
+            const row = select.closest(".mission-row");
             const mission = missionByKey(select.value);
             const slotInfo = PLANNER_SLOTS.find((item) => item.slot === Number(select.dataset.slot));
-            return mission ? { ...slotInfo, mission } : null;
+            const count = Math.max(0, Number(row?.querySelector(".mission-operator-count")?.value) || 0);
+            return mission ? { ...slotInfo, send: count, mission } : null;
         })
         .filter(Boolean);
 }
 
 function completedMissionSlots() {
-    return new Set([...plannerEls.rows.querySelectorAll(".mission-status-button[data-state='done']")]
-        .map((button) => Number(button.closest(".mission-row")?.querySelector(".mission-select")?.dataset.slot))
-        .filter(Boolean));
+    return new Set();
 }
 
 function setMissionStatus(button, state) {
-    const isDone = state === "done";
-    button.dataset.state = isDone ? "done" : "pending";
-    button.textContent = isDone ? "Conclu\u00EDdo" : "Pendente";
-    button.closest(".mission-row")?.classList.toggle("is-completed", isDone);
+    if (!button) {
+        return;
+    }
 }
 
 function normalizeOperatorName(operator) {
@@ -1784,7 +1743,6 @@ function replaceOperatorData(nextData) {
     persistOperatorData();
     renderOperatorEditor();
     setPlannerControlsEnabled(plannerUnlocked);
-    importedAssignment = null;
     clearManualMissionSelections();
     updateMissionPlanner();
 }
@@ -1848,22 +1806,24 @@ function compareRelocationTargets(operator, a, b) {
         return availability;
     }
 
+    const targetPriority = (slot) => (Number(slot) >= 6 ? 0 : 1);
+    const priority = targetPriority(a.item.slot) - targetPriority(b.item.slot);
+    if (priority) {
+        return priority;
+    }
+
     return b.score - a.score || a.item.slot - b.item.slot;
 }
 
 function clearManualMissionSelections(slot) {
     if (Number.isFinite(Number(slot))) {
         delete manualMissionSelections[slot];
-        delete importedFixedOperatorsBySlot[slot];
         delete recentRemovedOperatorsBySlot[slot];
         return;
     }
 
     Object.keys(manualMissionSelections).forEach((key) => {
         delete manualMissionSelections[key];
-    });
-    Object.keys(importedFixedOperatorsBySlot).forEach((key) => {
-        delete importedFixedOperatorsBySlot[key];
     });
     Object.keys(recentRemovedOperatorsBySlot).forEach((key) => {
         delete recentRemovedOperatorsBySlot[key];
@@ -1881,10 +1841,6 @@ function missionSelectionLimit(item) {
     }
 
     if (item.isRelocationTarget) {
-        return Number.POSITIVE_INFINITY;
-    }
-
-    if (Number(item.slot) >= 6) {
         return Number.POSITIVE_INFINITY;
     }
 
@@ -2106,199 +2062,6 @@ function buildAssignment(selected) {
     return assignment;
 }
 
-function parseMissionText(text) {
-    const lines = String(text || "")
-        .split(/\r?\n/)
-        .map((line) => line.trim())
-        .filter(Boolean);
-    const parsed = [];
-
-    lines.forEach((line) => {
-        const cleanLine = line.replace(/^>\s*/, "");
-        const match = cleanLine.match(/^\*?\[\s*(\d+)\s*\]\s*([^:*]+?)\*?\s*(?::\s*(.*))?$/i);
-
-        if (!match) {
-            return;
-        }
-
-        const slot = Number(match[1]);
-        const mission = missionByTextName(match[2]);
-
-        if (!mission) {
-            return;
-        }
-
-        const operatorsText = (match[3] || "").replace(/\*/g, "").replace(/\.$/, "");
-        const chosen = operatorsText && !/SEM OPERADORES/i.test(operatorsText)
-            ? operatorsText.split(",")
-                .map((operator) => operatorByTextName(operator.replace(/\.$/, "")))
-                .filter(Boolean)
-                .map((operator, index) => ({
-                    operator,
-                    score: getMissionScore(mission, operator, PLANNER_OPERATORS.indexOf(operator) >= 0 ? PLANNER_OPERATORS.indexOf(operator) : index, slot)
-                }))
-            : [];
-        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === slot);
-
-        if (slotInfo) {
-            parsed.push({
-                ...slotInfo,
-                mission,
-                chosen,
-                alternatives: []
-            });
-        }
-    });
-
-    return parsed;
-}
-
-function base64UrlEncode(text) {
-    const bytes = new TextEncoder().encode(text);
-    let binary = "";
-    bytes.forEach((byte) => {
-        binary += String.fromCharCode(byte);
-    });
-
-    return btoa(binary)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/g, "");
-}
-
-function base64UrlDecode(text) {
-    const padded = String(text || "")
-        .replace(/-/g, "+")
-        .replace(/_/g, "/")
-        .padEnd(Math.ceil(String(text || "").length / 4) * 4, "=");
-    const binary = atob(padded);
-    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-
-    return new TextDecoder().decode(bytes);
-}
-
-function buildMissionCode(assignment) {
-    const statusBySlot = new Map([...plannerEls.rows.querySelectorAll(".mission-status-button")].map((button) => [
-        Number(button.dataset.slot || button.closest(".mission-row")?.querySelector(".mission-select")?.dataset.slot),
-        button.dataset.state === "done" ? "done" : "pending"
-    ]));
-    const payload = {
-        version: 1,
-        type: "blastoise-missions",
-        time: plannerEls.timeSelect?.value || "09:00",
-        missions: assignment.map((item) => ({
-            slot: item.slot,
-            key: item.mission.key,
-            state: statusBySlot.get(item.slot) || "pending",
-            operators: item.chosen.map((entry) => entry.operator)
-        }))
-    };
-
-    return `${MISSION_CODE_PREFIX}${base64UrlEncode(JSON.stringify(payload))}`;
-}
-
-function parseMissionCode(text) {
-    const rawText = String(text || "").trim();
-    const code = rawText.startsWith(MISSION_CODE_PREFIX)
-        ? rawText.slice(MISSION_CODE_PREFIX.length).trim()
-        : "";
-
-    if (!code) {
-        return null;
-    }
-
-    const payload = JSON.parse(base64UrlDecode(code));
-    if (payload?.type !== "blastoise-missions" || !Array.isArray(payload.missions)) {
-        throw new Error("Invalid mission code");
-    }
-
-    const parsed = payload.missions
-        .map((entry) => {
-            const slot = Number(entry.slot);
-            const slotInfo = PLANNER_SLOTS.find((item) => item.slot === slot);
-            const mission = missionByKey(entry.key);
-
-            if (!slotInfo || !mission) {
-                return null;
-            }
-
-            const chosen = Array.isArray(entry.operators)
-                ? entry.operators
-                    .map((operator) => operatorByTextName(operator))
-                    .filter(Boolean)
-                    .map((operator, index) => ({
-                        operator,
-                        score: getMissionScore(mission, operator, PLANNER_OPERATORS.indexOf(operator) >= 0 ? PLANNER_OPERATORS.indexOf(operator) : index, slot)
-                    }))
-                : [];
-
-            return {
-                ...slotInfo,
-                mission,
-                chosen,
-                alternatives: [],
-                state: entry.state === "done" ? "done" : "pending"
-            };
-        })
-        .filter(Boolean);
-
-    return {
-        time: MISSION_TIMES.includes(payload.time) ? payload.time : "",
-        missions: parsed
-    };
-}
-
-function importMissionText() {
-    let parsed = [];
-    let parsedCode = null;
-
-    try {
-        parsedCode = parseMissionCode(plannerEls.lastMissionText.value);
-    } catch (error) {
-        plannerEls.importMessage.textContent = "Código Blastoise inválido. Confira se copiou completo.";
-        return;
-    }
-
-    if (parsedCode) {
-        parsed = parsedCode.missions;
-    } else {
-        parsed = parseMissionText(plannerEls.lastMissionText.value);
-    }
-
-    if (!parsed.length) {
-        plannerEls.importMessage.textContent = "N\u00E3o encontrei c\u00F3digo ou miss\u00F5es v\u00E1lidas no texto colado.";
-        return;
-    }
-
-    importedAssignment = parsed;
-    clearManualMissionSelections();
-    if (parsedCode) {
-        parsed
-            .filter((item) => item.state !== "done")
-            .forEach((item) => {
-                const operators = item.chosen.map((entry) => entry.operator);
-                manualMissionSelections[item.slot] = operators;
-                importedFixedOperatorsBySlot[item.slot] = operators;
-            });
-    }
-    if (parsedCode?.time && plannerEls.timeSelect) {
-        plannerEls.timeSelect.value = parsedCode.time;
-    }
-    plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
-        const item = parsed.find((entry) => entry.slot === Number(select.dataset.slot));
-        select.value = item?.mission.key || "";
-    });
-    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
-        const item = parsed.find((entry) => entry.slot === Number(button.dataset.slot));
-        setMissionStatus(button, item?.state === "done" ? "done" : "pending");
-    });
-    updateMissionSelectOptions();
-    updateMissionPlanner();
-    plannerEls.importMessage.textContent = parsedCode
-        ? `${parsed.length} miss\u00F5es importadas pelo c\u00F3digo Blastoise.`
-        : `${parsed.length} miss\u00F5es importadas. Marque como conclu\u00EDdas as miss\u00F5es finalizadas.`;
-}
-
 function buildRelocationAssignment(baseAssignment, completedSlots, originalAssignment = baseAssignment) {
     const movingOperators = [];
     const sourceItems = originalAssignment.filter((item) => completedSlots.has(item.slot) && item.chosen.length);
@@ -2351,10 +2114,6 @@ function buildRelocationDisplayAssignment(assignment, relocation, completedSlots
     }
 
     const movingOperatorSet = new Set(relocation.movingOperators || []);
-    const fixedImportedOperators = new Set(Object.entries(importedFixedOperatorsBySlot)
-        .filter(([slot]) => !completedSlots.has(Number(slot)))
-        .flatMap(([, operators]) => operators));
-    const editableMovingOperatorSet = new Set([...movingOperatorSet].filter((operator) => !fixedImportedOperators.has(operator)));
     const sourceBySlot = new Map(relocation.sourceItems.map((item) => [item.slot, item]));
     const sourceOperatorSetBySlot = new Map(relocation.sourceItems.map((item) => [
         item.slot,
@@ -2395,13 +2154,13 @@ function buildRelocationDisplayAssignment(assignment, relocation, completedSlots
                 chosen,
                 alternatives: target.alternatives || [],
                 isRelocationTarget: true,
-                relocationAllowedOperators: editableMovingOperatorSet
+                relocationAllowedOperators: movingOperatorSet
             };
         }
 
         return {
             ...item,
-            relocationAllowedOperators: editableMovingOperatorSet
+            relocationAllowedOperators: movingOperatorSet
         };
     });
 }
@@ -2412,9 +2171,6 @@ function renderEmptyState() {
     plannerEls.assignment.innerHTML = '<p class="mission-empty">Escolha pelo menos uma miss\u00E3o para gerar a loca\u00E7\u00E3o.</p>';
     plannerEls.ranking.innerHTML = '<li class="mission-empty">Aguardando miss\u00F5es.</li>';
     plannerEls.copyText.value = "";
-    if (plannerEls.missionCodeText) {
-        plannerEls.missionCodeText.value = "";
-    }
 }
 
 function renderMissionPlanner(selected) {
@@ -2426,7 +2182,7 @@ function renderMissionPlanner(selected) {
     const ranking = buildRanking(selected);
     const generatedAssignment = buildAssignment(selected);
     const completedSlots = completedMissionSlots();
-    const baseAssignment = importedAssignment?.length ? importedAssignment : generatedAssignment;
+    const baseAssignment = generatedAssignment;
     latestMissionExpected = new Map(baseAssignment.map((item) => [
         item.slot,
         {
@@ -2478,13 +2234,8 @@ function renderMissionPlanner(selected) {
         </li>
     `).join("");
 
-    plannerEls.copyText.value = relocationForText
-        ? buildRelocationText(relocationForText)
-        : buildCopyText(assignment, ranking);
+    plannerEls.copyText.value = buildFullMissionText(assignment);
 
-    if (plannerEls.missionCodeText) {
-        plannerEls.missionCodeText.value = buildMissionCode(displayAssignment);
-    }
 }
 
 function buildCopyText(assignment) {
@@ -2544,18 +2295,127 @@ function buildRelocationText(relocation) {
     return lines.join("\n");
 }
 
+function nextRelocationTargets(stateAssignment, sourceSlot) {
+    return stateAssignment
+        .filter((item) => (
+            RELOCATION_TARGET_SLOTS.has(Number(item.slot))
+            && Number(item.slot) > Number(sourceSlot)
+            && item.send !== 0
+        ))
+        .map((item) => ({
+            ...item,
+            chosen: []
+        }));
+}
+
+function buildRelocationStep(stateAssignment, sourceItem) {
+    const targets = nextRelocationTargets(stateAssignment, sourceItem.slot);
+
+    if (!sourceItem?.chosen?.length || !targets.length) {
+        return null;
+    }
+
+    sourceItem.chosen.forEach((entry) => {
+        const operatorIndex = PLANNER_OPERATORS.indexOf(entry.operator);
+        const bestTarget = targets
+            .map((item) => ({
+                item,
+                score: getMissionScore(item.mission, entry.operator, operatorIndex >= 0 ? operatorIndex : 0, item.slot)
+            }))
+            .sort((a, b) => compareRelocationTargets(entry.operator, a, b))[0];
+
+        if (bestTarget) {
+            bestTarget.item.chosen.push({
+                operator: entry.operator,
+                score: bestTarget.score
+            });
+        }
+    });
+
+    return {
+        movingOperators: sourceItem.chosen.map((entry) => entry.operator),
+        sourceItems: [sourceItem],
+        targetItems: targets.filter((item) => item.chosen.length)
+    };
+}
+
+function applyRelocationStepToState(stateAssignment, relocation) {
+    if (!relocation?.sourceItems?.length) {
+        return stateAssignment;
+    }
+
+    const sourceSlots = new Set(relocation.sourceItems.map((item) => Number(item.slot)));
+    const targetBySlot = new Map(relocation.targetItems.map((item) => [Number(item.slot), item.chosen]));
+
+    return stateAssignment.map((item) => {
+        if (sourceSlots.has(Number(item.slot))) {
+            return {
+                ...item,
+                chosen: []
+            };
+        }
+
+        const added = targetBySlot.get(Number(item.slot));
+        if (added?.length) {
+            const currentOperators = new Set(item.chosen.map((entry) => entry.operator));
+            return {
+                ...item,
+                chosen: [
+                    ...item.chosen,
+                    ...added.filter((entry) => !currentOperators.has(entry.operator))
+                ]
+            };
+        }
+
+        return item;
+    });
+}
+
+function buildFullMissionText(initialAssignment) {
+    const texts = [buildCopyText(initialAssignment)];
+    let stateAssignment = initialAssignment.map((item) => ({
+        ...item,
+        chosen: item.chosen.map((entry) => ({ ...entry })),
+        alternatives: item.alternatives || []
+    }));
+
+    stateAssignment
+        .filter((item) => Number(item.slot) >= 1 && Number(item.slot) < 7 && item.chosen.length)
+        .sort((a, b) => Number(a.slot) - Number(b.slot))
+        .forEach((sourceRef) => {
+            const sourceItem = stateAssignment.find((item) => Number(item.slot) === Number(sourceRef.slot));
+            const relocation = buildRelocationStep(stateAssignment, sourceItem);
+
+            if (!relocation?.targetItems?.length) {
+                return;
+            }
+
+            texts.push(buildRelocationText(relocation));
+            stateAssignment = applyRelocationStepToState(stateAssignment, relocation);
+        });
+
+    return texts.join("\n\n\n\n");
+}
+
 function updateMissionPlanner() {
     renderMissionPlanner(selectedMissions());
 }
 
 function handleMissionSelectChange(event) {
-    importedAssignment = null;
-    const changedSlot = Number(event?.target?.dataset?.slot);
+    const target = event?.target;
+    const changedSlot = Number(target?.dataset?.slot);
     if (Number.isFinite(changedSlot)) {
         clearManualMissionSelections(changedSlot);
     }
-    if (plannerEls.importMessage) {
-        plannerEls.importMessage.textContent = "";
+    if (target?.classList?.contains("mission-operator-count")) {
+        updateMissionCountOptions();
+        const row = target.closest(".mission-row");
+        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === changedSlot);
+        const count = Math.max(0, Number(target.value) || 0);
+        const meta = row?.querySelector(".mission-meta em");
+        if (meta && slotInfo) {
+            meta.textContent = missionSendLabel({ ...slotInfo, send: count });
+        }
     }
     updateMissionSelectOptions();
     updateMissionPlanner();
@@ -2583,17 +2443,6 @@ function handleMissionOperatorChoice(event) {
         .filter((operator) => PLANNER_OPERATORS.includes(operator));
 
     manualMissionSelections[slot] = [...new Set(selectedOperators)];
-    updateMissionPlanner();
-}
-
-function handleMissionStatusClick(event) {
-    const button = event.target.closest(".mission-status-button");
-    if (!button || button.disabled) {
-        return;
-    }
-
-    const isDone = button.dataset.state === "done";
-    setMissionStatus(button, isDone ? "pending" : "done");
     updateMissionPlanner();
 }
 
@@ -2656,7 +2505,7 @@ function missionShareBlocks() {
     )));
 
     return latestMissionAssignment
-        .filter((item) => item.send !== 0 && Number(item.slot) >= 3 && Number(item.slot) <= 5)
+        .filter((item) => item.send !== 0)
         .map((item) => {
             const expected = latestMissionExpected.get(item.slot) || { count: 0, operators: [] };
             const expectedCount = Math.max(0, Number(expected.count) || 0);
@@ -2693,12 +2542,13 @@ function suggestRelocationMission(operator) {
 
     return targets
         .map((item) => ({
+            item,
             operator,
             slot: item.slot,
             missionName: item.mission.name,
             score: getMissionScore(item.mission, operator, operatorIndex >= 0 ? operatorIndex : 0, item.slot)
         }))
-        .sort((a, b) => b.score - a.score || a.slot - b.slot)[0] || null;
+        .sort((a, b) => compareRelocationTargets(operator, a, b))[0] || null;
 }
 
 function missionShareBlockMessage(blocks) {
@@ -2808,27 +2658,6 @@ async function copyMissionText() {
     plannerEls.copyButton.textContent = "Copiado";
     setTimeout(() => {
         plannerEls.copyButton.textContent = "Copiar texto";
-    }, 1300);
-}
-
-async function copyMissionCode() {
-    const code = plannerEls.missionCodeText?.value.trim() || "";
-    if (!code) {
-        return;
-    }
-
-    try {
-        await navigator.clipboard.writeText(code);
-    } catch (error) {
-        plannerEls.missionCodeText.focus();
-        plannerEls.missionCodeText.select();
-        document.execCommand("copy");
-        plannerEls.missionCodeText.setSelectionRange(0, 0);
-    }
-
-    plannerEls.copyMissionCodeButton.textContent = "Código copiado";
-    setTimeout(() => {
-        plannerEls.copyMissionCodeButton.textContent = "Copiar código";
     }, 1300);
 }
 
@@ -3012,13 +2841,13 @@ function renderOperatorEditor() {
         return `
             <tr${visible ? "" : ' class="is-filtered-out"'}>
                 <th>${escapeHtml(operator)}</th>
-                <td><select data-operator="${escapeHtml(operator)}" data-field="rank" disabled>${createRankOptions(data.rank)}</select></td>
+                <td><span class="operator-readonly-value">${escapeHtml(data.rank || "-")}</span></td>
                 ${PLANNER_MISSIONS.map((mission) => {
                     const score = Number(data.scores[mission.key]) || 0;
                     const highlightClass = getOperatorScoreHighlightClass(stats, score);
                     const classAttribute = highlightClass ? ` class="${highlightClass}"` : "";
                     return `
-                    <td${classAttribute}><input type="number" min="0" step="1" data-operator="${escapeHtml(operator)}" data-mission="${escapeHtml(mission.key)}" value="${score}" disabled></td>
+                    <td${classAttribute}><span class="operator-readonly-score">${formatScore(score)}</span></td>
                 `;
                 }).join("")}
             </tr>
@@ -3111,7 +2940,6 @@ function saveOperatorEditor() {
     persistOperatorData();
     renderOperatorEditor();
     setPlannerControlsEnabled(plannerUnlocked);
-    importedAssignment = null;
     updateMissionPlanner();
     plannerEls.operatorEditorStatus.textContent = "Base salva. A locação já está usando as novas pontuações.";
 }
@@ -3146,20 +2974,19 @@ function resetOperatorEditor() {
 }
 
 function clearMissionPlanner() {
-    importedAssignment = null;
     clearManualMissionSelections();
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
         select.value = "";
     });
-    plannerEls.rows.querySelectorAll(".mission-status-button").forEach((button) => {
-        setMissionStatus(button, "pending");
+    plannerEls.rows.querySelectorAll(".mission-operator-count").forEach((select) => {
+        select.value = "0";
+        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === Number(select.dataset.slot));
+        const meta = select.closest(".mission-row")?.querySelector(".mission-meta em");
+        if (meta && slotInfo) {
+            meta.textContent = missionSendLabel({ ...slotInfo, send: 0 });
+        }
     });
-    if (plannerEls.lastMissionText) {
-        plannerEls.lastMissionText.value = "";
-    }
-    if (plannerEls.importMessage) {
-        plannerEls.importMessage.textContent = "";
-    }
+    updateMissionCountOptions();
     updateMissionSelectOptions();
     updateMissionPlanner();
 }
@@ -3180,18 +3007,13 @@ function initOperatorPlanner() {
     plannerEls.assignment = document.getElementById("missionAssignment");
     plannerEls.ranking = document.getElementById("missionRanking");
     plannerEls.copyText = document.getElementById("missionCopyText");
-    plannerEls.missionCodeText = document.getElementById("missionCodeText");
     plannerEls.copyButton = document.getElementById("copyMissionButton");
-    plannerEls.copyMissionCodeButton = document.getElementById("copyMissionCodeButton");
     plannerEls.shareButton = document.getElementById("shareMissionButton");
     plannerEls.shareModal = document.getElementById("missionShareModal");
     plannerEls.shareModalBody = document.getElementById("missionShareModalBody");
     plannerEls.shareModalClose = document.getElementById("missionShareModalClose");
     plannerEls.shareModalOk = document.getElementById("missionShareModalOk");
     plannerEls.clearButton = document.getElementById("clearMissionButton");
-    plannerEls.lastMissionText = document.getElementById("lastMissionText");
-    plannerEls.importButton = document.getElementById("importMissionButton");
-    plannerEls.importMessage = document.getElementById("missionImportMessage");
     plannerEls.tabs = [...tool.querySelectorAll(".mission-tab")];
     plannerEls.tabPanels = [...tool.querySelectorAll(".mission-tab-panel")];
     plannerEls.operatorPanel = tool.querySelector('[data-mission-panel="operators"]');
@@ -3227,7 +3049,6 @@ function initOperatorPlanner() {
     plannerEls.clanRosterBody = document.getElementById("clanRosterBody");
 
     loadOperatorData();
-    loadClanRoster();
     createMissionTimes();
     createOperatorMissionFilter();
     createMissionRows();
@@ -3239,47 +3060,55 @@ function initOperatorPlanner() {
             showPlannerLockedNotice();
         }
     }, true);
-    plannerEls.timeSelect.addEventListener("change", updateMissionPlanner);
-    plannerEls.rows.addEventListener("change", handleMissionSelectChange);
-    plannerEls.rows.addEventListener("click", handleMissionStatusClick);
-    plannerEls.assignment.addEventListener("change", handleMissionOperatorChoice);
-    plannerEls.importButton.addEventListener("click", importMissionText);
-    plannerEls.clearButton.addEventListener("click", clearMissionPlanner);
-    plannerEls.copyButton.addEventListener("click", copyMissionText);
-    plannerEls.copyMissionCodeButton.addEventListener("click", copyMissionCode);
-    plannerEls.shareButton.addEventListener("click", shareMissionText);
-    plannerEls.shareModalClose.addEventListener("click", closeMissionShareModal);
-    plannerEls.shareModalOk.addEventListener("click", closeMissionShareModal);
-    plannerEls.shareModal.addEventListener("click", (event) => {
+    plannerEls.timeSelect?.addEventListener("change", updateMissionPlanner);
+    plannerEls.rows?.addEventListener("change", handleMissionSelectChange);
+    plannerEls.rows?.addEventListener("click", handleMissionChoiceClick);
+    plannerEls.assignment?.addEventListener("change", handleMissionOperatorChoice);
+    plannerEls.clearButton?.addEventListener("click", clearMissionPlanner);
+    plannerEls.copyButton?.addEventListener("click", copyMissionText);
+    plannerEls.shareButton?.addEventListener("click", shareMissionText);
+    plannerEls.shareModalClose?.addEventListener("click", closeMissionShareModal);
+    plannerEls.shareModalOk?.addEventListener("click", closeMissionShareModal);
+    plannerEls.shareModal?.addEventListener("click", (event) => {
         if (event.target === plannerEls.shareModal) {
             closeMissionShareModal();
         }
     });
     document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMissionChoiceWidgets();
+        }
         if (event.key === "Escape" && plannerEls.shareModal && !plannerEls.shareModal.hidden) {
             closeMissionShareModal();
         }
     });
+    document.addEventListener("click", (event) => {
+        if (!event.target.closest(".mission-choice-widget")) {
+            closeMissionChoiceWidgets();
+        }
+    });
+    window.addEventListener("resize", repositionOpenMissionChoiceWidget);
+    window.addEventListener("scroll", repositionOpenMissionChoiceWidget, true);
     plannerEls.tabs.forEach((tab) => {
         tab.addEventListener("click", () => switchMissionTab(tab.dataset.missionTab));
     });
-    plannerEls.saveOperatorDataButton.addEventListener("click", saveOperatorEditor);
-    plannerEls.exportOperatorDataButton.addEventListener("click", exportOperatorEditor);
-    plannerEls.importOperatorDataButton.addEventListener("click", importOperatorEditor);
-    plannerEls.resetOperatorDataButton.addEventListener("click", resetOperatorEditor);
-    plannerEls.operatorEditorBody.addEventListener("input", handleOperatorEditorInput);
-    plannerEls.operatorEditorHead.addEventListener("click", handleOperatorEditorSortClick);
-    plannerEls.operatorSearchFilter.addEventListener("input", handleOperatorEditorFilterChange);
-    plannerEls.operatorViewFilter.addEventListener("change", handleOperatorEditorFilterChange);
-    plannerEls.operatorMissionFilter.addEventListener("change", handleOperatorEditorFilterChange);
-    plannerEls.clanRosterUnlockForm.addEventListener("submit", unlockClanRoster);
-    plannerEls.clanRosterForm.addEventListener("submit", saveClanPlayer);
-    plannerEls.clearClanPlayerFormButton.addEventListener("click", clearClanRosterForm);
-    plannerEls.exportClanRosterButton.addEventListener("click", exportClanRoster);
-    plannerEls.importClanRosterButton.addEventListener("click", importClanRoster);
-    plannerEls.copyClanRosterButton.addEventListener("click", copyClanRosterList);
-    plannerEls.clanRosterSearch.addEventListener("input", renderClanRoster);
-    plannerEls.clanRosterBody.addEventListener("click", handleClanRosterAction);
+    plannerEls.saveOperatorDataButton?.addEventListener("click", saveOperatorEditor);
+    plannerEls.exportOperatorDataButton?.addEventListener("click", exportOperatorEditor);
+    plannerEls.importOperatorDataButton?.addEventListener("click", importOperatorEditor);
+    plannerEls.resetOperatorDataButton?.addEventListener("click", resetOperatorEditor);
+    plannerEls.operatorEditorBody?.addEventListener("input", handleOperatorEditorInput);
+    plannerEls.operatorEditorHead?.addEventListener("click", handleOperatorEditorSortClick);
+    plannerEls.operatorSearchFilter?.addEventListener("input", handleOperatorEditorFilterChange);
+    plannerEls.operatorViewFilter?.addEventListener("change", handleOperatorEditorFilterChange);
+    plannerEls.operatorMissionFilter?.addEventListener("change", handleOperatorEditorFilterChange);
+    plannerEls.clanRosterUnlockForm?.addEventListener("submit", unlockClanRoster);
+    plannerEls.clanRosterForm?.addEventListener("submit", saveClanPlayer);
+    plannerEls.clearClanPlayerFormButton?.addEventListener("click", clearClanRosterForm);
+    plannerEls.exportClanRosterButton?.addEventListener("click", exportClanRoster);
+    plannerEls.importClanRosterButton?.addEventListener("click", importClanRoster);
+    plannerEls.copyClanRosterButton?.addEventListener("click", copyClanRosterList);
+    plannerEls.clanRosterSearch?.addEventListener("input", renderClanRoster);
+    plannerEls.clanRosterBody?.addEventListener("click", handleClanRosterAction);
 
     renderEmptyState();
 }
