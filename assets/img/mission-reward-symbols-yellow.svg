@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-labelledby="title desc">
+  <title id="title">Simbolos de recompensa</title>
+  <desc id="desc">Icones minimalistas amarelos de recursos, medalha e moedas, sem fundo.</desc>
+  <defs>
+    <style>
+      .mark {
+        fill: none;
+        stroke: #ffd93d;
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .fill {
+        fill: #ffd93d;
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(34 22)" aria-label="Recurso">
+    <circle class="mark" cx="46" cy="46" r="28"/>
+    <circle class="mark" cx="58" cy="38" r="28" opacity=".78"/>
+    <circle class="mark" cx="70" cy="30" r="28" opacity=".55"/>
+  </g>
+
+  <g transform="translate(176 18)" aria-label="Medalha">
+    <path class="mark" d="M38 8h36v30l-18 15-18-15V8z"/>
+    <circle class="mark" cx="56" cy="70" r="24"/>
+    <path class="mark" d="M56 58v24M44 70h24"/>
+    <path class="mark" d="M38 96l18-10 18 10"/>
+  </g>
+
+  <g transform="translate(302 22)" aria-label="Moedas">
+    <circle class="mark" cx="30" cy="46" r="28" opacity=".55"/>
+    <circle class="mark" cx="46" cy="46" r="28" opacity=".78"/>
+    <circle class="mark" cx="62" cy="46" r="28"/>
+    <circle class="fill" cx="62" cy="46" r="7"/>
+  </g>
+</svg>

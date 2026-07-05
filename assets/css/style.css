@@ -43,7 +43,7 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
     background:
         repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0, rgba(255, 255, 255, 0.035) 1px, transparent 1px, transparent 58px),
@@ -402,6 +402,10 @@ h2 {
 }
 
 .section-divider {
+    --section-action-color: #ffd93d;
+    --section-action-border: rgba(255, 217, 61, 0.62);
+    --section-action-bg: rgba(255, 217, 61, 0.08);
+    --section-action-shadow: rgba(255, 217, 61, 0.12);
     width: min(1120px, 100%);
     margin: 18px auto 8px;
     padding: 12px 18px 11px;
@@ -428,6 +432,10 @@ h2 {
 }
 
 .section-toggle {
+    --button-accent: var(--section-action-color);
+    --button-accent-border: var(--section-action-border);
+    --button-accent-bg: var(--section-action-bg);
+    --button-accent-shadow: var(--section-action-shadow);
     grid-column: 2;
     grid-row: 1 / span 2;
     display: inline-flex;
@@ -437,13 +445,25 @@ h2 {
     min-width: 104px;
     min-height: 42px;
     padding: 8px 12px;
-    border: 1px solid rgba(255, 217, 61, 0.62);
-    background: rgba(5, 7, 10, 0.7);
-    color: #fff8d0;
+    border: 1px solid var(--section-action-border);
+    background:
+        linear-gradient(180deg, var(--section-action-bg), rgba(5, 7, 10, 0.72));
+    color: var(--section-action-color);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025), 0 0 18px var(--section-action-shadow);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.76rem;
     font-weight: 900;
     text-transform: uppercase;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.section-toggle:hover,
+.section-toggle:focus-visible {
+    border-color: var(--section-action-color);
+    background:
+        linear-gradient(180deg, var(--section-action-bg), rgba(5, 7, 10, 0.86));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 0 24px var(--section-action-shadow);
+    outline: none;
 }
 
 .section-toggle i {
@@ -468,6 +488,10 @@ h2 {
 }
 
 .section-divider-calculator {
+    --section-action-color: #e8e8d0;
+    --section-action-border: rgba(232, 232, 208, 0.72);
+    --section-action-bg: rgba(232, 232, 208, 0.1);
+    --section-action-shadow: rgba(232, 232, 208, 0.14);
     border-color: rgba(232, 232, 208, 0.52);
     border-left-color: #e8e8d0;
     background:
@@ -500,6 +524,10 @@ h2 {
 }
 
 .section-divider-mission {
+    --section-action-color: #ffd93d;
+    --section-action-border: rgba(255, 217, 61, 0.68);
+    --section-action-bg: rgba(255, 217, 61, 0.1);
+    --section-action-shadow: rgba(255, 217, 61, 0.16);
     margin-top: 24px;
     border-color: rgba(255, 217, 61, 0.5);
     border-left-color: #ffd93d;
@@ -514,6 +542,10 @@ h2 {
 }
 
 .section-divider-announcement {
+    --section-action-color: #ff5f6d;
+    --section-action-border: rgba(255, 75, 75, 0.72);
+    --section-action-bg: rgba(255, 75, 75, 0.1);
+    --section-action-shadow: rgba(255, 75, 75, 0.18);
     margin-top: 24px;
     border-color: rgba(255, 75, 75, 0.52);
     border-left-color: #ff4b4b;
@@ -528,6 +560,10 @@ h2 {
 }
 
 .section-divider-game {
+    --section-action-color: #3ba9ff;
+    --section-action-border: rgba(59, 169, 255, 0.7);
+    --section-action-bg: rgba(59, 169, 255, 0.1);
+    --section-action-shadow: rgba(59, 169, 255, 0.18);
     margin-top: 24px;
     border-color: rgba(59, 169, 255, 0.5);
     border-left-color: #3ba9ff;
@@ -745,6 +781,10 @@ h2 {
 }
 
 .icon-button {
+    --button-accent: var(--danger);
+    --button-accent-border: rgba(255, 75, 75, 0.7);
+    --button-accent-bg: rgba(255, 75, 75, 0.1);
+    --button-accent-shadow: rgba(255, 75, 75, 0.18);
     width: 38px;
     height: 38px;
     color: var(--danger);
@@ -754,6 +794,10 @@ h2 {
 }
 
 .ghost-action {
+    --button-accent: var(--accent);
+    --button-accent-border: rgba(255, 217, 61, 0.66);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     min-height: 38px;
     padding: 0 12px;
     color: var(--accent);
@@ -764,6 +808,10 @@ h2 {
 }
 
 .primary-action {
+    --button-accent: #ffba08;
+    --button-accent-border: rgba(255, 217, 61, 0.76);
+    --button-accent-bg: rgba(255, 217, 61, 0.12);
+    --button-accent-shadow: rgba(255, 186, 8, 0.2);
     width: 100%;
     min-height: 52px;
     margin-top: 16px;
@@ -779,6 +827,164 @@ h2 {
 button:hover {
     transform: translateY(-1px);
     box-shadow: 0 0 22px rgba(255, 217, 61, 0.16);
+}
+
+.section-toggle,
+.icon-button,
+.ghost-action,
+.primary-action,
+.secondary-action,
+.max-action,
+.target-button,
+.choice-button,
+.stepper button,
+.announcement-actions button,
+.mission-unlock-form button,
+.mission-import-actions button,
+.mission-toolbar-actions button,
+.mission-tab,
+.mission-share-actions button,
+.mission-share-modal-ok,
+.operator-editor-actions button,
+.clan-roster-form-actions button,
+.clan-roster-action,
+.operator-next {
+    --button-accent: var(--accent);
+    --button-accent-border: rgba(255, 217, 61, 0.66);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease,
+        filter 160ms ease;
+}
+
+.section-toggle::before,
+.icon-button::before,
+.ghost-action::before,
+.primary-action::before,
+.secondary-action::before,
+.max-action::before,
+.target-button::before,
+.choice-button::before,
+.stepper button::before,
+.announcement-actions button::before,
+.mission-unlock-form button::before,
+.mission-import-actions button::before,
+.mission-toolbar-actions button::before,
+.mission-tab::before,
+.mission-share-actions button::before,
+.mission-share-modal-ok::before,
+.operator-editor-actions button::before,
+.clan-roster-form-actions button::before,
+.clan-roster-action::before,
+.operator-next::before {
+    content: "";
+    position: absolute;
+    inset: -35% auto -35% -55%;
+    z-index: 0;
+    width: 48%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--button-accent) 22%, transparent), transparent);
+    opacity: 0;
+    transform: skewX(-18deg);
+    transition: transform 280ms ease, opacity 180ms ease;
+    pointer-events: none;
+}
+
+.section-toggle:not(:disabled):hover,
+.section-toggle:not(:disabled):focus-visible,
+.icon-button:not(:disabled):hover,
+.icon-button:not(:disabled):focus-visible,
+.ghost-action:not(:disabled):hover,
+.ghost-action:not(:disabled):focus-visible,
+.primary-action:not(:disabled):hover,
+.primary-action:not(:disabled):focus-visible,
+.secondary-action:not(:disabled):hover,
+.secondary-action:not(:disabled):focus-visible,
+.max-action:not(:disabled):hover,
+.max-action:not(:disabled):focus-visible,
+.target-button:not(:disabled):hover,
+.target-button:not(:disabled):focus-visible,
+.choice-button:not(:disabled):hover,
+.choice-button:not(:disabled):focus-visible,
+.stepper button:not(:disabled):hover,
+.stepper button:not(:disabled):focus-visible,
+.announcement-actions button:not(:disabled):hover,
+.announcement-actions button:not(:disabled):focus-visible,
+.mission-unlock-form button:not(:disabled):hover,
+.mission-unlock-form button:not(:disabled):focus-visible,
+.mission-import-actions button:not(:disabled):hover,
+.mission-import-actions button:not(:disabled):focus-visible,
+.mission-toolbar-actions button:not(:disabled):hover,
+.mission-toolbar-actions button:not(:disabled):focus-visible,
+.mission-tab:not(:disabled):hover,
+.mission-tab:not(:disabled):focus-visible,
+.mission-share-actions button:not(:disabled):hover,
+.mission-share-actions button:not(:disabled):focus-visible,
+.mission-share-modal-ok:not(:disabled):hover,
+.mission-share-modal-ok:not(:disabled):focus-visible,
+.operator-editor-actions button:not(:disabled):hover,
+.operator-editor-actions button:not(:disabled):focus-visible,
+.clan-roster-form-actions button:not(:disabled):hover,
+.clan-roster-form-actions button:not(:disabled):focus-visible,
+.clan-roster-action:not(.is-disabled):hover,
+.clan-roster-action:not(.is-disabled):focus-visible,
+.operator-next:not(:disabled):hover,
+.operator-next:not(:disabled):focus-visible {
+    transform: translateY(-1px);
+    border-color: var(--button-accent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--button-accent) 14%, transparent), 0 0 24px var(--button-accent-shadow);
+    outline: none;
+}
+
+.section-toggle:not(:disabled):hover::before,
+.section-toggle:not(:disabled):focus-visible::before,
+.icon-button:not(:disabled):hover::before,
+.icon-button:not(:disabled):focus-visible::before,
+.ghost-action:not(:disabled):hover::before,
+.ghost-action:not(:disabled):focus-visible::before,
+.primary-action:not(:disabled):hover::before,
+.primary-action:not(:disabled):focus-visible::before,
+.secondary-action:not(:disabled):hover::before,
+.secondary-action:not(:disabled):focus-visible::before,
+.max-action:not(:disabled):hover::before,
+.max-action:not(:disabled):focus-visible::before,
+.target-button:not(:disabled):hover::before,
+.target-button:not(:disabled):focus-visible::before,
+.choice-button:not(:disabled):hover::before,
+.choice-button:not(:disabled):focus-visible::before,
+.stepper button:not(:disabled):hover::before,
+.stepper button:not(:disabled):focus-visible::before,
+.announcement-actions button:not(:disabled):hover::before,
+.announcement-actions button:not(:disabled):focus-visible::before,
+.mission-unlock-form button:not(:disabled):hover::before,
+.mission-unlock-form button:not(:disabled):focus-visible::before,
+.mission-import-actions button:not(:disabled):hover::before,
+.mission-import-actions button:not(:disabled):focus-visible::before,
+.mission-toolbar-actions button:not(:disabled):hover::before,
+.mission-toolbar-actions button:not(:disabled):focus-visible::before,
+.mission-tab:not(:disabled):hover::before,
+.mission-tab:not(:disabled):focus-visible::before,
+.mission-share-actions button:not(:disabled):hover::before,
+.mission-share-actions button:not(:disabled):focus-visible::before,
+.mission-share-modal-ok:not(:disabled):hover::before,
+.mission-share-modal-ok:not(:disabled):focus-visible::before,
+.operator-editor-actions button:not(:disabled):hover::before,
+.operator-editor-actions button:not(:disabled):focus-visible::before,
+.clan-roster-form-actions button:not(:disabled):hover::before,
+.clan-roster-form-actions button:not(:disabled):focus-visible::before,
+.clan-roster-action:not(.is-disabled):hover::before,
+.clan-roster-action:not(.is-disabled):focus-visible::before,
+.operator-next:not(:disabled):hover::before,
+.operator-next:not(:disabled):focus-visible::before {
+    opacity: 1;
+    transform: translateX(330%) skewX(-18deg);
 }
 
 label span,
@@ -949,6 +1155,10 @@ select:focus {
 }
 
 .target-button {
+    --button-accent: var(--tier-color);
+    --button-accent-border: color-mix(in srgb, var(--tier-color) 64%, transparent);
+    --button-accent-bg: color-mix(in srgb, var(--tier-color) 12%, transparent);
+    --button-accent-shadow: color-mix(in srgb, var(--tier-color) 24%, transparent);
     min-height: 46px;
     color: var(--tier-color);
     background: linear-gradient(180deg, color-mix(in srgb, var(--tier-color) 14%, #111), #080a0d);
@@ -1099,6 +1309,10 @@ select:focus {
 }
 
 .choice-button {
+    --button-accent: var(--choice-color);
+    --button-accent-border: color-mix(in srgb, var(--choice-color) 62%, transparent);
+    --button-accent-bg: color-mix(in srgb, var(--choice-color) 12%, transparent);
+    --button-accent-shadow: color-mix(in srgb, var(--choice-color) 22%, transparent);
     min-height: 52px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background:
@@ -1169,6 +1383,10 @@ select:focus {
 }
 
 .stepper button {
+    --button-accent: #a8bdc9;
+    --button-accent-border: rgba(168, 189, 201, 0.72);
+    --button-accent-bg: rgba(168, 189, 201, 0.1);
+    --button-accent-shadow: rgba(168, 189, 201, 0.18);
     min-height: 50px;
     color: var(--accent);
     font-size: 1.6rem;
@@ -1617,6 +1835,10 @@ body {
 }
 
 .secondary-action {
+    --button-accent: #a8bdc9;
+    --button-accent-border: rgba(168, 189, 201, 0.72);
+    --button-accent-bg: rgba(168, 189, 201, 0.1);
+    --button-accent-shadow: rgba(168, 189, 201, 0.18);
     min-height: 52px;
     border: 3px solid #a8bdc9;
     background: rgba(17, 22, 25, 0.92);
@@ -2416,6 +2638,10 @@ body {
 }
 
 .max-action {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.72);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     width: min(220px, 100%);
     min-height: 38px;
     display: block;
@@ -2599,6 +2825,10 @@ body {
 }
 
 .announcement-actions button {
+    --button-accent: #ff9f1c;
+    --button-accent-border: rgba(255, 159, 28, 0.82);
+    --button-accent-bg: rgba(255, 159, 28, 0.12);
+    --button-accent-shadow: rgba(255, 159, 28, 0.2);
     min-height: 46px;
     border: 1px solid rgba(255, 95, 109, 0.72);
     background: linear-gradient(180deg, rgba(255, 75, 75, 0.28), rgba(92, 10, 16, 0.82));
@@ -2617,8 +2847,19 @@ body {
 }
 
 .mission5k-actions button:first-child {
+    --button-accent: #d8eef8;
+    --button-accent-border: rgba(216, 238, 248, 0.62);
+    --button-accent-bg: rgba(216, 238, 248, 0.08);
+    --button-accent-shadow: rgba(216, 238, 248, 0.14);
     border-color: rgba(216, 238, 248, 0.48);
     background: rgba(5, 7, 10, 0.82);
+}
+
+.mission5k-actions button:last-child {
+    --button-accent: #40ff7a;
+    --button-accent-border: rgba(64, 255, 122, 0.72);
+    --button-accent-bg: rgba(64, 255, 122, 0.1);
+    --button-accent-shadow: rgba(64, 255, 122, 0.18);
 }
 
 #announcementStatus {
@@ -2804,6 +3045,10 @@ body {
 .mission-unlock-form button,
 .mission-import-actions button,
 .mission-toolbar-actions button {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.78);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     min-height: 44px;
     padding: 0 14px;
     border: 1px solid rgba(255, 217, 61, 0.78);
@@ -2842,6 +3087,10 @@ body {
 }
 
 .mission-tab {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.58);
+    --button-accent-bg: rgba(255, 217, 61, 0.09);
+    --button-accent-shadow: rgba(255, 217, 61, 0.14);
     min-height: 40px;
     padding: 0 14px;
     border: 1px solid rgba(216, 238, 248, 0.18);
@@ -2990,6 +3239,10 @@ body {
 
 .clan-roster-form-actions button,
 .clan-roster-action {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.78);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     min-height: 38px;
     padding: 0 12px;
     border: 1px solid rgba(255, 217, 61, 0.78);
@@ -3004,11 +3257,19 @@ body {
 .clan-roster-form-actions button:last-child,
 .clan-roster-action[data-action="edit"],
 .clan-roster-action[data-action="copy"] {
+    --button-accent: #d8eef8;
+    --button-accent-border: rgba(216, 238, 248, 0.58);
+    --button-accent-bg: rgba(216, 238, 248, 0.08);
+    --button-accent-shadow: rgba(216, 238, 248, 0.14);
     border-color: rgba(216, 238, 248, 0.48);
     background: rgba(5, 7, 10, 0.82);
 }
 
 .clan-roster-action[data-action="delete"] {
+    --button-accent: #ff4b4b;
+    --button-accent-border: rgba(255, 75, 75, 0.68);
+    --button-accent-bg: rgba(255, 75, 75, 0.1);
+    --button-accent-shadow: rgba(255, 75, 75, 0.18);
     border-color: rgba(255, 75, 75, 0.62);
     background: linear-gradient(180deg, rgba(255, 75, 75, 0.22), rgba(92, 10, 16, 0.72));
 }
@@ -3245,6 +3506,10 @@ a.clan-roster-action {
 }
 
 .mission-share-actions button {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.78);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     min-height: 46px;
     border: 1px solid rgba(255, 217, 61, 0.78);
     background: linear-gradient(180deg, rgba(255, 217, 61, 0.24), rgba(117, 96, 0, 0.72));
@@ -3255,11 +3520,19 @@ a.clan-roster-action {
 }
 
 .mission-share-actions button:first-child {
+    --button-accent: #d8eef8;
+    --button-accent-border: rgba(216, 238, 248, 0.62);
+    --button-accent-bg: rgba(216, 238, 248, 0.08);
+    --button-accent-shadow: rgba(216, 238, 248, 0.14);
     border-color: rgba(216, 238, 248, 0.62);
     background: rgba(5, 7, 10, 0.82);
 }
 
 .mission-share-actions button:last-child {
+    --button-accent: #40ff7a;
+    --button-accent-border: rgba(64, 255, 122, 0.72);
+    --button-accent-bg: rgba(64, 255, 122, 0.1);
+    --button-accent-shadow: rgba(64, 255, 122, 0.18);
     border-color: rgba(64, 255, 122, 0.72);
     background: linear-gradient(180deg, rgba(64, 255, 122, 0.22), rgba(14, 88, 42, 0.72));
     box-shadow: 0 0 18px rgba(64, 255, 122, 0.1);
@@ -3430,6 +3703,10 @@ a.clan-roster-action {
 }
 
 .mission-share-modal-ok {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.8);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     width: 100%;
     min-height: 46px;
     margin-top: 18px;
@@ -3493,6 +3770,10 @@ a.clan-roster-action {
 }
 
 .operator-editor-actions button {
+    --button-accent: #ffd93d;
+    --button-accent-border: rgba(255, 217, 61, 0.78);
+    --button-accent-bg: rgba(255, 217, 61, 0.1);
+    --button-accent-shadow: rgba(255, 217, 61, 0.16);
     min-height: 38px;
     padding: 0 12px;
     border: 1px solid rgba(255, 217, 61, 0.78);
@@ -3505,6 +3786,10 @@ a.clan-roster-action {
 }
 
 .operator-editor-actions button:last-child {
+    --button-accent: #d8eef8;
+    --button-accent-border: rgba(216, 238, 248, 0.58);
+    --button-accent-bg: rgba(216, 238, 248, 0.08);
+    --button-accent-shadow: rgba(216, 238, 248, 0.14);
     border-color: rgba(216, 238, 248, 0.48);
     background: rgba(5, 7, 10, 0.82);
 }
@@ -3898,8 +4183,9 @@ a.clan-roster-action {
 
 .mission-meta {
     display: grid;
-    gap: 2px;
-    padding: 0 10px;
+    gap: 0;
+    min-width: 0;
+    padding: 0 8px;
     text-transform: uppercase;
 }
 
@@ -3922,6 +4208,50 @@ a.clan-roster-action {
     color: #ffd93d;
     font-size: 0.62rem;
     font-style: normal;
+}
+
+.mission-reward-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 7px;
+    min-width: 0;
+}
+
+.mission-reward-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    color: #fff8d0;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.mission-reward-item strong {
+    color: currentColor;
+    font-size: 0.7rem;
+    font-weight: 950;
+}
+
+.mission-reward-item img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(255, 217, 61, 0.16));
+}
+
+.mission-reward-prata {
+    color: #eaf9ff;
+}
+
+.mission-reward-reputacao {
+    color: #ffd93d;
+}
+
+.mission-reward-moeda {
+    color: #d05cff;
 }
 
 .mission-row select {
@@ -4541,7 +4871,7 @@ a.clan-roster-action {
     .mission-meta {
         grid-area: meta;
         min-height: 58px;
-        padding: 7px 10px;
+        padding: 7px 8px;
         border-bottom: 1px solid rgba(216, 238, 248, 0.13);
         align-content: center;
     }
@@ -4556,6 +4886,19 @@ a.clan-roster-action {
 
     .mission-meta em {
         font-size: 0.58rem;
+    }
+
+    .mission-reward-strip {
+        gap: 4px 6px;
+    }
+
+    .mission-reward-item strong {
+        font-size: 0.68rem;
+    }
+
+    .mission-reward-item img {
+        width: 17px;
+        height: 17px;
     }
 
     .mission-row select {
@@ -4829,6 +5172,10 @@ a.clan-roster-action {
 }
 
 .operator-next {
+    --button-accent: #3ba9ff;
+    --button-accent-border: rgba(59, 169, 255, 0.62);
+    --button-accent-bg: rgba(59, 169, 255, 0.1);
+    --button-accent-shadow: rgba(59, 169, 255, 0.18);
     min-height: 42px;
     margin-top: 10px;
     padding: 0 18px;
@@ -5417,6 +5764,10 @@ a.clan-roster-action {
 }
 
 .clan-roster-table-wrap .clan-roster-message-action {
+    --button-accent: #00e1ff;
+    --button-accent-border: rgba(0, 225, 255, 0.58);
+    --button-accent-bg: rgba(0, 225, 255, 0.1);
+    --button-accent-shadow: rgba(0, 225, 255, 0.16);
     border-color: rgba(0, 225, 255, 0.5);
     background: linear-gradient(180deg, rgba(0, 225, 255, 0.16), rgba(0, 82, 96, 0.68));
     color: #d8fbff;

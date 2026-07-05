@@ -810,6 +810,22 @@ const PLANNER_SLOTS = [
     { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
 ];
 
+const MISSION_REWARD_ICONS = {
+    prata: "assets/img/rewards/prata.png?v=20260705-minimal-icons",
+    reputacao: "assets/img/rewards/reputacao-do-cla.png?v=20260705-minimal-icons",
+    moeda: "assets/img/rewards/moeda-do-cla.png?v=20260705-minimal-icons"
+};
+
+const MISSION_SLOT_REWARDS = {
+    1: { prata: "7.000", reputacao: "100", moeda: "100" },
+    2: { prata: "14.000", reputacao: "165", moeda: "165" },
+    3: { prata: "110", reputacao: "270", moeda: "270" },
+    4: { prata: "26.600", reputacao: "460", moeda: "460" },
+    5: { prata: "210", reputacao: "650", moeda: "650" },
+    6: { prata: "45.500", reputacao: "1.000", moeda: "1.000" },
+    7: { prata: "380", reputacao: "1.400", moeda: "1.400" }
+};
+
 const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY", "LENS", "MECHARI"]);
 const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
 const RELOCATION_TARGET_SLOTS = new Set([1, 2, 3, 4, 5, 6, 7]);
@@ -1063,9 +1079,7 @@ function createMissionRows() {
         <div class="mission-row">
             <span class="mission-slot">#${item.slot}</span>
             <span class="mission-meta">
-                <strong>${item.points}</strong>
-                <small>${item.reward}</small>
-                <em>${missionSendLabel({ ...item, send: 0 })}</em>
+                ${renderMissionRewardStrip(item.slot)}
             </span>
             <span class="mission-count-wrap">
                 <span class="mission-count-label">QTD<br>OPERADOR</span>
@@ -1082,6 +1096,26 @@ function createMissionRows() {
     `).join("");
     updateMissionCountOptions();
     syncMissionChoiceWidgets();
+}
+
+function renderMissionRewardStrip(slot) {
+    const rewards = MISSION_SLOT_REWARDS[slot] || MISSION_SLOT_REWARDS[1];
+    return `
+        <span class="mission-reward-strip" aria-label="Beneficios da missao ${slot}">
+            <span class="mission-reward-item mission-reward-prata">
+                <strong>${rewards.prata}</strong>
+                <img src="${MISSION_REWARD_ICONS.prata}" alt="Prata">
+            </span>
+            <span class="mission-reward-item mission-reward-reputacao">
+                <strong>${rewards.reputacao}</strong>
+                <img src="${MISSION_REWARD_ICONS.reputacao}" alt="Reputacao do cla">
+            </span>
+            <span class="mission-reward-item mission-reward-moeda">
+                <strong>${rewards.moeda}</strong>
+                <img src="${MISSION_REWARD_ICONS.moeda}" alt="Moeda do cla">
+            </span>
+        </span>
+    `;
 }
 
 function updateMissionSelectOptions() {
@@ -2409,13 +2443,6 @@ function handleMissionSelectChange(event) {
     }
     if (target?.classList?.contains("mission-operator-count")) {
         updateMissionCountOptions();
-        const row = target.closest(".mission-row");
-        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === changedSlot);
-        const count = Math.max(0, Number(target.value) || 0);
-        const meta = row?.querySelector(".mission-meta em");
-        if (meta && slotInfo) {
-            meta.textContent = missionSendLabel({ ...slotInfo, send: count });
-        }
     }
     updateMissionSelectOptions();
     updateMissionPlanner();
@@ -2980,11 +3007,6 @@ function clearMissionPlanner() {
     });
     plannerEls.rows.querySelectorAll(".mission-operator-count").forEach((select) => {
         select.value = "0";
-        const slotInfo = PLANNER_SLOTS.find((item) => item.slot === Number(select.dataset.slot));
-        const meta = select.closest(".mission-row")?.querySelector(".mission-meta em");
-        if (meta && slotInfo) {
-            meta.textContent = missionSendLabel({ ...slotInfo, send: 0 });
-        }
     });
     updateMissionCountOptions();
     updateMissionSelectOptions();
