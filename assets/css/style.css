@@ -4141,14 +4141,14 @@ a.clan-roster-action {
 
 .mission-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr));
     gap: 10px;
 }
 
 .mission-row {
     position: relative;
     display: grid;
-    grid-template-columns: 44px minmax(82px, 0.6fr) 86px minmax(116px, 1fr) 70px;
+    grid-template-columns: 44px minmax(92px, 0.72fr) 86px minmax(136px, 1fr) 64px;
     align-items: center;
     min-height: 64px;
     border: 1px solid rgba(216, 238, 248, 0.13);
@@ -4186,6 +4186,7 @@ a.clan-roster-action {
 
 .mission-slot {
     display: grid;
+    min-width: 0;
     height: 100%;
     place-items: center;
     border-right: 1px solid rgba(255, 217, 61, 0.18);
@@ -4348,6 +4349,10 @@ a.clan-roster-action {
     text-transform: uppercase;
     cursor: pointer;
     overflow: hidden;
+}
+
+.mission-choice-button > * {
+    min-width: 0;
 }
 
 .mission-choice-button::before {
@@ -4911,6 +4916,10 @@ a.clan-roster-action {
     }
 
     .mission-assignment {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-grid {
         grid-template-columns: 1fr;
     }
 
