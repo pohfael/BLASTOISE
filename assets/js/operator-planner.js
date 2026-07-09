@@ -87,7 +87,7 @@ const EXTRA_OPERATOR_SCORES = {
     WOLF: { hildr: 135 }
 };
 
-const MISSION_SEVEN_RESERVED_OPERATORS = new Set(["MECHARI"]);
+const MISSION_SEVEN_RESERVED_OPERATORS = new Set(["MECHARI", "SUSSURRO", "FERRY", "CRAIG", "WOLF", "KIRIN", "RAY", "DMITRY"]);
 const MISSION_SEVEN_RESERVED_SCORE = 200;
 
 const UPDATED_MISSION_SCORES = {
@@ -98,7 +98,7 @@ const UPDATED_MISSION_SCORES = {
         "CAPISCE": 181,
         "CHARON": 231,
         "CHEN LI": 496,
-        "CRAIG": 370,
+        "CRAIG": 192,
         "DAVID": 192,
         "DIANA": 253,
         "DMITRY": 202,
@@ -108,10 +108,10 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
-        "JOE": 192,
-        "KIRIN": 174,
+        "JOE": 204,
+        "KIRIN": 199,
         "KLAUS": 200,
-        "LENS": 55,
+        "LENS": 100,
         "MCMEAN": 173,
         "MIA": 88,
         "MIRO": 280,
@@ -149,7 +149,7 @@ const UPDATED_MISSION_SCORES = {
         "FENIX": 195,
         "FERRY": 0,
         "HAWK": 178,
-        "JASON": 199,
+        "JASON": 355,
         "JB": 234,
         "JOE": 192,
         "KIRIN": 199,
@@ -194,10 +194,10 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
-        "JOE": 192,
+        "JOE": 202,
         "KIRIN": 199,
         "KLAUS": 200,
-        "LENS": 55,
+        "LENS": 100,
         "MCMEAN": 173,
         "MIA": 88,
         "MIRO": 280,
@@ -237,7 +237,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 310,
         "JASON": 199,
         "JB": 416,
-        "JOE": 341,
+        "JOE": 364,
         "KIRIN": 199,
         "KLAUS": 200,
         "LENS": 55,
@@ -280,8 +280,8 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 199,
         "JB": 234,
-        "JOE": 192,
-        "KIRIN": 316,
+        "JOE": 204,
+        "KIRIN": 353,
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
@@ -323,7 +323,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 199,
         "JB": 234,
-        "JOE": 202,
+        "JOE": 204,
         "KIRIN": 199,
         "KLAUS": 347,
         "LENS": 55,
@@ -366,7 +366,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 310,
         "JASON": 199,
         "JB": 234,
-        "JOE": 341,
+        "JOE": 359,
         "KIRIN": 353,
         "KLAUS": 200,
         "LENS": 55,
@@ -409,10 +409,10 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
-        "JOE": 192,
+        "JOE": 204,
         "KIRIN": 199,
         "KLAUS": 200,
-        "LENS": 100,
+        "LENS": 55,
         "MCMEAN": 173,
         "MIA": 88,
         "MIRO": 280,
@@ -452,7 +452,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 199,
         "JB": 416,
-        "JOE": 341,
+        "JOE": 359,
         "KIRIN": 199,
         "KLAUS": 200,
         "LENS": 100,
@@ -495,7 +495,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 355,
         "JB": 234,
-        "JOE": 202,
+        "JOE": 204,
         "KIRIN": 199,
         "KLAUS": 200,
         "LENS": 55,
@@ -538,7 +538,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 178,
         "JASON": 199,
         "JB": 234,
-        "JOE": 192,
+        "JOE": 204,
         "KIRIN": 199,
         "KLAUS": 347,
         "LENS": 55,
@@ -624,7 +624,7 @@ const UPDATED_MISSION_SCORES = {
         "HAWK": 310,
         "JASON": 199,
         "JB": 234,
-        "JOE": 202,
+        "JOE": 204,
         "KIRIN": 199,
         "KLAUS": 347,
         "LENS": 55,
@@ -751,9 +751,9 @@ const UPDATED_MISSION_SCORES = {
         "FENIX": 195,
         "FERRY": 0,
         "HAWK": 310,
-        "JASON": 355,
+        "JASON": 199,
         "JB": 234,
-        "JOE": 359,
+        "JOE": 364,
         "KIRIN": 199,
         "KLAUS": 200,
         "LENS": 55,
@@ -826,10 +826,10 @@ const MISSION_SLOT_REWARDS = {
     7: { prata: "380", reputacao: "1.400", moeda: "1.400" }
 };
 
-const LIMITED_ACCESS_OPERATORS = new Set(["WOLF", "FERRY", "SUSSURRO", "CRAIG", "KIRIN", "RAY", "LENS", "MECHARI"]);
+const LIMITED_ACCESS_OPERATORS = new Set(["LENS"]);
 const LIMITED_ACCESS_RESERVED_UNTIL_SLOT = 5;
 const RELOCATION_TARGET_SLOTS = new Set([1, 2, 3, 4, 5, 6, 7]);
-const OPERATOR_DATA_STORAGE_KEY = "blastoise.operatorData.v3";
+const OPERATOR_DATA_STORAGE_KEY = "blastoise.operatorData.v4";
 const CLAN_ROSTER_STORAGE_KEY = "blastoise.clanRoster.v1";
 const DEFAULT_CLAN_ROSTER_NICKS = [];
 const CLAN_ROSTER_NICK_ALIASES = {};
@@ -894,6 +894,7 @@ const plannerEls = {};
 let plannerUnlocked = false;
 const manualMissionSelections = {};
 const recentRemovedOperatorsBySlot = {};
+const priorityMissionSlots = new Set();
 let latestMissionAssignment = [];
 let latestMissionExpected = new Map();
 let operatorData = null;
@@ -999,6 +1000,10 @@ function setPlannerControlsEnabled(enabled) {
         select.disabled = !enabled;
     });
 
+    plannerEls.rows.querySelectorAll(".mission-priority-button").forEach((button) => {
+        button.disabled = !enabled;
+    });
+
     if (plannerEls.timeSelect) {
         plannerEls.timeSelect.disabled = !enabled;
     }
@@ -1092,10 +1097,17 @@ function createMissionRows() {
                     ${options}
                 </select>
             </span>
+            <span class="mission-priority-wrap">
+                <button type="button" class="mission-priority-button" data-slot="${item.slot}" aria-pressed="false" disabled>
+                    <span>Prioridade</span>
+                    <i aria-hidden="true"></i>
+                </button>
+            </span>
         </div>
     `).join("");
     updateMissionCountOptions();
     syncMissionChoiceWidgets();
+    syncPriorityButtons();
 }
 
 function renderMissionRewardStrip(slot) {
@@ -1232,6 +1244,14 @@ function repositionOpenMissionChoiceWidget() {
 }
 
 function handleMissionChoiceClick(event) {
+    const priorityButton = event.target.closest(".mission-priority-button");
+    if (priorityButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleMissionPriority(priorityButton);
+        return;
+    }
+
     const button = event.target.closest(".mission-choice-button");
     const option = event.target.closest(".mission-choice-option");
 
@@ -1290,9 +1310,42 @@ function selectedMissions() {
             const mission = missionByKey(select.value);
             const slotInfo = PLANNER_SLOTS.find((item) => item.slot === Number(select.dataset.slot));
             const count = Math.max(0, Number(row?.querySelector(".mission-operator-count")?.value) || 0);
-            return mission ? { ...slotInfo, send: count, mission } : null;
+            return mission ? { ...slotInfo, send: count, mission, priority: isPrioritySlot(slotInfo.slot) } : null;
         })
         .filter(Boolean);
+}
+
+function isPrioritySlot(slot) {
+    return priorityMissionSlots.has(Number(slot));
+}
+
+function syncPriorityButtons() {
+    plannerEls.rows?.querySelectorAll(".mission-priority-button").forEach((button) => {
+        const slot = Number(button.dataset.slot);
+        const active = isPrioritySlot(slot);
+        const row = button.closest(".mission-row");
+
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+        button.querySelector("span").textContent = "Prioridade";
+        row?.classList.toggle("is-priority", active);
+    });
+}
+
+function toggleMissionPriority(button) {
+    const slot = Number(button.dataset.slot);
+    if (!Number.isFinite(slot)) {
+        return;
+    }
+
+    if (isPrioritySlot(slot)) {
+        priorityMissionSlots.delete(slot);
+    } else {
+        priorityMissionSlots.add(slot);
+    }
+
+    syncPriorityButtons();
+    updateMissionPlanner();
 }
 
 function completedMissionSlots() {
@@ -1802,7 +1855,21 @@ function scoreMission(mission, slot) {
 
 function getMissionScore(mission, operator, index, slot) {
     if (MISSION_SEVEN_RESERVED_OPERATORS.has(normalizeOperatorName(operator))) {
-        return Number(slot) === 7 ? MISSION_SEVEN_RESERVED_SCORE : 0;
+        if (Number(slot) !== 7) {
+            return 0;
+        }
+
+        const updatedScore = UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
+        if (Number.isFinite(updatedScore) && updatedScore > 0) {
+            return updatedScore;
+        }
+
+        const editedScore = Number(operatorData?.operators?.[operator]?.scores?.[mission.key]);
+        if (Number.isFinite(editedScore) && editedScore > 0) {
+            return editedScore;
+        }
+
+        return MISSION_SEVEN_RESERVED_SCORE;
     }
 
     const editedScore = Number(operatorData?.operators?.[operator]?.scores?.[mission.key]);
@@ -1817,8 +1884,12 @@ function isLimitedAccessOperator(operator) {
     return LIMITED_ACCESS_OPERATORS.has(normalizeOperatorName(operator));
 }
 
+function isMissionSevenReservedOperator(operator) {
+    return MISSION_SEVEN_RESERVED_OPERATORS.has(normalizeOperatorName(operator));
+}
+
 function operatorAvailabilityPriority(operator, slot) {
-    if (MISSION_SEVEN_RESERVED_OPERATORS.has(normalizeOperatorName(operator)) && Number(slot) <= 6) {
+    if (isMissionSevenReservedOperator(operator) && Number(slot) <= 6) {
         return 1;
     }
 
@@ -1831,6 +1902,17 @@ function compareAssignmentCandidates(a, b) {
         return availability;
     }
 
+    const reservedForMissionSeven = Number(isMissionSevenReservedOperator(b.operator) && Number(b.item.slot) === 7)
+        - Number(isMissionSevenReservedOperator(a.operator) && Number(a.item.slot) === 7);
+    if (reservedForMissionSeven) {
+        return reservedForMissionSeven;
+    }
+
+    const priority = Number(Boolean(b.item.priority)) - Number(Boolean(a.item.priority));
+    if (priority) {
+        return priority;
+    }
+
     return b.score - a.score || a.item.slot - b.item.slot || a.operator.localeCompare(b.operator);
 }
 
@@ -1838,6 +1920,20 @@ function compareRelocationTargets(operator, a, b) {
     const availability = operatorAvailabilityPriority(operator, a.item.slot) - operatorAvailabilityPriority(operator, b.item.slot);
     if (availability) {
         return availability;
+    }
+
+    if (isMissionSevenReservedOperator(operator)) {
+        const reservedTarget = Number(b.item.slot) === 7 ? 1 : 0;
+        const currentTarget = Number(a.item.slot) === 7 ? 1 : 0;
+        const missionSevenPriority = reservedTarget - currentTarget;
+        if (missionSevenPriority) {
+            return missionSevenPriority;
+        }
+    }
+
+    const selectedPriority = Number(Boolean(b.item.priority)) - Number(Boolean(a.item.priority));
+    if (selectedPriority) {
+        return selectedPriority;
     }
 
     const targetPriority = (slot) => (Number(slot) >= 6 ? 0 : 1);
@@ -3002,6 +3098,7 @@ function resetOperatorEditor() {
 
 function clearMissionPlanner() {
     clearManualMissionSelections();
+    priorityMissionSlots.clear();
     plannerEls.rows.querySelectorAll(".mission-select").forEach((select) => {
         select.value = "";
     });
@@ -3010,6 +3107,7 @@ function clearMissionPlanner() {
     });
     updateMissionCountOptions();
     updateMissionSelectOptions();
+    syncPriorityButtons();
     updateMissionPlanner();
 }
 
