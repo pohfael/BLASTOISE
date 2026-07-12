@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffd21f">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="BLASTOISE">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Calculadora de Mods / Inteligência</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=20260708-priority-grid-fix">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/blastoise-icon-192.png">
+    <link rel="stylesheet" href="assets/css/style.css?v=20260711-spider-tatico">
     <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
 </head>
 <body>
@@ -20,6 +27,7 @@
             <a href="#announcementTool">Anúncios</a>
             <a href="#mission5kTool">Missão 5K</a>
             <a href="#missionTool">Locação</a>
+            <a href="#spiderChartTool">Spider Chart</a>
             <a href="#operatorGame">Jogo</a>
         </nav>
 
@@ -330,6 +338,99 @@
             </div>
         </section>
 
+        <div class="section-divider section-divider-spider">
+            <p>Análise tática</p>
+            <div class="section-heading section-heading-inline">
+                <span>Spider chart</span>
+                <span class="section-status-pill" aria-label="Seção em construção">Em construção</span>
+            </div>
+        </div>
+
+        <section class="panel spider-tool" id="spiderChartTool" aria-label="Spider chart de arsenal e operadores">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Arsenal e operadores</p>
+                    <h2>Vantagens e desvantagens</h2>
+                </div>
+            </div>
+
+            <div class="spider-layout">
+                <div class="spider-chart-preview" aria-label="Prévia do spider chart">
+                    <span class="spider-axis spider-axis-top">Dano</span>
+                    <span class="spider-axis spider-axis-right">Controle</span>
+                    <span class="spider-axis spider-axis-bottom">Mobilidade</span>
+                    <span class="spider-axis spider-axis-left">Defesa</span>
+                    <div class="spider-radar" aria-hidden="true">
+                        <i></i>
+                    </div>
+                </div>
+
+                <div class="spider-copy">
+                    <p class="eyebrow">Em construção</p>
+                    <h3>Base pronta para comparações</h3>
+                    <p>
+                        Envie as imagens e os textos de cada arsenal ou operador para montarmos os atributos,
+                        pontos fortes, pontos fracos e recomendações de uso.
+                    </p>
+                    <div class="spider-stat-grid" aria-label="Estrutura inicial de atributos">
+                        <span>Dano</span>
+                        <span>Precisão</span>
+                        <span>Mobilidade</span>
+                        <span>Controle</span>
+                        <span>Defesa</span>
+                        <span>Utilidade</span>
+                    </div>
+                </div>
+            </div>
+            <div class="spider-controls" aria-label="Filtros do spider chart">
+                <button class="spider-filter is-active" type="button" data-spider-filter="all">Todos</button>
+                <button class="spider-filter" type="button" data-spider-filter="granada">Granadas</button>
+                <button class="spider-filter" type="button" data-spider-filter="explosivo">Explosivos</button>
+                <button class="spider-filter" type="button" data-spider-filter="controle">Controle</button>
+                <button class="spider-filter" type="button" data-spider-filter="dano">Dano</button>
+            </div>
+
+            <div class="spider-dashboard">
+                <div class="spider-list" id="spiderItemList" aria-label="Lista de arsenal"></div>
+
+                <article class="spider-detail" aria-live="polite">
+                    <div class="spider-visual">
+                        <img id="spiderItemImage" class="spider-item-image" src="assets/img/spider/coquetel-molotov.png" alt="">
+                        <svg class="spider-chart" viewBox="0 0 240 240" role="img" aria-label="Grafico radar de atributos">
+                            <polygon class="spider-grid spider-grid-outer" points="120,30 198,75 198,165 120,210 42,165 42,75"></polygon>
+                            <polygon class="spider-grid spider-grid-middle" points="120,60 172,90 172,150 120,180 68,150 68,90"></polygon>
+                            <polygon class="spider-grid spider-grid-inner" points="120,90 146,105 146,135 120,150 94,135 94,105"></polygon>
+                            <line class="spider-line" x1="120" y1="120" x2="120" y2="30"></line>
+                            <line class="spider-line" x1="120" y1="120" x2="198" y2="75"></line>
+                            <line class="spider-line" x1="120" y1="120" x2="198" y2="165"></line>
+                            <line class="spider-line" x1="120" y1="120" x2="120" y2="210"></line>
+                            <line class="spider-line" x1="120" y1="120" x2="42" y2="165"></line>
+                            <line class="spider-line" x1="120" y1="120" x2="42" y2="75"></line>
+                            <polygon id="spiderRadarPolygon" class="spider-radar-polygon" points=""></polygon>
+                        </svg>
+                    </div>
+
+                    <div class="spider-detail-copy">
+                        <p class="eyebrow" id="spiderItemType">Granada de controle</p>
+                        <h3 id="spiderItemName">Coquetel Molotov</h3>
+                        <p id="spiderItemIntent" class="spider-intent"></p>
+                        <div class="spider-metrics" id="spiderMetrics"></div>
+                        <div class="spider-highlight-grid" id="spiderHighlights"></div>
+                        <div class="spider-info-grid">
+                            <div>
+                                <strong>Mecanicas</strong>
+                                <ul id="spiderMechanics"></ul>
+                            </div>
+                            <div>
+                                <strong>Leitura tatica</strong>
+                                <ul id="spiderTactical"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <div class="section-divider section-divider-game">
             <p>Entretenimento</p>
             <div class="section-heading">Mini game</div>
@@ -368,8 +469,9 @@
         </footer>
     </main>
 
-    <script src="assets/js/app.js?v=20260703-game-collapsible"></script>
-    <script src="assets/js/operator-planner.js?v=20260708-priority-compact"></script>
+    <script src="assets/js/app.js?v=20260711-spider-tatico"></script>
+    <script src="assets/js/operator-planner.js?v=20260708-spider-chart"></script>
+    <script src="assets/js/pwa-install.js?v=20260711-pwa"></script>
 </body>
 </html>
 

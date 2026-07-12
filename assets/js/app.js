@@ -93,6 +93,369 @@ const OPERATORS = [
     }
 ];
 
+const SPIDER_AXES = [
+    "Zona",
+    "Anti-avanço",
+    "Cobertura",
+    "Equipe",
+    "Counters",
+    "Mapa"
+];
+
+const SPIDER_AXIS_META = [
+    { key: "controle", strong: "Controla zona", weak: "Pouco controle de zona" },
+    { key: "area", strong: "Segura avanço", weak: "Pouco anti-avanço" },
+    { key: "seguranca", strong: "Cria cobertura", weak: "Pouca cobertura" },
+    { key: "anti", strong: "Seguro para equipe", weak: "Risco para aliados" },
+    { key: "dano", strong: "Responde counters", weak: "Muito counterável" },
+    { key: "dependencia", strong: "Pouco dependente", weak: "Depende do mapa" }
+];
+
+const MOLOTOV_ADVANTAGES = [
+    {
+        label: "Queimadura no inimigo",
+        text: "Coloca fogo no operador adversário e pressiona a saída da posição.",
+        icon: "assets/img/spider/coquetel-molotov.png"
+    },
+    {
+        label: "Chamas seletivas",
+        text: "O fogo não queima aliados, então ajuda a controlar espaço sem punir o time.",
+        icon: "assets/img/spider/mistura-spark.png"
+    },
+    {
+        label: "Dano contínuo",
+        text: "Enquanto o corpo do inimigo estiver em chamas, ele sofre dano aos poucos.",
+        iconType: "burn"
+    }
+];
+
+const MOLOTOV_DISADVANTAGES = [
+    {
+        label: "Granada de fumaça",
+        text: "Apaga o fogo do corpo do operador e também remove chamas no cenário.",
+        icon: "assets/img/spider/granada-fumaca.png"
+    },
+    {
+        label: "Granada de gás",
+        text: "Pode apagar o fogo criando uma combustão, com risco de causar ainda mais dano na área.",
+        icon: "assets/img/spider/granada-gas.png"
+    },
+    {
+        label: "Água",
+        text: "Entrar na água remove a queimadura do corpo e impede o fogo de permanecer.",
+        iconType: "water"
+    },
+    {
+        label: "Fumaça do mapa",
+        text: "Fumaça própria do cenário também pode apagar o fogo do operador.",
+        iconType: "smoke"
+    }
+];
+
+const SPIDER_ITEMS = [
+    {
+        id: "coquetel-molotov",
+        name: "Coquetel Molotov",
+        type: "Granada de controle",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/coquetel-molotov.png",
+        intent: "Serve para incendiar inimigos, travar passagem e defender uma zona sem queimar aliados.",
+        scores: [55, 88, 82, 92, 15, 35],
+        advantages: MOLOTOV_ADVANTAGES,
+        disadvantages: MOLOTOV_DISADVANTAGES,
+        mechanics: [
+            "Incendeia operadores inimigos e cria área incendiada.",
+            "Não causa dano em aliados.",
+            "Água, fumaça e Granada de Fumaça apagam o fogo.",
+            "Granada de Gás em contato com fogo causa combustão e extingue as chamas."
+        ],
+        tactical: [
+            "Excelente para cortar passagem e forçar recuo.",
+            "Boa ferramenta defensiva para proteger entrada, objetivo ou corredor.",
+            "Perde valor em mapas com muita água ou muito recurso de fumaça."
+        ]
+    },
+    {
+        id: "mistura-spark",
+        name: "Mistura Spark",
+        type: "Granada incendiaria",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/mistura-spark.png",
+        intent: "Serve como versão incendiária superior ao Molotov, mantendo a mesma função defensiva.",
+        scores: [60, 92, 86, 92, 15, 35],
+        advantages: MOLOTOV_ADVANTAGES.map((entry) => ({
+            ...entry,
+            icon: entry.icon && entry.icon.includes("coquetel-molotov") ? "assets/img/spider/mistura-spark.png" : entry.icon
+        })),
+        disadvantages: MOLOTOV_DISADVANTAGES,
+        mechanics: [
+            "Incendeia inimigos e cria área incendiada.",
+            "Não causa dano em aliados.",
+            "Fumaça apaga completamente o fogo.",
+            "Gás provoca combustão ao tocar o fogo e extingue as chamas."
+        ],
+        tactical: [
+            "Melhor escolha quando a ideia for controlar corredor ou objetivo.",
+            "Mais forte que Molotov, mas com a mesma finalidade tática.",
+            "Evite depender dela em áreas com água."
+        ]
+    },
+    {
+        id: "granada-fumaca",
+        name: "Granada de Fumaca",
+        type: "Granada de cobertura",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/granada-fumaca.png",
+        intent: "Bloqueia completamente a visao para criar cobertura e movimentacao segura.",
+        scores: [0, 96, 88, 94, 20, 30],
+        mechanics: [
+            "Bloqueia linha de visao.",
+            "Apaga fogo do cenario.",
+            "Apaga fogo em operadores incendiados.",
+            "Counter direto de Molotov e Mistura Spark."
+        ],
+        tactical: [
+            "Ferramenta forte para avancar, reviver ou reposicionar.",
+            "Pode salvar aliados incendiados.",
+            "Tem valor mesmo sem causar dano."
+        ]
+    },
+    {
+        id: "granada-gas",
+        name: "Granada de Gas",
+        type: "Granada toxica",
+        category: "granada",
+        tags: ["controle", "dano"],
+        image: "assets/img/spider/granada-gas.png",
+        intent: "Cria uma area toxica que causa dano continuo aos inimigos.",
+        scores: [62, 82, 84, 92, 25, 35],
+        mechanics: [
+            "Causa dano apenas em inimigos.",
+            "Nao causa dano em aliados.",
+            "Em contato com fogo provoca combustao.",
+            "A combustao causa dano em area e apaga o fogo."
+        ],
+        tactical: [
+            "Boa para travar rota e segurar objetivo.",
+            "Combina com fogo para dano explosivo curto.",
+            "Use com cuidado para nao apagar fogo importante cedo demais."
+        ]
+    },
+    {
+        id: "granada-flash",
+        name: "Granada Flash",
+        type: "Granada de cegueira",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/granada-flash.png",
+        intent: "Cega operadores para facilitar o avancar da equipe.",
+        scores: [10, 78, 72, 55, 45, 28],
+        mechanics: [
+            "Cega inimigos.",
+            "Tambem afeta aliados.",
+            "Aliados sofrem aproximadamente 60% menos efeito.",
+            "Neutraliza Fumaca, Gas, Molotov e Mistura Spark."
+        ],
+        tactical: [
+            "Boa para abrir entrada em troca direta.",
+            "Exige comunicacao para nao atrapalhar aliados.",
+            "Tambem funciona como resposta contra utilitarios de controle."
+        ]
+    },
+    {
+        id: "suspicious-package",
+        name: "Suspicious Package",
+        type: "Granada de cegueira",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/suspicious-package.png",
+        intent: "Possui a mesma finalidade da Flash, com desempenho ligeiramente superior.",
+        scores: [12, 84, 76, 55, 50, 28],
+        mechanics: [
+            "Cega inimigos.",
+            "Tambem afeta aliados com efeito reduzido.",
+            "Aliados recebem aproximadamente 60% menos efeito.",
+            "Neutraliza Fumaca, Gas, Molotov e Mistura Spark."
+        ],
+        tactical: [
+            "Versao mais forte para entrada e limpeza de posicao.",
+            "Continua exigindo cuidado com aliados proximos.",
+            "Boa opcao para quebrar defesa com varias granadas de controle."
+        ]
+    },
+    {
+        id: "granada-impacto",
+        name: "Granada de Impacto",
+        type: "Granada explosiva",
+        category: "granada",
+        tags: ["dano"],
+        image: "assets/img/spider/granada-impacto.png",
+        intent: "Elimina operadores atraves de explosao imediata ao atingir o alvo.",
+        scores: [92, 35, 78, 25, 10, 20],
+        mechanics: [
+            "Explode imediatamente ao impacto.",
+            "Causa dano em area.",
+            "Causa dano em inimigos e aliados.",
+            "Pode eliminar qualquer operador proximo."
+        ],
+        tactical: [
+            "Forte para finalizacao rapida.",
+            "Perigosa em combate embolado com aliados.",
+            "Melhor quando o alvo esta agrupado ou sem rota de fuga."
+        ]
+    },
+    {
+        id: "granada-fragmentacao",
+        name: "Granada de Fragmentacao",
+        type: "Granada explosiva",
+        category: "granada",
+        tags: ["dano"],
+        image: "assets/img/spider/granada-fragmentacao.png",
+        intent: "Elimina operadores atraves de explosao em area.",
+        scores: [95, 34, 88, 20, 10, 28],
+        mechanics: [
+            "Explode causando dano em area.",
+            "Causa dano em inimigos e aliados.",
+            "Pode eliminar qualquer operador proximo.",
+            "Exige controle de tempo e posicionamento."
+        ],
+        tactical: [
+            "Muito forte contra grupo parado.",
+            "Risco alto de friendly fire.",
+            "Funciona melhor quando o inimigo nao tem tempo de reagir."
+        ]
+    },
+    {
+        id: "pryanik",
+        name: "Pryanik",
+        type: "Explosivo curto",
+        category: "granada",
+        tags: ["dano"],
+        image: "assets/img/spider/pryanik.png",
+        intent: "Explosivo de curto alcance com pequeno raio de explosao.",
+        scores: [76, 28, 42, 24, 10, 18],
+        mechanics: [
+            "Causa dano ao atingir o alvo.",
+            "Possui pequeno raio de explosao.",
+            "Causa dano em inimigos e aliados.",
+            "Pode eliminar qualquer operador."
+        ],
+        tactical: [
+            "Melhor para alvo proximo ou corredor apertado.",
+            "Menos area, mais controle do ponto de impacto.",
+            "Risco de dano aliado continua alto."
+        ]
+    },
+    {
+        id: "granada-emp",
+        name: "Granada EMP",
+        type: "Anti-dispositivo",
+        category: "granada",
+        tags: ["controle"],
+        image: "assets/img/spider/granada-emp.png",
+        intent: "Neutraliza explosivos e dispositivos.",
+        scores: [8, 74, 65, 90, 98, 55],
+        mechanics: [
+            "Desarma explosivos.",
+            "Desativa dispositivos.",
+            "Interacao com Landau Grenade ainda em validacao.",
+            "Valor principal esta em negar armadilhas."
+        ],
+        tactical: [
+            "Essencial contra time que joga com setup.",
+            "Nao e ferramenta de dano direto.",
+            "Use antes de avancar em area armadilhada."
+        ]
+    },
+    {
+        id: "landau-grenade",
+        name: "Landau Grenade",
+        type: "Controle fisico",
+        category: "granada",
+        tags: ["controle", "dano"],
+        image: "assets/img/spider/landau-grenade.png",
+        intent: "Utiliza objetos fisicos do cenario como arma.",
+        scores: [82, 62, 78, 18, 20, 96],
+        mechanics: [
+            "Atrai e lanca objetos do mapa.",
+            "Objetos podem causar dano.",
+            "Pode atingir inimigos, aliados e o proprio jogador.",
+            "Dano depende dos objetos presentes no cenario."
+        ],
+        tactical: [
+            "Muito forte em mapas com objetos perigosos.",
+            "Muito dependente do mapa.",
+            "Pode virar contra a propria equipe se mal posicionada."
+        ]
+    },
+    {
+        id: "mina",
+        name: "Mina",
+        type: "Explosivo de area",
+        category: "explosivo",
+        tags: ["dano", "controle"],
+        image: "assets/img/spider/mina.png",
+        intent: "Controla passagem e pune inimigos que avancam sem checar rota.",
+        scores: [86, 76, 58, 40, 35, 72],
+        mechanics: [
+            "Dados detalhados ainda serao refinados.",
+            "Funciona como controle de rota.",
+            "Valor aumenta quando o inimigo precisa passar por corredor.",
+            "Pode ser neutralizada por leitura e anti-dispositivo."
+        ],
+        tactical: [
+            "Boa para travar flanco.",
+            "Melhor quando posicionada fora da visao imediata.",
+            "Depende muito do mapa e do comportamento inimigo."
+        ]
+    },
+    {
+        id: "bomb-bunny",
+        name: "Bomb Bunny",
+        type: "Explosivo especial",
+        category: "explosivo",
+        tags: ["dano"],
+        image: "assets/img/spider/bomb-bunny.png",
+        intent: "Explosivo especial para pressionar area e surpreender movimentacao inimiga.",
+        scores: [84, 68, 62, 34, 30, 70],
+        mechanics: [
+            "Dados detalhados ainda serao refinados.",
+            "Usado para pressao e punicao de posicionamento.",
+            "Pode forcar deslocamento inimigo.",
+            "Valor depende do momento de uso."
+        ],
+        tactical: [
+            "Bom para tirar inimigo de cobertura.",
+            "Nao deve ser usado sem leitura da rota.",
+            "Pode abrir janela para entrada da equipe."
+        ]
+    },
+    {
+        id: "c4",
+        name: "C4",
+        type: "Explosivo remoto",
+        category: "explosivo",
+        tags: ["dano"],
+        image: "assets/img/spider/c4.png",
+        intent: "Explosivo de alto dano para controle de ponto e eliminacao em area.",
+        scores: [98, 58, 86, 32, 45, 76],
+        mechanics: [
+            "Dados detalhados ainda serao refinados.",
+            "Alto potencial de dano em area.",
+            "Forte para defender ponto ou punir agrupamento.",
+            "Exige posicionamento e timing."
+        ],
+        tactical: [
+            "Excelente para armadilha em objetivo.",
+            "Muito forte quando o inimigo agrupa.",
+            "Perde valor se for descoberto antes da ativacao."
+        ]
+    }
+];
+
 const els = {
     coins: document.getElementById("coinsInput"),
     resourceInputs: [...document.querySelectorAll(".resource-input")],
@@ -808,6 +1171,233 @@ function setupCollapsibleSections() {
     }
 }
 
+function getSpiderEls() {
+    return {
+        list: document.getElementById("spiderItemList"),
+        filters: [...document.querySelectorAll(".spider-filter")],
+        image: document.getElementById("spiderItemImage"),
+        type: document.getElementById("spiderItemType"),
+        name: document.getElementById("spiderItemName"),
+        intent: document.getElementById("spiderItemIntent"),
+        metrics: document.getElementById("spiderMetrics"),
+        mechanics: document.getElementById("spiderMechanics"),
+        tactical: document.getElementById("spiderTactical"),
+        highlights: document.getElementById("spiderHighlights"),
+        polygon: document.getElementById("spiderRadarPolygon")
+    };
+}
+
+function spiderRadarPoints(scores) {
+    const center = 120;
+    const radius = 90;
+    const step = 360 / scores.length;
+
+    return scores.map((score, index) => {
+        const safeScore = Math.max(0, Math.min(100, Number(score) || 0));
+        const angle = (-90 + (step * index)) * (Math.PI / 180);
+        const pointRadius = radius * (safeScore / 100);
+        const x = center + (Math.cos(angle) * pointRadius);
+        const y = center + (Math.sin(angle) * pointRadius);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(" ");
+}
+
+function renderSpiderList(items, selectedId, spiderEls) {
+    if (!spiderEls.list) {
+        return;
+    }
+
+    spiderEls.list.innerHTML = items.map((item) => `
+        <button class="spider-item-card${item.id === selectedId ? " is-active" : ""}" type="button" data-spider-id="${item.id}">
+            <img class="spider-item-thumb" src="${item.image}" alt="">
+            <span>
+                <strong>${item.name}</strong>
+                <span>${item.type}</span>
+            </span>
+        </button>
+    `).join("");
+}
+
+function renderSpiderDetail(item, spiderEls) {
+    if (!item || !spiderEls.name) {
+        return;
+    }
+
+    spiderEls.image.src = item.image;
+    spiderEls.image.alt = item.name;
+    spiderEls.type.textContent = item.type;
+    spiderEls.name.textContent = item.name;
+    spiderEls.intent.textContent = item.intent;
+    spiderEls.polygon.setAttribute("points", spiderRadarPoints(item.scores));
+
+    spiderEls.metrics.innerHTML = SPIDER_AXES.map((axis) => `
+        <div class="spider-metric spider-metric-label">
+            <span>${axis}</span>
+            <strong>Defesa</strong>
+        </div>
+    `).join("");
+
+    if (spiderEls.highlights) {
+        spiderEls.highlights.innerHTML = renderSpiderHighlights(item);
+    }
+    spiderEls.mechanics.innerHTML = item.mechanics.map((text) => `<li>${text}</li>`).join("");
+    spiderEls.tactical.innerHTML = item.tactical.map((text) => `<li>${text}</li>`).join("");
+}
+
+function getSpiderHighlights(item) {
+    const positiveIndexes = [0, 1, 2, 3, 4];
+    const strongPositive = positiveIndexes
+        .map((index) => ({ index, score: item.scores[index] }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+
+    let weakPositive = positiveIndexes
+        .map((index) => ({ index, score: item.scores[index] }))
+        .sort((a, b) => a.score - b.score)
+        .filter((entry) => entry.score <= 45)
+        .slice(0, 2);
+
+    if (!weakPositive.length) {
+        weakPositive = positiveIndexes
+            .map((index) => ({ index, score: item.scores[index] }))
+            .sort((a, b) => a.score - b.score)
+            .slice(0, 2);
+    }
+
+    const strengths = strongPositive.map(({ index, score }) => ({
+        kind: "strength",
+        iconType: SPIDER_AXIS_META[index].key,
+        label: SPIDER_AXIS_META[index].strong,
+        text: "Ponto tático favorável no uso defensivo."
+    }));
+
+    if (item.scores[5] <= 35) {
+        strengths.push({
+            kind: "strength",
+            iconType: SPIDER_AXIS_META[5].key,
+            label: SPIDER_AXIS_META[5].strong,
+            text: "Funciona bem sem depender tanto de condição externa."
+        });
+    }
+
+    const weaknesses = weakPositive.map(({ index, score }) => ({
+        kind: "weakness",
+        iconType: SPIDER_AXIS_META[index].key,
+        label: SPIDER_AXIS_META[index].weak,
+        text: "Ponto de atenção ao escolher esse arsenal."
+    }));
+
+    if (item.scores[5] >= 55) {
+        weaknesses.unshift({
+            kind: "weakness",
+            iconType: SPIDER_AXIS_META[5].key,
+            label: SPIDER_AXIS_META[5].weak,
+            text: "O desempenho pode variar bastante conforme o mapa."
+        });
+    }
+
+    return {
+        strengths: strengths.slice(0, 3),
+        weaknesses: weaknesses.slice(0, 3)
+    };
+}
+
+function renderSpiderHighlightMedia(entry) {
+    if (entry.icon) {
+        return `
+            <span class="spider-highlight-media">
+                <img src="${entry.icon}" alt="">
+            </span>
+        `;
+    }
+
+    return `
+        <span class="spider-highlight-media">
+            <span class="spider-highlight-symbol symbol-${entry.iconType || entry.icon || "generic"}" aria-hidden="true"></span>
+        </span>
+    `;
+}
+
+function renderSpiderHighlightCard(entry) {
+    return `
+        <span class="spider-highlight-card is-${entry.kind}">
+            ${renderSpiderHighlightMedia(entry)}
+            <span>
+                <strong>${entry.label}</strong>
+                <small>${entry.text}</small>
+            </span>
+        </span>
+    `;
+}
+
+function renderSpiderHighlights(item) {
+    const highlights = item.advantages || item.disadvantages
+        ? {
+            strengths: (item.advantages || []).map((entry) => ({ ...entry, kind: "strength" })),
+            weaknesses: (item.disadvantages || []).map((entry) => ({ ...entry, kind: "weakness" }))
+        }
+        : getSpiderHighlights(item);
+
+    return `
+        <div class="spider-highlight-group">
+            <strong>Vantagens</strong>
+            <div>${highlights.strengths.map(renderSpiderHighlightCard).join("")}</div>
+        </div>
+        <div class="spider-highlight-group">
+            <strong>Counters e desvantagens</strong>
+            <div>${highlights.weaknesses.map(renderSpiderHighlightCard).join("")}</div>
+        </div>
+    `;
+}
+
+function setupSpiderChart() {
+    const spiderEls = getSpiderEls();
+    if (!spiderEls.list || !spiderEls.filters.length) {
+        return;
+    }
+
+    let currentFilter = "all";
+    let selectedId = SPIDER_ITEMS[0].id;
+
+    const getFilteredItems = () => SPIDER_ITEMS.filter((item) => {
+        if (currentFilter === "all") {
+            return true;
+        }
+        return item.category === currentFilter || item.tags.includes(currentFilter);
+    });
+
+    const refresh = () => {
+        const filteredItems = getFilteredItems();
+        if (!filteredItems.some((item) => item.id === selectedId)) {
+            selectedId = filteredItems[0]?.id || SPIDER_ITEMS[0].id;
+        }
+
+        renderSpiderList(filteredItems, selectedId, spiderEls);
+        renderSpiderDetail(SPIDER_ITEMS.find((item) => item.id === selectedId), spiderEls);
+    };
+
+    spiderEls.filters.forEach((button) => {
+        button.addEventListener("click", () => {
+            currentFilter = button.dataset.spiderFilter || "all";
+            spiderEls.filters.forEach((filterButton) => {
+                filterButton.classList.toggle("is-active", filterButton === button);
+            });
+            refresh();
+        });
+    });
+
+    spiderEls.list.addEventListener("click", (event) => {
+        const card = event.target.closest(".spider-item-card");
+        if (!card) {
+            return;
+        }
+        selectedId = card.dataset.spiderId;
+        refresh();
+    });
+
+    refresh();
+}
+
 function bindEvents() {
     [els.coins, ...els.resourceInputs].forEach((input) => {
         input.addEventListener("input", () => {
@@ -876,6 +1466,7 @@ function bindEvents() {
 
 function init() {
     setupCollapsibleSections();
+    setupSpiderChart();
     populateManualSelects();
     if (els.announcementText) {
         els.announcementText.value = ANNOUNCEMENT_TEXT;
