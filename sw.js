@@ -1,4 +1,4 @@
-const CACHE_NAME = "blastoise-pwa-v20260711";
+const CACHE_NAME = "blastoise-pwa-v20260712-ios";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -16,7 +16,9 @@ const APP_SHELL = [
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => cache.addAll(APP_SHELL))
+            .then((cache) => Promise.all(
+                APP_SHELL.map((url) => cache.add(url).catch(() => null))
+            ))
             .then(() => self.skipWaiting())
     );
 });
@@ -34,6 +36,13 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            fetch(event.request).catch(() => caches.match("./index.html"))
+        );
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request).then((cached) => {
             if (cached) {
@@ -44,7 +53,7 @@ self.addEventListener("fetch", (event) => {
                 const copy = response.clone();
                 caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
                 return response;
-            });
+            }).catch(() => cached);
         })
     );
 });

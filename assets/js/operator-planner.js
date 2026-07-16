@@ -113,6 +113,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 100,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -156,6 +157,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -199,6 +201,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 100,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -242,6 +245,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -285,6 +289,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 324,
@@ -328,6 +333,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 347,
         "LENS": 55,
         "MCMEAN": 309,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -371,6 +377,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 496,
         "MISHKA": 324,
@@ -414,6 +421,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -457,6 +465,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 100,
         "MCMEAN": 309,
+        "MECHARI": 0,
         "MIA": 157,
         "MIRO": 496,
         "MISHKA": 178,
@@ -500,6 +509,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 496,
         "MISHKA": 178,
@@ -543,6 +553,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 347,
         "LENS": 55,
         "MCMEAN": 309,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -586,6 +597,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 307,
         "LENS": 85,
         "MCMEAN": 270,
+        "MECHARI": 0,
         "MIA": 137,
         "MIRO": 433,
         "MISHKA": 275,
@@ -629,6 +641,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 347,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 157,
         "MIRO": 280,
         "MISHKA": 178,
@@ -672,6 +685,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 100,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 324,
@@ -715,6 +729,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 347,
         "LENS": 55,
         "MCMEAN": 173,
+        "MECHARI": 0,
         "MIA": 88,
         "MIRO": 280,
         "MISHKA": 178,
@@ -758,6 +773,7 @@ const UPDATED_MISSION_SCORES = {
         "KLAUS": 200,
         "LENS": 55,
         "MCMEAN": 309,
+        "MECHARI": 0,
         "MIA": 157,
         "MIRO": 280,
         "MISHKA": 178,
@@ -1759,7 +1775,7 @@ function getBaseMissionScore(mission, operator, index) {
         return 0;
     }
 
-    const updatedScore = UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
+    const updatedScore = getUpdatedMissionScore(mission, operator);
     if (Number.isFinite(updatedScore)) {
         return updatedScore;
     }
@@ -1769,6 +1785,10 @@ function getBaseMissionScore(mission, operator, index) {
     }
 
     return EXTRA_OPERATOR_SCORES[operator]?.[mission.key] || 55;
+}
+
+function getUpdatedMissionScore(mission, operator) {
+    return UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
 }
 
 function createDefaultOperatorData() {
@@ -1798,6 +1818,12 @@ function mergeOperatorData(savedData) {
         defaults.operators[operator].rank = RANK_LEVELS.some((rank) => rank.value === savedRank) ? savedRank : "";
 
         PLANNER_MISSIONS.forEach((mission) => {
+            const updatedScore = getUpdatedMissionScore(mission, operator);
+            if (Number.isFinite(updatedScore)) {
+                defaults.operators[operator].scores[mission.key] = Math.max(0, Math.floor(updatedScore));
+                return;
+            }
+
             const score = Number(savedOperator.scores?.[mission.key]);
             if (Number.isFinite(score)) {
                 defaults.operators[operator].scores[mission.key] = Math.max(0, Math.floor(score));
@@ -1859,7 +1885,7 @@ function getMissionScore(mission, operator, index, slot) {
             return 0;
         }
 
-        const updatedScore = UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
+        const updatedScore = getUpdatedMissionScore(mission, operator);
         if (Number.isFinite(updatedScore) && updatedScore > 0) {
             return updatedScore;
         }
@@ -1870,6 +1896,11 @@ function getMissionScore(mission, operator, index, slot) {
         }
 
         return MISSION_SEVEN_RESERVED_SCORE;
+    }
+
+    const updatedScore = getUpdatedMissionScore(mission, operator);
+    if (Number.isFinite(updatedScore)) {
+        return updatedScore;
     }
 
     const editedScore = Number(operatorData?.operators?.[operator]?.scores?.[mission.key]);

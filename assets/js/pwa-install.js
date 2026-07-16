@@ -2,8 +2,9 @@
     const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
     const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches || navigator.maxTouchPoints > 0;
     const isMobileViewport = window.matchMedia("(max-width: 1024px)").matches;
-    const isInstallTarget = isTouchDevice && isMobileViewport && !isStandalone;
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isAppleMobile = /iphone|ipad|ipod/i.test(navigator.userAgent)
+        || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isInstallTarget = (isAppleMobile || (isTouchDevice && isMobileViewport)) && !isStandalone;
     let deferredPrompt = null;
     let banner = null;
 
@@ -38,9 +39,9 @@
         const text = banner.querySelector(".pwa-install-text");
         const action = banner.querySelector(".pwa-install-action");
         if (text) {
-            text.textContent = isIOS
-                ? "No iPhone/iPad, toque em Compartilhar e depois em Adicionar à Tela de Início."
-                : "Abra o menu do navegador e escolha Instalar app ou Adicionar à tela inicial.";
+            text.textContent = isAppleMobile
+                ? "No iPhone/iPad, abra no Safari, toque em Compartilhar e escolha Adicionar a Tela de Inicio."
+                : "Abra o menu do navegador e escolha Instalar app ou Adicionar a tela inicial.";
         }
         if (action) {
             action.textContent = "Entendi";
@@ -78,10 +79,10 @@
             <img class="pwa-install-icon" src="assets/icons/blastoise-icon-192.png" alt="">
             <div class="pwa-install-copy">
                 <strong>Instale o BLASTOISE</strong>
-                <span class="pwa-install-text">Crie um atalho no dispositivo para abrir o painel mais rápido.</span>
+                <span class="pwa-install-text">${isAppleMobile ? "No iPhone/iPad, instale pelo botao Compartilhar do Safari." : "Crie um atalho no dispositivo para abrir o painel mais rapido."}</span>
             </div>
-            <button class="pwa-install-action" type="button">Instalar</button>
-            <button class="pwa-install-close" type="button" aria-label="Fechar aviso">×</button>
+            <button class="pwa-install-action" type="button">${isAppleMobile ? "Ver passo" : "Instalar"}</button>
+            <button class="pwa-install-close" type="button" aria-label="Fechar aviso">x</button>
         `;
 
         document.body.appendChild(banner);
@@ -102,6 +103,9 @@
         setTimeout(() => {
             if (!deferredPrompt) {
                 createBanner();
+                if (isAppleMobile) {
+                    setGuideMode();
+                }
             }
         }, 900);
     });

@@ -1,13 +1,17 @@
 {
   "name": "BLASTOISE",
   "short_name": "BLASTOISE",
+  "id": "./",
   "description": "Painel BLASTOISE para calculadoras, missões e inteligência do clã.",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
+  "lang": "pt-BR",
+  "dir": "ltr",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#050607",
   "theme_color": "#ffd21f",
+  "categories": ["utilities", "productivity"],
   "icons": [
     {
       "src": "assets/icons/blastoise-icon-192.png",
