@@ -29,7 +29,103 @@ button {
     min-width: 0;
 }
 
+button,
+select,
+input,
+textarea,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
 @media (max-width: 900px) {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    select,
+    input:not([type="range"]),
+    textarea {
+        font-size: 16px !important;
+    }
+
+    button,
+    select,
+    input,
+    textarea,
+    a,
+    [role="button"] {
+        touch-action: manipulation;
+    }
+
+    .quick-nav {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 30;
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        padding: 8px 12px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .quick-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .quick-nav a {
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        scroll-snap-align: start;
+        white-space: nowrap;
+    }
+
+    [id] {
+        scroll-margin-top: 76px;
+    }
+
+    .mission-setup-progress {
+        margin: 12px 0;
+        padding: 13px 14px;
+        border: 1px solid rgba(59, 169, 255, 0.28);
+        border-left: 4px solid #3ba9ff;
+        border-radius: 10px;
+        background: linear-gradient(120deg, rgba(59, 169, 255, 0.12), rgba(5, 7, 10, 0.82));
+        color: #e7f5ff;
+        font-size: 0.86rem;
+        font-weight: 750;
+        line-height: 1.45;
+    }
+
+    .mission-setup-progress[data-state="ready"] {
+        border-color: rgba(64, 255, 122, 0.32);
+        border-left-color: #40ff7a;
+        background: linear-gradient(120deg, rgba(64, 255, 122, 0.12), rgba(5, 7, 10, 0.82));
+        color: #eaffef;
+    }
+
+    .mission-setup-progress[data-state="pending"] {
+        border-left-color: #ffd93d;
+    }
+
+    .mission-row.is-configured {
+        border-color: rgba(64, 255, 122, 0.42);
+        box-shadow: inset 3px 0 0 rgba(64, 255, 122, 0.58);
+    }
+
+    .mission-row.needs-mission .mission-select-wrap .mission-choice-button,
+    .mission-row.needs-count .mission-count-wrap .mission-choice-button {
+        border-color: rgba(255, 217, 61, 0.72);
+        box-shadow: inset 0 0 0 1px rgba(255, 217, 61, 0.18);
+    }
+
     .app-shell {
         width: 100%;
         padding: 0 0 32px;
@@ -211,7 +307,15 @@ button {
     .mission-row {
         grid-template-columns: 36px minmax(76px, 88px) minmax(0, 1fr);
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
+    }
+
+    .mission-grid {
+        overflow: visible;
+    }
+
+    .mission-row.has-open-choice {
+        z-index: 100;
     }
 
     .mission-row select,
@@ -255,6 +359,110 @@ button {
 }
 
 @media (max-width: 520px) {
+    .mission-setup-progress {
+        position: sticky;
+        top: calc(env(safe-area-inset-top, 0px) + 58px);
+        z-index: 20;
+        margin: 8px -2px 12px;
+        padding: 11px 12px;
+        font-size: 0.82rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .mission-row {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "slot"
+            "meta"
+            "count"
+            "mission"
+            "priority";
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .mission-grid {
+        overflow: visible;
+    }
+
+    .mission-row.has-open-choice {
+        z-index: 100;
+    }
+
+    .mission-slot {
+        grid-area: slot;
+        min-height: 36px;
+        place-items: center start;
+        padding-inline: 12px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+    }
+
+    .mission-meta {
+        grid-area: meta;
+        min-height: 58px;
+    }
+
+    .mission-count-wrap,
+    .mission-select-wrap,
+    .mission-priority-wrap {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .mission-count-wrap {
+        grid-area: count;
+        min-height: 70px;
+        border-left: 0;
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+    }
+
+    .mission-select-wrap {
+        grid-area: mission;
+        min-height: 70px;
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+    }
+
+    .mission-priority-wrap {
+        grid-area: priority;
+        min-height: 58px;
+    }
+
+    .mission-choice-button {
+        min-height: 70px;
+        padding: 10px 14px;
+        touch-action: manipulation;
+    }
+
+    .mission-choice-button small {
+        font-size: 0.72rem;
+        line-height: 1.1;
+    }
+
+    .mission-choice-button strong {
+        font-size: 1.05rem;
+    }
+
+    .mission-choice-list {
+        max-height: var(--choice-max-height, min(48dvh, 320px));
+        min-width: 0;
+        border-radius: 12px;
+        padding: 5px;
+        padding-bottom: max(5px, env(safe-area-inset-bottom, 0px));
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.66), 0 0 0 100vmax rgba(0, 0, 0, 0.12);
+    }
+
+    .mission-choice-option {
+        min-height: 52px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.92rem;
+        line-height: 1.25;
+        touch-action: manipulation;
+    }
+
     .brand-mark {
         width: 210px;
         min-height: 104px;
@@ -392,7 +600,15 @@ button {
     }
 
     .mission-row {
-        grid-template-columns: 38px 86px minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "slot"
+            "meta"
+            "count"
+            "mission"
+            "priority";
+        min-height: 0;
+        overflow: visible;
     }
 
     .mission-meta {
