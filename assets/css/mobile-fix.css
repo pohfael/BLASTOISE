@@ -698,7 +698,92 @@ a {
 }
 
 .mission-priority-button.is-active {
-    border-left-color: rgba(64, 255, 122, 0.42);
+    border-left-color: rgba(208, 92, 255, 0.7);
+    background: linear-gradient(120deg, rgba(208, 92, 255, 0.3), rgba(30, 10, 38, 0.96) 76%);
+    box-shadow: inset 0 0 0 1px rgba(208, 92, 255, 0.22), 0 0 16px rgba(208, 92, 255, 0.12);
+    color: #f0c2ff;
+}
+
+.mission-priority-button.is-active i {
+    border-color: rgba(224, 160, 255, 0.8);
+    background: rgba(93, 24, 120, 0.72);
+}
+
+.mission-priority-button.is-active i::after {
+    transform: translateX(15px);
+    background: #f0c2ff;
+    box-shadow: 0 0 10px rgba(208, 92, 255, 0.62);
+}
+
+@media (min-width: 521px) {
+    .mission-row {
+        grid-template-columns: minmax(146px, 0.85fr) minmax(0, 1fr) minmax(0, 1fr) 92px;
+        grid-template-areas:
+            "slot meta meta meta"
+            "count mission mission priority";
+        align-items: stretch;
+        min-height: 124px;
+    }
+
+    .mission-slot {
+        grid-area: slot;
+        min-height: 48px;
+        height: auto;
+        place-items: center start;
+        padding-inline: 12px;
+        border-right: 1px solid rgba(255, 217, 61, 0.18);
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+        font-size: 0.74rem;
+        white-space: nowrap;
+    }
+
+    .mission-meta {
+        grid-area: meta;
+        min-height: 48px;
+        padding: 7px 12px;
+        border-bottom: 1px solid rgba(216, 238, 248, 0.13);
+        align-content: center;
+    }
+
+    .mission-count-wrap {
+        grid-area: count;
+        min-height: 76px;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 217, 61, 0.22);
+    }
+
+    .mission-select-wrap {
+        grid-area: mission;
+        min-height: 76px;
+        border-top: 1px solid rgba(73, 190, 255, 0.22);
+    }
+
+    .mission-priority-wrap {
+        grid-area: priority;
+        min-height: 76px;
+    }
+
+    .mission-choice-widget.is-count .mission-choice-button {
+        min-height: 76px;
+        padding-inline: 12px;
+    }
+
+    .mission-choice-widget.is-count .mission-choice-button strong {
+        font-size: 0.76rem;
+        line-height: 1.12;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .mission-choice-widget.is-mission .mission-choice-button {
+        min-height: 76px;
+        padding-inline: 14px;
+    }
+
+    .mission-priority-button {
+        min-height: 76px;
+        padding-inline: 8px;
+    }
 }
 
 @media (max-width: 520px) {
@@ -741,4 +826,9 @@ a {
     .manual-panel {
         padding-inline: 12px;
     }
+}
+
+.mission-slot,
+.mission-choice-widget.is-count .mission-choice-button strong {
+    font-size: 0.76rem;
 }
