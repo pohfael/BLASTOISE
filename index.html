@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/blastoise-icon-192.png">
     <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/blastoise-icon-512.png">
     <link rel="stylesheet" href="assets/css/style.css?v=20260711-spider-tatico">
-    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20260520-alpha-operators">
+    <link rel="stylesheet" href="assets/css/mobile-fix.css?v=20261102-mission-flow-fix1">
 </head>
 <body>
     <main class="app-shell">
@@ -255,12 +255,16 @@
 
                     <div class="mission-toolbar">
                         <div>
-                            <p class="eyebrow">Lista de missões</p>
-                            <h3>Escolha os tipos de missão</h3>
+                            <p class="eyebrow">Configure em duas etapas</p>
+                            <h3>Distribua operadores e escolha missões</h3>
                         </div>
                         <div class="mission-toolbar-actions">
                             <button type="button" id="clearMissionButton">Limpar</button>
                         </div>
+                    </div>
+
+                    <div id="missionSetupProgress" class="mission-setup-progress" aria-live="polite" aria-atomic="true">
+                        Passo 1 de 2 · Escolha quantos operadores enviar para cada missão.
                     </div>
 
                     <div class="mission-grid" id="missionRows"></div>
@@ -473,7 +477,7 @@
     </main>
 
     <script src="assets/js/app.js?v=20260711-spider-tatico"></script>
-    <script src="assets/js/operator-planner.js?v=20260708-spider-chart"></script>
+    <script src="assets/js/operator-planner.js?v=20261102-lazarus"></script>
     <script src="assets/js/pwa-install.js?v=20260712-ios-pwa"></script>
 </body>
 </html>
