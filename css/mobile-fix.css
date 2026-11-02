@@ -38,10 +38,23 @@ a {
 }
 
 @media (max-width: 900px) {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    select,
+    input:not([type="range"]),
+    textarea {
+        font-size: 16px !important;
+    }
+
+    button,
     select,
     input,
-    textarea {
-        font-size: max(16px, 1em);
+    textarea,
+    a,
+    [role="button"] {
+        touch-action: manipulation;
     }
 
     .quick-nav {
@@ -294,7 +307,15 @@ a {
     .mission-row {
         grid-template-columns: 36px minmax(76px, 88px) minmax(0, 1fr);
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
+    }
+
+    .mission-grid {
+        overflow: visible;
+    }
+
+    .mission-row.has-open-choice {
+        z-index: 100;
     }
 
     .mission-row select,
@@ -357,6 +378,15 @@ a {
             "mission"
             "priority";
         min-height: 0;
+        overflow: visible;
+    }
+
+    .mission-grid {
+        overflow: visible;
+    }
+
+    .mission-row.has-open-choice {
+        z-index: 100;
     }
 
     .mission-slot {
@@ -578,6 +608,7 @@ a {
             "mission"
             "priority";
         min-height: 0;
+        overflow: visible;
     }
 
     .mission-meta {
