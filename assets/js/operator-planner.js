@@ -828,6 +828,13 @@ const PLANNER_SLOTS = [
     { slot: 7, points: "2.000.000", reward: "65k Prata", send: "remaining" }
 ];
 
+const MISSION_SLOT_ROMAN_NUMERALS = ["I", "II", "III", "IV", "V", "VI", "VII"];
+
+function missionSlotLabel(slot) {
+    const numeral = MISSION_SLOT_ROMAN_NUMERALS[Number(slot) - 1];
+    return numeral ? `MISSÃO ${numeral}` : `MISSÃO ${slot}`;
+}
+
 const MISSION_REWARD_ICONS = {
     prata: "assets/img/rewards/prata.png?v=20260705-minimal-icons",
     reputacao: "assets/img/rewards/reputacao-do-cla.png?v=20260705-minimal-icons",
@@ -1101,7 +1108,7 @@ function createMissionRows() {
 
     plannerEls.rows.innerHTML = PLANNER_SLOTS.map((item) => `
         <div class="mission-row">
-            <span class="mission-slot">#${item.slot}</span>
+            <span class="mission-slot">${missionSlotLabel(item.slot)}</span>
             <span class="mission-meta">
                 ${renderMissionRewardStrip(item.slot)}
             </span>
