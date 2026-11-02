@@ -38,6 +38,7 @@ const PLANNER_OPERATORS = [
     "JOE",
     "KIRIN",
     "KLAUS",
+    "LAZARUS",
     "LENS",
     "MCMEAN",
     "MECHARI",
@@ -87,7 +88,8 @@ const EXTRA_OPERATOR_SCORES = {
     WOLF: { hildr: 135 }
 };
 
-const MISSION_SEVEN_RESERVED_OPERATORS = new Set(["MECHARI", "SUSSURRO", "FERRY", "CRAIG", "WOLF", "KIRIN", "RAY", "DMITRY"]);
+const MISSION_SEVEN_RESERVED_OPERATORS = new Set(["MECHARI", "SUSSURRO", "FERRY", "CRAIG", "WOLF", "KIRIN", "RAY", "DMITRY", "LAZARUS"]);
+const ZERO_SCORE_OPERATORS = new Set(["LAZARUS"]);
 const MISSION_SEVEN_RESERVED_SCORE = 200;
 
 const UPDATED_MISSION_SCORES = {
@@ -872,6 +874,7 @@ const DEFAULT_OPERATOR_DETAILS = {
     JOE: { rank: "4-6" },
     KIRIN: { rank: "3-5" },
     KLAUS: { rank: "4-6" },
+    LAZARUS: { rank: "" },
     LENS: { rank: "1-1" },
     MCMEAN: { rank: "3-9" },
     MIA: { rank: "1-1" },
@@ -1104,12 +1107,12 @@ function createMissionRows() {
             </span>
             <span class="mission-count-wrap">
                 <span class="mission-count-label">QTD<br>OPERADOR</span>
-                <select class="mission-operator-count" data-slot="${item.slot}" aria-label="Quantidade de operadores da miss\u00E3o ${item.slot}" disabled>
+                <select class="mission-operator-count" data-slot="${item.slot}" data-confirmed="false" aria-label="Etapa 1: quantidade de operadores para a miss\u00E3o ${item.slot}" disabled>
                     ${countOptions}
                 </select>
             </span>
             <span class="mission-select-wrap">
-                <select class="mission-select" data-slot="${item.slot}" disabled>
+                <select class="mission-select" data-slot="${item.slot}" aria-label="Etapa 2: tipo de miss\u00E3o para a linha ${item.slot}" disabled>
                     ${options}
                 </select>
             </span>
@@ -1205,8 +1208,10 @@ function syncMissionChoiceWidgets() {
         const button = widget.querySelector(".mission-choice-button");
         const list = widget.querySelector(".mission-choice-list");
         const selectedOption = select.options[select.selectedIndex] || select.options[0];
-        const label = isCount ? "QTD OPERADOR" : "MISS\u00C3O";
-        const valueText = selectedOption ? selectedOption.textContent : (isCount ? "0" : "MISS\u00C3O");
+        const label = isCount ? "ETAPA 1 · OPERADORES" : "ETAPA 2 · MISSÃO";
+        const valueText = isCount
+            ? (select.dataset.confirmed === "true" ? `${selectedOption?.textContent || "0"} operador(es)` : "Escolher quantidade")
+            : (select.value ? (selectedOption?.textContent || "") : "Escolher missão");
 
         button.disabled = select.disabled;
         button.dataset.slot = select.dataset.slot || "";
@@ -1235,20 +1240,39 @@ function closeMissionChoiceWidgets(exceptWidget = null) {
         widget.style.removeProperty("--choice-left");
         widget.style.removeProperty("--choice-top");
         widget.style.removeProperty("--choice-width");
+        widget.style.removeProperty("--choice-max-height");
+        widget.classList.remove("opens-above");
         widget.querySelector(".mission-choice-button")?.setAttribute("aria-expanded", "false");
     });
 }
 
 function positionMissionChoiceList(widget, button) {
     const rect = button.getBoundingClientRect();
+    const viewport = window.visualViewport;
+    const viewportWidth = viewport?.width || window.innerWidth;
+    const viewportHeight = viewport?.height || window.innerHeight;
+    const viewportTop = viewport?.offsetTop || 0;
     const margin = 8;
-    const width = Math.min(Math.max(rect.width, 160), window.innerWidth - (margin * 2));
-    const left = Math.min(Math.max(rect.left, margin), window.innerWidth - width - margin);
-    const top = Math.min(rect.bottom + 4, window.innerHeight - 60);
+    const isCompact = viewportWidth <= 600;
+    const width = isCompact
+        ? viewportWidth - (margin * 2)
+        : Math.min(Math.max(rect.width, 200), viewportWidth - (margin * 2));
+    const left = isCompact
+        ? margin
+        : Math.min(Math.max(rect.left, margin), viewportWidth - width - margin);
+    const availableBelow = viewportTop + viewportHeight - rect.bottom - 12;
+    const availableAbove = rect.top - viewportTop - 12;
+    const openAbove = availableBelow < Math.min(240, availableAbove) && availableAbove > availableBelow;
+    const maxHeight = Math.max(120, Math.min(320, (openAbove ? availableAbove : availableBelow) - 8));
+    const top = openAbove
+        ? Math.max(viewportTop + margin, rect.top - maxHeight - 8)
+        : Math.min(rect.bottom + 4, viewportTop + viewportHeight - margin);
 
     widget.style.setProperty("--choice-left", `${left}px`);
     widget.style.setProperty("--choice-top", `${top}px`);
     widget.style.setProperty("--choice-width", `${width}px`);
+    widget.style.setProperty("--choice-max-height", `${maxHeight}px`);
+    widget.classList.toggle("opens-above", openAbove);
 }
 
 function repositionOpenMissionChoiceWidget() {
@@ -1300,6 +1324,9 @@ function handleMissionChoiceClick(event) {
 
     if (option) {
         select.value = option.dataset.value || "";
+        if (select.classList.contains("mission-operator-count")) {
+            select.dataset.confirmed = "true";
+        }
         closeMissionChoiceWidgets();
         select.dispatchEvent(new Event("change", { bubbles: true }));
     }
@@ -1329,6 +1356,45 @@ function selectedMissions() {
             return mission ? { ...slotInfo, send: count, mission, priority: isPrioritySlot(slotInfo.slot) } : null;
         })
         .filter(Boolean);
+}
+
+function syncMissionSetupProgress() {
+    if (!plannerEls.setupProgress || !plannerEls.rows) {
+        return;
+    }
+
+    const rows = [...plannerEls.rows.querySelectorAll(".mission-row")];
+    const steps = rows.map((row) => {
+        const hasMission = Boolean(row.querySelector(".mission-select")?.value);
+        const hasCount = row.querySelector(".mission-operator-count")?.dataset.confirmed === "true";
+        row.classList.toggle("is-configured", hasMission && hasCount);
+        row.classList.toggle("needs-mission", hasCount && !hasMission);
+        row.classList.toggle("needs-count", hasMission && !hasCount);
+        return {
+            hasMission,
+            hasCount,
+            count: Math.max(0, Number(row.querySelector(".mission-operator-count")?.value) || 0)
+        };
+    });
+    const configured = steps.filter((step) => step.hasMission && step.hasCount).length;
+    const pendingMission = steps.filter((step) => step.hasCount && !step.hasMission).length;
+    const pendingCount = steps.filter((step) => step.hasMission && !step.hasCount).length;
+    const operatorTotal = steps.reduce((sum, step) => sum + (step.hasCount ? step.count : 0), 0);
+    const active = steps.some((step) => step.hasMission || step.hasCount);
+
+    if (!active) {
+        plannerEls.setupProgress.textContent = "Passo 1 de 2 · Escolha quantos operadores enviar para cada missão. Depois, escolha o tipo da missão.";
+        plannerEls.setupProgress.dataset.state = "start";
+    } else if (pendingMission) {
+        plannerEls.setupProgress.textContent = `${configured} missão(ões) pronta(s) · ${pendingMission} pendente(s). Passo 2: escolha o tipo da missão nas linhas com operadores.`;
+        plannerEls.setupProgress.dataset.state = "pending";
+    } else if (pendingCount) {
+        plannerEls.setupProgress.textContent = `${configured} missão(ões) pronta(s) · ${pendingCount} pendente(s). Passo 1: defina a quantidade de operadores nas missões escolhidas.`;
+        plannerEls.setupProgress.dataset.state = "pending";
+    } else {
+        plannerEls.setupProgress.textContent = `${configured} missão(ões) configurada(s) · ${operatorTotal} operador(es) distribuído(s). A locação sugerida está atualizada abaixo.`;
+        plannerEls.setupProgress.dataset.state = "ready";
+    }
 }
 
 function isPrioritySlot(slot) {
@@ -1788,6 +1854,10 @@ function getBaseMissionScore(mission, operator, index) {
 }
 
 function getUpdatedMissionScore(mission, operator) {
+    if (ZERO_SCORE_OPERATORS.has(normalizeOperatorName(operator))) {
+        return 0;
+    }
+
     return UPDATED_MISSION_SCORES[mission.key]?.[normalizeOperatorName(operator)];
 }
 
@@ -2559,6 +2629,7 @@ function buildFullMissionText(initialAssignment) {
 }
 
 function updateMissionPlanner() {
+    syncMissionSetupProgress();
     renderMissionPlanner(selectedMissions());
 }
 
@@ -3135,6 +3206,7 @@ function clearMissionPlanner() {
     });
     plannerEls.rows.querySelectorAll(".mission-operator-count").forEach((select) => {
         select.value = "0";
+        select.dataset.confirmed = "false";
     });
     updateMissionCountOptions();
     updateMissionSelectOptions();
@@ -3155,6 +3227,7 @@ function initOperatorPlanner() {
     plannerEls.workbench = document.getElementById("missionWorkbench");
     plannerEls.timeSelect = document.getElementById("missionTimeSelect");
     plannerEls.rows = document.getElementById("missionRows");
+    plannerEls.setupProgress = document.getElementById("missionSetupProgress");
     plannerEls.assignment = document.getElementById("missionAssignment");
     plannerEls.ranking = document.getElementById("missionRanking");
     plannerEls.copyText = document.getElementById("missionCopyText");
@@ -3240,6 +3313,8 @@ function initOperatorPlanner() {
     });
     window.addEventListener("resize", repositionOpenMissionChoiceWidget);
     window.addEventListener("scroll", repositionOpenMissionChoiceWidget, true);
+    window.visualViewport?.addEventListener("resize", repositionOpenMissionChoiceWidget);
+    window.visualViewport?.addEventListener("scroll", repositionOpenMissionChoiceWidget);
     plannerEls.tabs.forEach((tab) => {
         tab.addEventListener("click", () => switchMissionTab(tab.dataset.missionTab));
     });
