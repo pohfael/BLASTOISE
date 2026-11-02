@@ -1,4 +1,4 @@
-const CACHE_NAME = "blastoise-pwa-v20261102-lazarus";
+const CACHE_NAME = "blastoise-pwa-v20261102-ios-focus-zoom";
 const APP_SHELL = [
     "./",
     "./index.html",
