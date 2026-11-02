@@ -1215,10 +1215,10 @@ function syncMissionChoiceWidgets() {
         const button = widget.querySelector(".mission-choice-button");
         const list = widget.querySelector(".mission-choice-list");
         const selectedOption = select.options[select.selectedIndex] || select.options[0];
-        const label = isCount ? "ETAPA 1 · OPERADORES" : "ETAPA 2 · MISSÃO";
+        const label = isCount ? "OPERADORES" : "MISSÃO";
         const valueText = isCount
-            ? (select.dataset.confirmed === "true" ? `${selectedOption?.textContent || "0"} operador(es)` : "Escolher quantidade")
-            : (select.value ? (selectedOption?.textContent || "") : "Escolher missão");
+            ? (select.dataset.confirmed === "true" ? `${selectedOption?.textContent || "0"} operador(es)` : "QUANTIDADE")
+            : (select.value ? (selectedOption?.textContent || "") : "NOME DA MISSÃO");
 
         button.disabled = select.disabled;
         button.dataset.slot = select.dataset.slot || "";
