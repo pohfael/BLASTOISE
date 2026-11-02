@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560">
+  <defs>
+    <linearGradient id="bg" x1="1" x2="0" y1="0" y2="1">
+      <stop stop-color="#162433"/>
+      <stop offset="1" stop-color="#050607"/>
+    </linearGradient>
+    <linearGradient id="armor" x1="0" x2="1">
+      <stop stop-color="#3ba9ff"/>
+      <stop offset="1" stop-color="#9b4dff"/>
+    </linearGradient>
+  </defs>
+  <rect width="420" height="560" fill="url(#bg)"/>
+  <circle cx="210" cy="148" r="86" fill="#17232d"/>
+  <path d="M111 164c13-74 46-111 99-111s86 37 99 111c-39-19-72-28-99-28s-60 9-99 28z" fill="#263845"/>
+  <path d="M138 139h144l22 41-38 32H154l-38-32z" fill="#07101a"/>
+  <path d="M151 154h118l10 18-21 19h-96l-21-19z" fill="#3ba9ff"/>
+  <path d="M52 493c18-137 70-226 158-226s140 89 158 226z" fill="#0d151b"/>
+  <path d="M91 335h238l29 158H62z" fill="#1d2c36"/>
+  <path d="M128 305h164l50 188H78z" fill="url(#armor)"/>
+  <path d="M180 301h60l26 191H154z" fill="#07101a" opacity=".72"/>
+  <path d="M44 421h83l25-62-65 7zM376 421h-83l-25-62 65 7z" fill="#223442"/>
+</svg>
