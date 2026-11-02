@@ -79,12 +79,19 @@ a {
     .quick-nav a {
         flex: 0 0 auto;
         min-height: 44px;
-        padding: 0 14px;
+        gap: 8px;
+        padding: 0 13px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         scroll-snap-align: start;
         white-space: nowrap;
+    }
+
+    .quick-nav a svg {
+        width: 16px;
+        height: 16px;
+        flex-basis: 16px;
     }
 
     [id] {
@@ -115,9 +122,9 @@ a {
         border-left-color: #ffd93d;
     }
 
-    .mission-row.is-configured {
-        border-color: rgba(64, 255, 122, 0.42);
-        box-shadow: inset 3px 0 0 rgba(64, 255, 122, 0.58);
+    .mission-row.is-configured:not(.is-priority) {
+        border-color: rgba(216, 238, 248, 0.24);
+        box-shadow: inset 3px 0 0 rgba(216, 238, 248, 0.24);
     }
 
     .mission-row.needs-mission .mission-select-wrap .mission-choice-button,
@@ -627,12 +634,28 @@ a {
     background: linear-gradient(110deg, rgba(255, 217, 61, 0.09), rgba(5, 7, 10, 0.96) 48%);
 }
 
+.mission-count-wrap.has-selection {
+    border-color: rgba(255, 217, 61, 0.88);
+    background: #493b08;
+    box-shadow: inset 0 0 0 1px rgba(255, 217, 61, 0.2), 0 0 18px rgba(255, 217, 61, 0.12);
+}
+
 .mission-choice-widget.is-count .mission-choice-button {
     justify-items: start;
     padding-inline: 14px;
     border-left-color: rgba(255, 217, 61, 0.28);
     background: linear-gradient(110deg, rgba(255, 217, 61, 0.12), rgba(5, 7, 10, 0.96) 72%);
     text-align: left;
+}
+
+.mission-choice-widget.is-count.has-selection .mission-choice-button {
+    border-color: rgba(255, 217, 61, 0.72);
+    background: #5b490b;
+    box-shadow: inset 0 0 0 1px rgba(255, 217, 61, 0.15);
+}
+
+.mission-choice-widget.is-count.has-selection .mission-choice-button strong {
+    color: #fff0a0;
 }
 
 .mission-choice-widget.is-count .mission-choice-button small,
@@ -648,9 +671,25 @@ a {
     background: linear-gradient(110deg, rgba(73, 190, 255, 0.09), rgba(5, 7, 10, 0.96) 62%);
 }
 
+.mission-select-wrap.has-selection {
+    border-color: rgba(73, 190, 255, 0.88);
+    background: #10394f;
+    box-shadow: inset 0 0 0 1px rgba(73, 190, 255, 0.2), 0 0 18px rgba(73, 190, 255, 0.12);
+}
+
 .mission-choice-widget.is-mission .mission-choice-button {
     border-left-color: rgba(73, 190, 255, 0.3);
     background: linear-gradient(110deg, rgba(73, 190, 255, 0.12), rgba(5, 7, 10, 0.96) 72%);
+}
+
+.mission-choice-widget.is-mission.has-selection .mission-choice-button {
+    border-color: rgba(73, 190, 255, 0.72);
+    background: #12435d;
+    box-shadow: inset 0 0 0 1px rgba(73, 190, 255, 0.16);
+}
+
+.mission-choice-widget.is-mission.has-selection .mission-choice-button strong {
+    color: #d4f2ff;
 }
 
 .mission-choice-widget.is-mission .mission-choice-button small,
@@ -699,9 +738,15 @@ a {
 
 .mission-priority-button.is-active {
     border-left-color: rgba(208, 92, 255, 0.7);
-    background: linear-gradient(120deg, rgba(208, 92, 255, 0.3), rgba(30, 10, 38, 0.96) 76%);
+    background: #421653;
     box-shadow: inset 0 0 0 1px rgba(208, 92, 255, 0.22), 0 0 16px rgba(208, 92, 255, 0.12);
     color: #f0c2ff;
+}
+
+.mission-priority-wrap.is-active {
+    border-color: rgba(208, 92, 255, 0.82);
+    background: #381347;
+    box-shadow: inset 0 0 0 1px rgba(208, 92, 255, 0.2), 0 0 18px rgba(208, 92, 255, 0.14);
 }
 
 .mission-priority-button.is-active i {
