@@ -1171,6 +1171,48 @@ function setupCollapsibleSections() {
     }
 }
 
+function setupQuickNavigation() {
+    const nav = document.querySelector(".quick-nav");
+    const links = [...(nav?.querySelectorAll('a[href^="#"]') || [])];
+    const sections = links
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+    if (!nav || !links.length || !sections.length) {
+        return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+        links.forEach((link) => link.addEventListener("click", () => {
+            links.forEach((item) => item.removeAttribute("aria-current"));
+            link.setAttribute("aria-current", "location");
+        }));
+        return;
+    }
+
+    const visible = new Map();
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                visible.set(entry.target.id, entry.intersectionRatio);
+            } else {
+                visible.delete(entry.target.id);
+            }
+        });
+
+        const activeId = [...visible.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+        links.forEach((link) => {
+            if (link.hash === `#${activeId}`) {
+                link.setAttribute("aria-current", "location");
+            } else {
+                link.removeAttribute("aria-current");
+            }
+        });
+    }, { rootMargin: "-22% 0px -62% 0px", threshold: [0, 0.15, 0.35, 0.6] });
+
+    sections.forEach((section) => observer.observe(section));
+}
+
 function getSpiderEls() {
     return {
         list: document.getElementById("spiderItemList"),
@@ -1466,6 +1508,7 @@ function bindEvents() {
 
 function init() {
     setupCollapsibleSections();
+    setupQuickNavigation();
     setupSpiderChart();
     populateManualSelects();
     if (els.announcementText) {

@@ -1215,6 +1215,11 @@ function syncMissionChoiceWidgets() {
         const button = widget.querySelector(".mission-choice-button");
         const list = widget.querySelector(".mission-choice-list");
         const selectedOption = select.options[select.selectedIndex] || select.options[0];
+        const hasSelection = isCount
+            ? select.dataset.confirmed === "true"
+            : Boolean(select.value);
+        wrapper.classList.toggle("has-selection", hasSelection);
+        widget.classList.toggle("has-selection", hasSelection);
         const label = isCount ? "OPERADORES" : "MISSÃO";
         const valueText = isCount
             ? (select.dataset.confirmed === "true" ? `${selectedOption?.textContent || "0"} operador(es)` : "QUANTIDADE")
@@ -1413,8 +1418,10 @@ function syncPriorityButtons() {
         const slot = Number(button.dataset.slot);
         const active = isPrioritySlot(slot);
         const row = button.closest(".mission-row");
+        const wrapper = button.closest(".mission-priority-wrap");
 
         button.classList.toggle("is-active", active);
+        wrapper?.classList.toggle("is-active", active);
         button.setAttribute("aria-pressed", active ? "true" : "false");
         button.querySelector("span").textContent = "Prioridade";
         row?.classList.toggle("is-priority", active);
